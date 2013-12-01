@@ -1,4 +1,4 @@
-issuetracker_yuliya_fedartsova
-==============================
+Issue Tracker
+==========================
 
 JEE training project implementation by Yuliya Fedartsova
