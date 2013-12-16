@@ -1,0 +1,31 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<projects>
+	<project> 
+		<id> 0 </id>
+	    <name> Project1 </name>
+	    <description> description </description>
+	    <manager> 0 </manager>
+	    <build> 0 </build>
+	</project>
+	<project> 
+		<id> 1 </id>
+	    <name> Project2 </name>
+	    <description> description </description>
+	    <manager> 1 </manager>
+	    <build> 1 </build>
+	</project>
+	<project> 
+		<id> 2 </id>
+	    <name> Project3 </name>
+	    <description> description </description>
+	    <manager> 2 </manager>
+	    <build> 2 </build>
+	 </project>
+	<project> 
+		<id> 3 </id>
+	    <name> Project4 </name>
+	    <description> description </description>
+	    <manager> 3 </manager>
+	    <build> 3 </build>
+	</project>
+</projects>

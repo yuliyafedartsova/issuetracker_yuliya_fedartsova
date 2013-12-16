@@ -1,0 +1,35 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<users>
+	<user>
+		<id> 0 </id>
+		<firstName> Tom </firstName>
+		<lastName> Travis </lastName>
+		<email> tom@mail.ru </email>
+		<role> USER </role>
+		<password> 11223 </password>
+	</user>
+	<user>
+		<id> 1 </id>
+		<firstName> Ann </firstName>
+		<lastName> Rand </lastName>
+		<email> ann@mail.ru </email>
+		<role> ADMINISTRATOR </role>
+		<password> 11111 </password>
+	</user>
+	<user>
+		<id> 2 </id>
+		<firstName> Sid </firstName>
+		<lastName> Wishes </lastName>
+		<email> sid@mail.ru </email>
+		<role> ADMINISTRATOR </role>
+		<password> 22222 </password>
+	</user>
+	<user>
+		<id> 3 </id>
+		<firstName> Bob </firstName>
+		<lastName> Dylon </lastName>
+		<email> bob@mail.ru </email>
+		<role> USER </role>
+		<password> 3456 </password>
+	</user>
+</users>

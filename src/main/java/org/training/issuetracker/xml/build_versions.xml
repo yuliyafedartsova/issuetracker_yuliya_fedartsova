@@ -1,0 +1,63 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<versions>
+	<version> 
+		<id> 0 </id>
+	    <name> 1.0.0.1 beta </name>
+	    <project> 0 </project>
+	</version>
+	<version> 
+		<id> 1 </id>
+	    <name> 1.0.0.1 beta  </name>
+	    <project> 1 </project>
+	</version>
+	<version> 
+		<id> 2 </id>
+	    <name> 1.0.0.1 beta </name>
+	    <project> 2 </project>
+	</version>
+	<version> 
+		<id> 3 </id>
+	    <name> 1.0.0.1 beta </name>
+	    <project> 3 </project>
+	</version>
+	<version> 
+		<id> 4 </id>
+	    <name> 1.0.0.2 beta </name>
+	    <project> 0 </project>
+	</version>
+	<version> 
+		<id> 5 </id>
+	    <name> 1.0.0.2 beta  </name>
+	    <project> 1 </project>
+	</version>
+	<version> 
+		<id> 6 </id>
+	    <name> 1.0.0.2 beta </name>
+	    <project> 2 </project>
+	</version>
+	<version> 
+		<id> 7 </id>
+	    <name> 1.0.0.2 beta </name>
+	    <project> 3 </project>
+	</version>
+	<version> 
+		<id> 8 </id>
+	    <name> 1.0.0.3 beta </name>
+	    <project> 0 </project>
+	</version>
+	<version> 
+		<id> 9 </id>
+	    <name> 1.0.0.3 beta  </name>
+	    <project> 1 </project>
+	</version>
+	<version> 
+		<id> 10 </id>
+	    <name> 1.0.0.3 beta </name>
+	    <project> 2 </project>
+	</version>
+	<version> 
+		<id> 11 </id>
+	    <name> 1.0.0.3 beta </name>
+	    <project> 3 </project>
+	</version>
+</versions>

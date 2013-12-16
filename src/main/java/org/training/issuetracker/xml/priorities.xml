@@ -1,0 +1,19 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<parameters>
+	<parameter> 
+		<id> 0 </id>
+	    <name> Critical </name>
+	</parameter>
+	<parameter> 
+		<id> 1 </id>
+	    <name> Major </name>
+	</parameter>
+	<parameter> 
+		<id> 2 </id>
+	    <name> Important </name>
+	 </parameter>
+	<parameter> 
+		<id> 3 </id>
+	    <name> Minor </name>
+	</parameter>
+</parameters>

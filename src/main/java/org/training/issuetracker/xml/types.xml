@@ -1,0 +1,19 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<parameters>
+	<parameter> 
+		<id> 0 </id>
+	    <name> Cosmetic </name>
+	</parameter>
+	<parameter>  
+		<id> 1 </id>
+	    <name> Bug </name>
+	</parameter>
+	<parameter> 
+		<id> 2 </id>
+	    <name> Feature </name>
+	</parameter>
+	<parameter> 
+		<id> 3 </id>
+	    <name> Performance </name>
+	</parameter>
+</parameters>
