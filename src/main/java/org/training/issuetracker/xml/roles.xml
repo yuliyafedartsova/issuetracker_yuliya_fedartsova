@@ -1,0 +1,15 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<parameters>
+	<parameter> 
+		<id> 0 </id>
+	    <name> Guest </name>
+	</parameter>
+	<parameter>  
+		<id> 1 </id>
+	    <name> User </name>
+	</parameter>
+	<parameter> 
+		<id> 2 </id>
+	    <name> Administrator </name>
+	</parameter>
+</parameters>

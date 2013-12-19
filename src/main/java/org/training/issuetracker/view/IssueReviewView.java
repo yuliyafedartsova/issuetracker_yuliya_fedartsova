@@ -2,23 +2,19 @@ package org.training.issuetracker.view;
 
 import java.io.IOException;
 import java.io.PrintWriter;
-import java.util.List;
-import java.util.Map;
-
+import javax.servlet.RequestDispatcher;
 import javax.servlet.ServletException;
-import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
-
-import org.training.issuetracker.enums.Properties;
+import org.training.issuetracker.constants.Constants;
+import org.training.issuetracker.ifaces.AbstractController;
 import org.training.issuetracker.model.beans.Issue;
-import org.training.issuetracker.model.beans.PropertyParameter;
-import org.training.issuetracker.model.beans.User;
+
 
 /**
  * Servlet implementation class IssueReviewView
  */
-public class IssueReviewView extends HttpServlet {
+public class IssueReviewView extends AbstractController {
 	private static final long serialVersionUID = 1L;
        
     public IssueReviewView() {
@@ -26,9 +22,12 @@ public class IssueReviewView extends HttpServlet {
         
     }
 
-	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-		Issue issue = (Issue) request.getAttribute("issue");
+	protected void performTask(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+		Issue issue = (Issue) request.getAttribute(Constants.ISSUE);
 	 	PrintWriter out = response.getWriter();
+	 	request.setAttribute(Constants.WRITER, out);
+		RequestDispatcher rd = getServletContext().getRequestDispatcher("/HeaderView");
+		rd.include(request, response);
 	 	out.println("<html>");
 	    out.println("<head>");
 	 	out.println("<title>Sample Servlet interface implementation</title>");
@@ -64,8 +63,11 @@ public class IssueReviewView extends HttpServlet {
 
 	
 	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-		Issue issue = (Issue) request.getAttribute("issue");
+		Issue issue = (Issue) request.getAttribute(Constants.ISSUE);
 	 	PrintWriter out = response.getWriter();
+	 	request.setAttribute(Constants.WRITER, out);
+		RequestDispatcher rd = getServletContext().getRequestDispatcher("/HeaderView");
+		rd.include(request, response);
 	 	out.println("<html>");
 	    out.println("<head>");
 	 	out.println("<title>Sample Servlet interface implementation</title>");

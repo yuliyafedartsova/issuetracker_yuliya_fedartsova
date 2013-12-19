@@ -2,17 +2,17 @@ package org.training.issuetracker.view;
 
 import java.io.IOException;
 import java.io.PrintWriter;
-
+import java.util.List;
 import javax.servlet.ServletException;
-import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
-
-import org.training.issuetracker.enums.Role;
+import org.training.issuetracker.constants.Constants;
+import org.training.issuetracker.ifaces.AbstractController;
+import org.training.issuetracker.model.beans.PropertyParameter;
 import org.training.issuetracker.model.beans.User;
 
 
-public class UserDataUpdateView extends HttpServlet {
+public class UserDataUpdateView extends AbstractController {
 	private static final long serialVersionUID = 1L;
        
     
@@ -21,8 +21,9 @@ public class UserDataUpdateView extends HttpServlet {
         
     }
 
-    protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-		User user = (User)request.getSession().getAttribute("user"); 
+    protected void performTask(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+		User user = (User)request.getSession().getAttribute(Constants.USER); 
+		List<PropertyParameter> roles = (List<PropertyParameter>)request.getAttribute(Constants.ROLES);
 		PrintWriter out = response.getWriter();
 		out.println("<html>");
 		out.println("<head>");
@@ -36,12 +37,12 @@ public class UserDataUpdateView extends HttpServlet {
 		out.println("<input type='text' name='lastName' value=''><br>");
 		out.println("Email Address <br>");
 		out.println("<input type='text' name='email' value=''><br>");
-		if(user.getRole() == Role.ADMINISTRATOR) {
+		if(user.getRole() == Constants.ADMINISTRATOR) {
 			out.println("Role <br>");
 			out.println("<select name='role' size='1'>");
-			for(int i = 0; i < Role.values().length; i++) {
-					out.println("<option value='" + Role.values()[i] + 
-						"' selected >" + Role.values()[i] + "</option>");
+			for(PropertyParameter role : roles) {
+					out.println("<option value='" + role.getId() + 
+						"' selected >" + role.getName() + "</option>");
 			}
 		}
 		out.println("</form>");
@@ -51,9 +52,4 @@ public class UserDataUpdateView extends HttpServlet {
 	
 	}
 	
-
-	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-		
-	}
-
 }

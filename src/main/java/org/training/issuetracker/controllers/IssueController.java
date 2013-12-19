@@ -3,14 +3,10 @@ package org.training.issuetracker.controllers;
 import java.io.IOException;
 import java.util.List;
 import java.util.Map;
-
-import javax.servlet.RequestDispatcher;
 import javax.servlet.ServletException;
-import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
-import javax.servlet.http.HttpSession;
-
+import org.training.issuetracker.constants.Constants;
 import org.training.issuetracker.ifaces.AbstractController;
 import org.training.issuetracker.ifaces.IssueDAO;
 import org.training.issuetracker.ifaces.IssuePropertyDAO;
@@ -38,30 +34,38 @@ public class IssueController extends AbstractController {
     }
 
     protected void performTask(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-    	int id = Integer.parseInt(request.getParameter("id"));
+    	String action = request.getParameter("action");
+    	int id = Integer.parseInt(request.getParameter(Constants.ID));
   	   	Issue issue = null;
   	   	IssueDAO issuesDao = IssueFactory.getClassFromFactory();
   	   	issue = issuesDao.getIssueById(id);
-  	   	request.setAttribute("issue", issue);
-  	   	HttpSession session = request.getSession();
-  	   	User user = (User) session.getAttribute("user");
-  	   	ProjectDAO projectDAO = ProjectFactory.getClassFromFactory();
-  	   	
-  	   	if(user != null) {
-  	   		UserDAO userDAO = UserFactory.getClassFromFactory();
-  	   		List<User> users = userDAO.getUsers();
-  	   		request.setAttribute("users", users);
-  	   		IssuePropertyDAO propertyDAO = IssuePropertyFactory.getClassFromFactory();
-  	   		Map <String, List <PropertyParameter>> map = propertyDAO.getPropertiesMap();
-  	   		request.setAttribute("propertiesMap", map);
-  	   		List<Project> projects = projectDAO.getProjects();
-  	   		request.setAttribute("projects", projects);
-  	   		RequestDispatcher rd = getServletContext().getRequestDispatcher("/IssueUpdateView");
-  	   		rd.forward(request, response);
-  	   	} else {
-  	   		RequestDispatcher rd = getServletContext().getRequestDispatcher("/IssueReviewView");
-	   		rd.forward(request, response);
-  	   	}
+  	   	request.setAttribute(Constants.ISSUE, issue);
+    	
+    	if("review".equals(action)) {
+    		jumpPage("/IssueReviewView", request, response);
+    	} else {
+    		ProjectDAO projectDAO = ProjectFactory.getClassFromFactory();
+      	   	UserDAO userDAO = UserFactory.getClassFromFactory();
+      	    IssuePropertyDAO propertyDAO = IssuePropertyFactory.getClassFromFactory();
+       		List<User> users = userDAO.getUsers();
+       		request.setAttribute(Constants.USERS, users);
+       		List<Project> projects = projectDAO.getProjects();
+       		request.setAttribute(Constants.PROJECTS, projects);
+       		List<PropertyParameter> statuses = 
+        			propertyDAO.getPropertyParameters(Constants.STATUSES_SOURCE_NAME);
+        	List<PropertyParameter> priorities = 
+        			propertyDAO.getPropertyParameters(Constants.PRIORITIES_SOURCE_NAME);
+        	List<PropertyParameter> types = 
+        			propertyDAO.getPropertyParameters(Constants.TYPES_SOURCE_NAME);
+        	List<PropertyParameter> resolutions = 
+        			propertyDAO.getPropertyParameters(Constants.RESOLUTIONS_SOURCE_NAME);
+        	request.setAttribute(Constants.PRIORITIES, priorities);
+        	request.setAttribute(Constants.STATUSES, statuses);
+        	request.setAttribute(Constants.TYPES, types);
+        	request.setAttribute(Constants.RESOLUTIONS, resolutions);
+       		jumpPage("/IssueUpdateView", request, response);
+    	}
+    	
     }
     
  }

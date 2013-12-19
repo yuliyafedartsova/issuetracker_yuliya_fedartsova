@@ -3,25 +3,23 @@ package org.training.issuetracker.view;
 import java.io.IOException;
 import java.io.PrintWriter;
 import java.util.List;
-import java.util.Map;
-
+import javax.servlet.RequestDispatcher;
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
-
-import org.training.issuetracker.enums.Properties;
-import org.training.issuetracker.ifaces.IssueDAO;
+import org.training.issuetracker.constants.Constants;
+import org.training.issuetracker.ifaces.AbstractController;
 import org.training.issuetracker.model.beans.Issue;
 import org.training.issuetracker.model.beans.Project;
 import org.training.issuetracker.model.beans.PropertyParameter;
 import org.training.issuetracker.model.beans.User;
-import org.training.issuetracker.model.factories.IssueFactory;
+
 
 /**
  * Servlet implementation class IssueUpdateView
  */
-public class IssueUpdateView extends HttpServlet {
+public class IssueUpdateView extends AbstractController {
 	private static final long serialVersionUID = 1L;
        
     /**
@@ -32,15 +30,27 @@ public class IssueUpdateView extends HttpServlet {
         // TODO Auto-generated constructor stub
     }
 
-    protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
- 	   Issue issue = (Issue) request.getAttribute("issue");
- 	   List<User> users = (List<User>)request.getAttribute("users");
- 	   Map <String, List <PropertyParameter>> map = 
- 			   (Map <String, List <PropertyParameter>>)request.getAttribute("propertiesMap");
- 	   List<Project> projects = (List<Project>)request.getAttribute("projects");
+    protected void performTask(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+ 	   Issue issue = (Issue) request.getAttribute(Constants.ISSUE);
+ 	   List<User> users = (List<User>)request.getAttribute(Constants.USERS);
+ 	   List<Project> projects = (List<Project>)request.getAttribute(Constants.PROJECTS);
+ 	   List<PropertyParameter> statuses = 
+				(List<PropertyParameter>)request.getAttribute(Constants.STATUSES);
+ 	   List<PropertyParameter> priorities = 
+				(List<PropertyParameter>)request.getAttribute(Constants.PRIORITIES);
+ 	   List<PropertyParameter> types = 
+				(List<PropertyParameter>)request.getAttribute(Constants.TYPES);
+ 	   List<PropertyParameter> resolutions = 
+				(List<PropertyParameter>)request.getAttribute(Constants.RESOLUTIONS);
+ 	   
+ 	   
+ 	   
  	   
  	   PrintWriter out = response.getWriter();
- 	   out.println("<html>");
+ 	   request.setAttribute(Constants.WRITER, out);
+		RequestDispatcher rd = getServletContext().getRequestDispatcher("/HeaderView");
+		rd.include(request, response);
+		out.println("<html>");
  		out.println("<head>");
  		out.println("<title>Sample Servlet interface implementation</title>");
  		out.println("</head>");
@@ -66,22 +76,34 @@ public class IssueUpdateView extends HttpServlet {
  		out.println("<br>");
  		out.println("Status");
  		out.println("<select name='status' size='1'>");
- 		printPropertiesOptions(out, Properties.STATUSES.toString().toLowerCase(), map);
+ 		for(PropertyParameter par : statuses) {
+ 			out.println("<option value='" + par.getId() + "'>" + par.getName() + 
+ 					"</option>");
+ 		}
  		out.println("</select>");
  		out.println("<br>");
  		out.println("Resolution");
  		out.println("<select name='resolution' size='1'>");
- 		printPropertiesOptions(out, Properties.RESOLUTIONS.toString().toLowerCase(), map);
+ 		for(PropertyParameter par : resolutions) {
+ 			out.println("<option value='" + par.getId() + "'>" + par.getName() + 
+ 					"</option>");
+ 		}
  		out.println("</select>");
  		out.println("<br>");
  		out.println("Type");
  		out.println("<select name='type' size='1'>");
- 		printPropertiesOptions(out, Properties.TYPES.toString().toLowerCase(), map);
+ 		for(PropertyParameter par : types) {
+ 			out.println("<option value='" + par.getId() + "'>" + par.getName() + 
+ 					"</option>");
+ 		}
  		out.println("</select>");
  		out.println("<br>");
  		out.println("Priority");
  		out.println("<select name='priority' size='1'>");
- 		printPropertiesOptions(out, Properties.PRIORITIES.toString().toLowerCase(), map);
+ 		for(PropertyParameter par : priorities) {
+ 			out.println("<option value='" + par.getId() + "'>" + par.getName() + 
+ 					"</option>");
+ 		}
  		out.println("</select>");
  		out.println("<br>");
  		out.println("Project");
@@ -112,20 +134,4 @@ public class IssueUpdateView extends HttpServlet {
  		out.println("</html>");
  		out.close();
  	}
-
- 	
-    protected void printPropertiesOptions(PrintWriter out, String propertyName, 
-    		Map <String, List <PropertyParameter>> map) {
-    	List <PropertyParameter> parametres = 
- 				map.get(propertyName);
- 		for(PropertyParameter par : parametres) {
- 			out.println("<option value='" + par.getId() + "'>" + par.getName() + 
- 					"</option>");
- 		}
-    }
-    
-    
-    protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
- 	}
-
 }

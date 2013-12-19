@@ -9,6 +9,7 @@ import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
+import org.training.issuetracker.constants.Constants;
 import org.training.issuetracker.ifaces.AbstractController;
 import org.training.issuetracker.ifaces.ProjectDAO;
 import org.training.issuetracker.ifaces.UserDAO;
@@ -30,21 +31,45 @@ public class ProjectController extends AbstractController {
     
     protected void performTask(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
     	ProjectDAO projectDAO = ProjectFactory.getClassFromFactory();
-    	String projectId = request.getParameter("id");
-    	if(projectId != null) {
+    	String action = request.getParameter("action");
+    	UserDAO userDAO = UserFactory.getClassFromFactory();
+		List<User> users = userDAO.getUsers();
+    	
+    	
+    	switch(action) {
+    	case "show":
+    		List<Project> projects = projectDAO.getProjects();
+    		cutDescriptionsOff(projects);
+    		request.setAttribute(Constants.PROJECTS, projects);
+    		jumpPage("/ProjectsView", request, response);
+    	    break;
+    	case "update":
+    		String projectId = request.getParameter(Constants.ID);
     		int id = Integer.parseInt(projectId);
     		Project project = projectDAO.getProjectById(id);
-    		request.setAttribute("project", project);
-    		UserDAO userDAO = UserFactory.getClassFromFactory();
-    		List<User> users = userDAO.getUsers();
-    		request.setAttribute("users", users);
-    		RequestDispatcher rd = getServletContext().getRequestDispatcher("/ProjectUpdateView");
-      	   	rd.forward(request, response);
-    	} else {
-    		List<Project> projects = projectDAO.getProjects();
-    	   	request.setAttribute("projects", projects);
-    	   	RequestDispatcher rd = getServletContext().getRequestDispatcher("/ProjectsView");
-      	   	rd.forward(request, response);
+    		request.setAttribute(Constants.PROJECT, project);
+    		request.setAttribute(Constants.USERS, users);
+    		jumpPage("/ProjectUpdateView", request, response);
+    		break;
+    	case "add":
+    		request.setAttribute(Constants.USERS, users);
+    		jumpPage("/AddProjectView", request, response);
+    		break;
+    	}
+    	
+    	
+    	
+    }
+    
+    protected void cutDescriptionsOff(List<Project> projects) {
+    	for(Project project : projects) {
+    		if(project.getDescription().length() > Constants.DESCRIPTION_LENTH_LIMIT){
+    			String description = 
+    					project.getDescription().substring(Constants.NULL, 
+    							Constants.DESCRIPTION_LENTH_LIMIT);
+    			description += Constants.THREE_DOTS;
+    			project.setDescription(description);
+    		}
     	}
     }
 

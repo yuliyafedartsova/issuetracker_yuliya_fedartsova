@@ -1,7 +1,5 @@
 package org.training.issuetracker.model.beans;
 
-import org.training.issuetracker.enums.Role;
-
 
 
 public class User {
@@ -9,10 +7,10 @@ public class User {
 	private String firstName; 
 	private String lastName;
 	private String email;
-	private Role role;
+	private String role;
 	private String password;
 	
-	public User(int id, String firstName, String lastName, String email, Role role,
+	public User(int id, String firstName, String lastName, String email, String role,
 			String password) {
 		super();
 		this.id = id;
@@ -55,11 +53,11 @@ public class User {
 		this.email = email;
 	}
 
-	public Role getRole() {
+	public String getRole() {
 		return role;
 	}
 
-	public void setRole(Role role) {
+	public void setRole(String role) {
 		this.role = role;
 	}
 

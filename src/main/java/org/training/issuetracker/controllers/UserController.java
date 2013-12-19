@@ -3,7 +3,6 @@ package org.training.issuetracker.controllers;
 import java.io.IOException;
 import java.util.List;
 
-import javax.servlet.RequestDispatcher;
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
@@ -16,21 +15,27 @@ import org.training.issuetracker.model.beans.PropertyParameter;
 import org.training.issuetracker.model.factories.IssuePropertyFactory;
 
 
-public class PropertyController extends AbstractController {
+public class UserController extends AbstractController {
 	private static final long serialVersionUID = 1L;
        
     
-    public PropertyController() {
+    public UserController() {
         super();
         
     }
-
+    
     protected void performTask(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-    	String property = request.getParameter(Constants.PROPERTY);
-    	List<PropertyParameter> parametres;
-    	IssuePropertyDAO issuePropertyDAO = IssuePropertyFactory.getClassFromFactory();
-    	parametres = issuePropertyDAO.getPropertyParameters(property);
-    	request.setAttribute(Constants.PARAMETRES, parametres);
-    	jumpPage("/ParametersView", request, response);
-    }
+    	String action = request.getParameter(Constants.ACTION);
+    	IssuePropertyDAO propertyDAO = IssuePropertyFactory.getClassFromFactory();
+    	List<PropertyParameter> roles = propertyDAO.getPropertyParameters(Constants.ROLES_SOURCE_NAME);
+    	request.setAttribute(Constants.ROLES, roles);
+    	if(Constants.ADD.equals(action)) {
+    		jumpPage("/AddUserView", request, response);
+    	} else {
+    		jumpPage("/UserDataUpdateView", request, response);
+    	}
+    	
+    	
+    	
+	}
 }

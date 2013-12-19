@@ -5,6 +5,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 import org.training.issuetracker.constants.Constants;
+import org.training.issuetracker.exceptions.ValidationException;
 import org.training.issuetracker.ifaces.UserDAO;
 import org.training.issuetracker.model.beans.User;
 import org.training.issuetracker.model.handlers.UsersHandler;
@@ -28,7 +29,7 @@ public class XMLUserImpl implements UserDAO {
 		return users;
 	}
 	
-	public User getUser(String email, String password) {
+	public User getUser(String email, String password) throws ValidationException {
 		List<User> users = getUsers();
 		User user = null;
 		for(User u : users) {
@@ -36,6 +37,7 @@ public class XMLUserImpl implements UserDAO {
 				user = u;
 			}
 		}
+		if(user == null) throw new ValidationException(Constants.WRONG_LOGIN);
 		return user;
 	}
 	

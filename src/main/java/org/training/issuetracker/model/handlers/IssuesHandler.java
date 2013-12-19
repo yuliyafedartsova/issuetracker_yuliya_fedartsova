@@ -2,10 +2,8 @@ package org.training.issuetracker.model.handlers;
 
 
 import java.sql.Date;
-import java.util.List;
 import java.util.Set;
-
-import org.training.issuetracker.enums.Properties;
+import org.training.issuetracker.constants.Constants;
 import org.training.issuetracker.ifaces.IssuePropertyDAO;
 import org.training.issuetracker.ifaces.ProjectDAO;
 import org.training.issuetracker.ifaces.UserDAO;
@@ -69,7 +67,7 @@ public class IssuesHandler extends DefaultHandler {
 			if(!s.isEmpty()){
 				int id = Integer.parseInt(s);
 				currentPriority = 
-					propertyDAO.getPropertyParameterById(Properties.PRIORITIES.toString().toLowerCase(), id);
+					propertyDAO.getPropertyParameterById(Constants.PRIORITIES_SOURCE_NAME, id);
 					
 			}
 		}
@@ -84,7 +82,7 @@ public class IssuesHandler extends DefaultHandler {
 			String s = new String(ch, start, length).trim();
 			if(!s.isEmpty()){
 				int id = Integer.parseInt(s);
-				currentType = propertyDAO.getPropertyParameterById(Properties.TYPES.toString().toLowerCase(), id);
+				currentType = propertyDAO.getPropertyParameterById(Constants.TYPES_SOURCE_NAME, id);
 			}
 		}
 		if(currentEnum == IssuesXMLEnum.SUMMARY) {
@@ -104,7 +102,7 @@ public class IssuesHandler extends DefaultHandler {
 			String s = new String(ch, start, length).trim();
 			if(!s.isEmpty()){
 				int id = Integer.parseInt(s);
-				currentStatus = propertyDAO.getPropertyParameterById(Properties.STATUSES.toString().toLowerCase(), id);
+				currentStatus = propertyDAO.getPropertyParameterById(Constants.STATUSES_SOURCE_NAME, id);
 			}
 		}
 		if(currentEnum == IssuesXMLEnum.PROJECT) {
@@ -195,9 +193,8 @@ public class IssuesHandler extends DefaultHandler {
 				}
 				if(currentResolution != null && !currentResolution.isEmpty()) {
 					int id = Integer.parseInt(currentResolution);
-					String name = Properties.RESOLUTIONS.toString().toLowerCase();
 					PropertyParameter resolution = 
-							propertyDAO.getPropertyParameterById(name, id);
+							propertyDAO.getPropertyParameterById(Constants.RESOLUTIONS_SOURCE_NAME, id);
 					issue.setResolution(resolution.getName());
 					currentResolution = "";
 				}

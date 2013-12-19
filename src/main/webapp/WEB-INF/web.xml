@@ -115,16 +115,6 @@
   </servlet-mapping>
   <servlet>
     <description></description>
-    <display-name>IssueReviewController</display-name>
-    <servlet-name>IssueReviewController</servlet-name>
-    <servlet-class>org.training.issuetracker.controllers.IssueReviewController</servlet-class>
-  </servlet>
-  <servlet-mapping>
-    <servlet-name>IssueReviewController</servlet-name>
-    <url-pattern>/IssueReviewController</url-pattern>
-  </servlet-mapping>
-  <servlet>
-    <description></description>
     <display-name>IssueController</display-name>
     <servlet-name>IssueController</servlet-name>
     <servlet-class>org.training.issuetracker.controllers.IssueController</servlet-class>
@@ -167,7 +157,7 @@
     <description></description>
     <display-name>ParameterUpdateView</display-name>
     <servlet-name>ParameterUpdateView</servlet-name>
-    <servlet-class>org.training.issuetracker.model.impl.ParameterUpdateView</servlet-class>
+    <servlet-class>org.training.issuetracker.view.ParameterUpdateView</servlet-class>
   </servlet>
   <servlet-mapping>
     <servlet-name>ParameterUpdateView</servlet-name>
@@ -225,16 +215,6 @@
   </servlet-mapping>
   <servlet>
     <description></description>
-    <display-name>AddIssueController</display-name>
-    <servlet-name>AddIssueController</servlet-name>
-    <servlet-class>org.training.issuetracker.controllers.AddIssueController</servlet-class>
-  </servlet>
-  <servlet-mapping>
-    <servlet-name>AddIssueController</servlet-name>
-    <url-pattern>/AddIssueController</url-pattern>
-  </servlet-mapping>
-  <servlet>
-    <description></description>
     <display-name>ProjectController</display-name>
     <servlet-name>ProjectController</servlet-name>
     <servlet-class>org.training.issuetracker.controllers.ProjectController</servlet-class>
@@ -262,5 +242,55 @@
   <servlet-mapping>
     <servlet-name>ProjectUpdateView</servlet-name>
     <url-pattern>/ProjectUpdateView</url-pattern>
+  </servlet-mapping>
+  <servlet>
+    <description></description>
+    <display-name>LoginFormView</display-name>
+    <servlet-name>LoginFormView</servlet-name>
+    <servlet-class>org.training.issuetracker.view.LoginFormView</servlet-class>
+  </servlet>
+  <servlet-mapping>
+    <servlet-name>LoginFormView</servlet-name>
+    <url-pattern>/LoginFormView</url-pattern>
+  </servlet-mapping>
+  <servlet>
+    <description></description>
+    <display-name>AddProjectView</display-name>
+    <servlet-name>AddProjectView</servlet-name>
+    <servlet-class>org.training.issuetracker.view.AddProjectView</servlet-class>
+  </servlet>
+  <servlet-mapping>
+    <servlet-name>AddProjectView</servlet-name>
+    <url-pattern>/AddProjectView</url-pattern>
+  </servlet-mapping>
+  <servlet>
+    <description></description>
+    <display-name>IssueReviewController</display-name>
+    <servlet-name>IssueReviewController</servlet-name>
+    <servlet-class>org.training.issuetracker.controllers.IssueReviewController</servlet-class>
+  </servlet>
+  <servlet-mapping>
+    <servlet-name>IssueReviewController</servlet-name>
+    <url-pattern>/IssueReviewController</url-pattern>
+  </servlet-mapping>
+  <servlet>
+    <description></description>
+    <display-name>AddIssueController</display-name>
+    <servlet-name>AddIssueController</servlet-name>
+    <servlet-class>org.training.issuetracker.controllers.AddIssueController</servlet-class>
+  </servlet>
+  <servlet-mapping>
+    <servlet-name>AddIssueController</servlet-name>
+    <url-pattern>/AddIssueController</url-pattern>
+  </servlet-mapping>
+  <servlet>
+    <description></description>
+    <display-name>UserController</display-name>
+    <servlet-name>UserController</servlet-name>
+    <servlet-class>org.training.issuetracker.controllers.UserController</servlet-class>
+  </servlet>
+  <servlet-mapping>
+    <servlet-name>UserController</servlet-name>
+    <url-pattern>/UserController</url-pattern>
   </servlet-mapping>
 </web-app>

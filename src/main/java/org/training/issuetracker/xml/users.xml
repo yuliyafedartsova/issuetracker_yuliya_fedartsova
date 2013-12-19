@@ -5,7 +5,7 @@
 		<firstName> Tom </firstName>
 		<lastName> Travis </lastName>
 		<email> tom@mail.ru </email>
-		<role> USER </role>
+		<role> 1 </role>
 		<password> 11223 </password>
 	</user>
 	<user>
@@ -13,7 +13,7 @@
 		<firstName> Ann </firstName>
 		<lastName> Rand </lastName>
 		<email> ann@mail.ru </email>
-		<role> ADMINISTRATOR </role>
+		<role> 2 </role>
 		<password> 11111 </password>
 	</user>
 	<user>
@@ -21,7 +21,7 @@
 		<firstName> Sid </firstName>
 		<lastName> Wishes </lastName>
 		<email> sid@mail.ru </email>
-		<role> ADMINISTRATOR </role>
+		<role> 2 </role>
 		<password> 22222 </password>
 	</user>
 	<user>
@@ -29,7 +29,7 @@
 		<firstName> Bob </firstName>
 		<lastName> Dylon </lastName>
 		<email> bob@mail.ru </email>
-		<role> USER </role>
+		<role> 1 </role>
 		<password> 3456 </password>
 	</user>
 </users>

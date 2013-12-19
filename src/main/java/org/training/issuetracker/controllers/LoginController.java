@@ -10,6 +10,8 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 
+import org.training.issuetracker.constants.Constants;
+import org.training.issuetracker.exceptions.ValidationException;
 import org.training.issuetracker.ifaces.AbstractController;
 import org.training.issuetracker.ifaces.UserDAO;
 import org.training.issuetracker.model.beans.Issue;
@@ -26,24 +28,18 @@ public class LoginController extends AbstractController {
     }
     
     protected void performTask(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-    	List<User> users;
     	UserDAO userDAO = UserFactory.getClassFromFactory();
-    	users = userDAO.getUsers();
-    	String email = request.getParameter("email");
-		String password = request.getParameter("password");
+    	String email = request.getParameter(Constants.EMAIL);
+		String password = request.getParameter(Constants.PASSWORD);
 		User user = null;
-		
-		for(User us : users) {
-			if(us.getEmail().equals(email) && us.getPassword().equals(password)) {
-				user = us;
-			}
-		}
-		
-		if(user != null) {
-			HttpSession session = request.getSession();
-			session.setAttribute("user", user);
+		try {
+		user = userDAO.getUser(email, password);
+		}catch (ValidationException e) {
+			jumpError("/MainController", e.getMessage(), request, response);
+			return;
 		} 
-		RequestDispatcher rd = getServletContext().getRequestDispatcher("/MainController");
-		rd.forward(request, response);
+		HttpSession session = request.getSession();
+		session.setAttribute(Constants.USER, user);
+		jumpPage("/MainController", request, response);
 	}
 }

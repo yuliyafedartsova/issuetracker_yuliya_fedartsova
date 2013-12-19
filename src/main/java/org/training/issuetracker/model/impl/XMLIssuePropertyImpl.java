@@ -2,15 +2,10 @@ package org.training.issuetracker.model.impl;
 
 import java.io.IOException;
 import java.util.ArrayList;
-import java.util.HashMap;
 import java.util.List;
-import java.util.Map;
-
 import org.training.issuetracker.constants.Constants;
-import org.training.issuetracker.enums.Properties;
 import org.training.issuetracker.ifaces.IssuePropertyDAO;
 import org.training.issuetracker.model.beans.PropertyParameter;
-import org.training.issuetracker.model.factories.IssuePropertyFactory;
 import org.training.issuetracker.model.handlers.ParametrsHandler;
 import org.xml.sax.SAXException;
 import org.xml.sax.XMLReader;
@@ -43,15 +38,16 @@ public class XMLIssuePropertyImpl implements IssuePropertyDAO {
 		 return parameter;
 	 }
 	 
-	 public Map <String, List <PropertyParameter>> getPropertiesMap() {
-		 Map <String, List <PropertyParameter>> map = new HashMap <String, List <PropertyParameter>>();
-		 for(int i = 0; i < Properties.values().length; i++) {
-	  	    	String propertyname = Properties.values()[i].toString().toLowerCase();
-	  	        List<PropertyParameter> parametres = getPropertyParameters(propertyname); 
-	  	        map.put(propertyname, parametres);
-	  	 }
-		 return map;
-	 }
+	// public Map <String, List <PropertyParameter>> getPropertiesMap() {
+	//	 Map <String, List <PropertyParameter>> map = new HashMap <String, List <PropertyParameter>>();
+	//	 for(int i = 0; i < Properties.values().length; i++) {
+	//  	    	String propertyname = Properties.values()[i].toString().toLowerCase();
+	//  	        List<PropertyParameter> parametres = getPropertyParameters(propertyname); 
+	//  	        map.put(propertyname, parametres);
+	//  	 }
+		 
+	//	 return map;
+	// }
 	 
 	 public void updateProperty(int id, String propertyName, String newValue) {
 		 

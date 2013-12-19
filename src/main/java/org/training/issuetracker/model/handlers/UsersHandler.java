@@ -1,7 +1,10 @@
 package org.training.issuetracker.model.handlers;
 import java.util.List;
+import org.training.issuetracker.ifaces.IssuePropertyDAO;
+import org.training.issuetracker.model.beans.PropertyParameter;
 import org.training.issuetracker.model.beans.User;
-import org.training.issuetracker.enums.Role;
+import org.training.issuetracker.model.factories.IssuePropertyFactory;
+import org.training.issuetracker.constants.Constants;
 import org.xml.sax.Attributes;
 import org.xml.sax.helpers.DefaultHandler;
 
@@ -24,7 +27,7 @@ public class UsersHandler extends DefaultHandler {
 	private String currentEmail;
 	private String currentRole;
 	private String currentPassword;
-	
+	IssuePropertyDAO propertyDAO = IssuePropertyFactory.getClassFromFactory();
 	
 	
 	public void startElement(String uri, String localName, String qName, Attributes attrs) {
@@ -75,9 +78,12 @@ public class UsersHandler extends DefaultHandler {
 	public void endElement(String uri, 
 			String localName, String qName) { 
 			currentEnum = UsersXMLEnum.valueOf(qName.toUpperCase()); //!!!
+			
+			
 			if(currentEnum == UsersXMLEnum.USER) {
+				PropertyParameter role = propertyDAO.getPropertyParameterById(Constants.ROLES_SOURCE_NAME, Integer.parseInt(currentRole));
 				users.add(new User(Integer.parseInt(currentId), currentFirstName, currentLastName,currentEmail,
-					Role.valueOf(currentRole), currentPassword));
+						role.getName(), currentPassword));
 			}
 	} 
 
