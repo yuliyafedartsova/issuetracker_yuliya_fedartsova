@@ -4,15 +4,15 @@ package org.training.issuetracker.model.handlers;
 import java.sql.Date;
 import java.util.Set;
 import org.training.issuetracker.constants.Constants;
-import org.training.issuetracker.ifaces.IssuePropertyDAO;
 import org.training.issuetracker.ifaces.ProjectDAO;
+import org.training.issuetracker.ifaces.PropertyDAO;
 import org.training.issuetracker.ifaces.UserDAO;
 import org.training.issuetracker.model.beans.Issue;
 import org.training.issuetracker.model.beans.Project;
 import org.training.issuetracker.model.beans.PropertyParameter;
 import org.training.issuetracker.model.beans.User;
-import org.training.issuetracker.model.factories.IssuePropertyFactory;
 import org.training.issuetracker.model.factories.ProjectFactory;
+import org.training.issuetracker.model.factories.PropertyFactory;
 import org.training.issuetracker.model.factories.UserFactory;
 import org.xml.sax.Attributes;
 import org.xml.sax.helpers.DefaultHandler;
@@ -25,29 +25,27 @@ public class IssuesHandler extends DefaultHandler {
 	
 	private static enum IssuesXMLEnum {
 		ISSUES, ISSUE, ID, PRIORITY, ASSIGNEE, TYPE, SUMMARY, DESCRIPTION,   
-		STATUS, PROJECT, RESOLUTION, FOUND, CREATEDATE, CREATEDBY, MODIFYDATE, MODIFIEDBY;
+		STATUS, PROJECT, RESOLUTION, FOUND, CREATEDATE, AUTHOR, MODIFYDATE, MODIFIER;
 	}
 	
 	private Set<Issue> issues;
 	private IssuesXMLEnum currentEnum = null;
-	private String currentId;
+	private int currentId;
 	private PropertyParameter currentPriority;
 	private PropertyParameter currentType;
-	private String currentResolution;
+	private PropertyParameter currentResolution;
+	private PropertyParameter currentStatus;
+	private PropertyParameter currentVersion;
 	private String currentSummary;
 	private String currentDescription;
-	private PropertyParameter currentStatus;
-	private String currentProject;
-	private String currentFound;
-	
-	
-	private String currentAssignee;
-	private String currentCreateDate;
-	private String currentCreatedBy;
-	private String currentModifyDate;
-	private String currentModifiedBy;
+	private Project currentProject;
+	private User currentAssignee;
+	private Date currentCreateDate;
+	private User currentAuthor;
+	private Date currentModifyDate;
+	private User currentModifier;
 	UserDAO usersDAO = UserFactory.getClassFromFactory();
-	IssuePropertyDAO propertyDAO = IssuePropertyFactory.getClassFromFactory();
+	PropertyDAO propertyDAO = PropertyFactory.getClassFromFactory();
 	ProjectDAO projectDAO = ProjectFactory.getClassFromFactory();
 	
 	
@@ -59,7 +57,7 @@ public class IssuesHandler extends DefaultHandler {
 		if(currentEnum == IssuesXMLEnum.ID) {
 			String s = new String(ch, start, length).trim();
 			if(!s.isEmpty()){
-				currentId = s;
+				currentId = Integer.parseInt(s);
 			}
 		}
 		if(currentEnum == IssuesXMLEnum.PRIORITY) {
@@ -67,14 +65,15 @@ public class IssuesHandler extends DefaultHandler {
 			if(!s.isEmpty()){
 				int id = Integer.parseInt(s);
 				currentPriority = 
-					propertyDAO.getPropertyParameterById(Constants.PRIORITIES_SOURCE_NAME, id);
+					propertyDAO.getPriorityById(id);
 					
 			}
 		}
 		if(currentEnum == IssuesXMLEnum.ASSIGNEE) {
 			String s = new String(ch, start, length).trim();
 			if(!s.isEmpty()){
-				currentAssignee = s;
+				int id = Integer.parseInt(s);
+				currentAssignee = usersDAO.getUserById(id);
 			}
 		}
 		
@@ -82,7 +81,7 @@ public class IssuesHandler extends DefaultHandler {
 			String s = new String(ch, start, length).trim();
 			if(!s.isEmpty()){
 				int id = Integer.parseInt(s);
-				currentType = propertyDAO.getPropertyParameterById(Constants.TYPES_SOURCE_NAME, id);
+				currentType = propertyDAO.getTypeById(id);
 			}
 		}
 		if(currentEnum == IssuesXMLEnum.SUMMARY) {
@@ -102,20 +101,22 @@ public class IssuesHandler extends DefaultHandler {
 			String s = new String(ch, start, length).trim();
 			if(!s.isEmpty()){
 				int id = Integer.parseInt(s);
-				currentStatus = propertyDAO.getPropertyParameterById(Constants.STATUSES_SOURCE_NAME, id);
+				currentStatus = propertyDAO.getStatusById(id);
 			}
 		}
 		if(currentEnum == IssuesXMLEnum.PROJECT) {
 			String s = new String(ch, start, length).trim();
 			if(!s.isEmpty()){
-				currentProject = s;
+				int id = Integer.parseInt(s);
+				currentProject = projectDAO.getProjectById(id);
 			}
 		}
 		
-		if(currentEnum == IssuesXMLEnum.RESOLUTION) {///////////////////
+		if(currentEnum == IssuesXMLEnum.RESOLUTION) {
 			String s = new String(ch, start, length).trim();
 			if(!s.isEmpty()){
-				currentResolution = s;
+				int id = Integer.parseInt(s);
+				currentResolution = propertyDAO.getResolutionById(id);
 			} 
 		}
 		
@@ -123,43 +124,39 @@ public class IssuesHandler extends DefaultHandler {
 		if(currentEnum == IssuesXMLEnum.FOUND) {
 			String s = new String(ch, start, length).trim();
 			if(!s.isEmpty()){
-				currentFound = s;
+				int id = Integer.parseInt(s);
+				currentVersion = projectDAO.getVersionById(id);
 			}
 		}
 		
-		
-		if(currentEnum == IssuesXMLEnum.ASSIGNEE) {
-			String s = new String(ch, start, length).trim();
-			if(!s.isEmpty()){
-				currentAssignee = s;
-			} 
-		}
 		
 		if(currentEnum == IssuesXMLEnum.CREATEDATE) {
 			String s = new String(ch, start, length).trim();
 			if(!s.isEmpty()){
-				currentCreateDate = s;
+				currentCreateDate = Date.valueOf(s);
 			}
 		}
 		
-		if(currentEnum == IssuesXMLEnum.CREATEDBY) {
+		if(currentEnum == IssuesXMLEnum.AUTHOR) {
 			String s = new String(ch, start, length).trim();
 			if(!s.isEmpty()){
-				currentCreatedBy = s;
+				int id = Integer.parseInt(s);
+				currentAuthor = usersDAO.getUserById(id);
 			}
 		}
 		
 		if(currentEnum == IssuesXMLEnum.MODIFYDATE) {
 			String s = new String(ch, start, length).trim();
 			if(!s.isEmpty()){
-				currentModifyDate = s;
+				currentModifyDate = Date.valueOf(s);
 			} 
 		}
 		
-		if(currentEnum == IssuesXMLEnum.MODIFIEDBY) {
+		if(currentEnum == IssuesXMLEnum.MODIFIER) {
 			String s = new String(ch, start, length).trim();
 			if(!s.isEmpty()){
-				currentModifiedBy = s;
+				int id = Integer.parseInt(s);
+				currentModifier = usersDAO.getUserById(id);
 			} 
 		}
 		
@@ -167,38 +164,27 @@ public class IssuesHandler extends DefaultHandler {
 	
 	public void endElement(String uri, 
 			String localName, String qName) { 
-			currentEnum = IssuesXMLEnum.valueOf(qName.toUpperCase()); //!!!
+			currentEnum = IssuesXMLEnum.valueOf(qName.toUpperCase()); 
 			if(currentEnum == IssuesXMLEnum.ISSUE) {
-				Date createDate = Date.valueOf(currentCreateDate);
-				User createdBy = usersDAO.getUserById(Integer.parseInt(currentCreatedBy));
-				Project project = projectDAO.getProjectById(Integer.parseInt(currentProject));
-				PropertyParameter buildFound = projectDAO.getVersionById(Integer.parseInt(currentFound));
-				Issue issue = new Issue(Integer.parseInt(currentId), currentPriority.getName(),
+				Issue issue = new Issue(currentId, currentPriority.getName(),
 						currentType.getName(), currentSummary, currentDescription, currentStatus.getName(),
-							project, buildFound.getName(), createDate, createdBy);
-				if(currentAssignee != null  && !currentAssignee.isEmpty()) {
-					 User assignee = usersDAO.getUserById(Integer.parseInt(currentAssignee));
-					 issue.setAssignee(assignee);
-					 currentAssignee = "";
+							currentProject, currentVersion.getName(), currentCreateDate, currentAuthor);
+				if(currentAssignee != null) {
+					 issue.setAssignee(currentAssignee);
+					 currentAssignee = null;
 				}
-				if(currentModifyDate != null &&  !currentModifyDate.isEmpty()) {
-					 Date modifyDate = Date.valueOf(currentModifyDate);
-					 issue.setModifyDate(modifyDate);
-					 currentModifyDate = "";
+				if(currentModifyDate != null) {
+					 issue.setModifyDate(currentModifyDate);
+					 currentModifyDate = null;
 				}
-				if(currentModifiedBy != null &&  !currentModifiedBy.isEmpty()) {
-					 User modifiedBy = usersDAO.getUserById(Integer.parseInt(currentModifiedBy));
-					 issue.setModifiedBy(modifiedBy);
-					 currentModifiedBy = "";
+				if(currentModifier != null) {
+					 issue.setModifier(currentModifier);
+					 currentModifier = null;
 				}
-				if(currentResolution != null && !currentResolution.isEmpty()) {
-					int id = Integer.parseInt(currentResolution);
-					PropertyParameter resolution = 
-							propertyDAO.getPropertyParameterById(Constants.RESOLUTIONS_SOURCE_NAME, id);
-					issue.setResolution(resolution.getName());
-					currentResolution = "";
+				if(currentResolution != null) {
+					issue.setResolution(currentResolution.getName());
+					currentResolution = null;
 				}
-				
 				
 				issues.add(issue);
 			}

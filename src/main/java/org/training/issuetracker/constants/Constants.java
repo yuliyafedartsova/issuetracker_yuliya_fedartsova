@@ -38,5 +38,7 @@ public class Constants {
     public static final String TYPES = "types";
     public static final String ADMINISTRATOR = "administrator";
     public static final String GUEST = "guest";
-
+    public static final String REVIEW = "review";
+    public static final String VERSION = "version";
+    
 }

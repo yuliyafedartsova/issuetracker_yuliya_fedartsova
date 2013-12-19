@@ -1,9 +1,10 @@
 package org.training.issuetracker.model.handlers;
 import java.util.List;
-import org.training.issuetracker.ifaces.IssuePropertyDAO;
+
+import org.training.issuetracker.ifaces.PropertyDAO;
 import org.training.issuetracker.model.beans.PropertyParameter;
 import org.training.issuetracker.model.beans.User;
-import org.training.issuetracker.model.factories.IssuePropertyFactory;
+import org.training.issuetracker.model.factories.PropertyFactory;
 import org.training.issuetracker.constants.Constants;
 import org.xml.sax.Attributes;
 import org.xml.sax.helpers.DefaultHandler;
@@ -21,13 +22,13 @@ public class UsersHandler extends DefaultHandler {
 	
 	private List<User> users;
 	private UsersXMLEnum currentEnum = null;
-	private String currentId;
+	private int currentId;
 	private String currentFirstName;
 	private String currentLastName;
 	private String currentEmail;
-	private String currentRole;
+	private PropertyParameter currentRole;
 	private String currentPassword;
-	IssuePropertyDAO propertyDAO = IssuePropertyFactory.getClassFromFactory();
+	PropertyDAO propertyDAO = PropertyFactory.getClassFromFactory();
 	
 	
 	public void startElement(String uri, String localName, String qName, Attributes attrs) {
@@ -38,7 +39,7 @@ public class UsersHandler extends DefaultHandler {
 		if(currentEnum == UsersXMLEnum.ID) {
 			String s = new String(ch, start, length).trim();
 			if(!s.isEmpty()){
-				currentId = s;
+				currentId = Integer.parseInt(s);
 			}
 		}
 		
@@ -64,7 +65,8 @@ public class UsersHandler extends DefaultHandler {
 		if(currentEnum == UsersXMLEnum.ROLE) {
 			String s = new String(ch, start, length).trim();
 			if(!s.isEmpty()){
-				currentRole = s;
+				int id = Integer.parseInt(s);
+				currentRole = propertyDAO.getRoleById(id);
 			}
 		}
 		if(currentEnum == UsersXMLEnum.PASSWORD) {
@@ -77,18 +79,12 @@ public class UsersHandler extends DefaultHandler {
 	
 	public void endElement(String uri, 
 			String localName, String qName) { 
-			currentEnum = UsersXMLEnum.valueOf(qName.toUpperCase()); //!!!
-			
-			
+			currentEnum = UsersXMLEnum.valueOf(qName.toUpperCase()); 
 			if(currentEnum == UsersXMLEnum.USER) {
-				PropertyParameter role = propertyDAO.getPropertyParameterById(Constants.ROLES_SOURCE_NAME, Integer.parseInt(currentRole));
-				users.add(new User(Integer.parseInt(currentId), currentFirstName, currentLastName,currentEmail,
-						role.getName(), currentPassword));
+				users.add(new User(currentId, currentFirstName, currentLastName,currentEmail,
+						currentRole.getName(), currentPassword));
 			}
 	} 
-
-
-
 }
 
 

@@ -12,9 +12,9 @@
 		<resolution> </resolution>
 		<found> 1  </found>
 		<createDate> 2013-12-02 </createDate>
-		<createdBy> 2 </createdBy>
+		<author> 2 </author>
 		<modifyDate> 2013-12-04 </modifyDate>
-		<modifiedBy> 0 </modifiedBy>
+		<modifier> 0 </modifier>
 	</issue>
 	<issue>
 		<id> 2 </id>
@@ -28,9 +28,9 @@
 		<resolution> </resolution>
 		<found> 2 </found>
 		<createDate> 2013-12-03 </createDate>
-		<createdBy> 3 </createdBy>
+		<author> 3 </author>
 		<modifyDate> 2013-12-07 </modifyDate>
-		<modifiedBy> 2 </modifiedBy>
+		<modifier> 2 </modifier>
 	</issue>
 	<issue>
 		<id> 3 </id>
@@ -44,9 +44,9 @@
 		<resolution> </resolution>
 		<found> 3 </found>
 		<createDate> 2013-09-02 </createDate>
-		<createdBy> 1 </createdBy>
+		<author> 1 </author>
 		<modifyDate> </modifyDate>
-		<modifiedBy> </modifiedBy>
+		<modifier> </modifier>
 	</issue>
 	<issue>
 		<id> 4 </id>
@@ -60,8 +60,8 @@
 		<resolution> </resolution>
 		<found> 4  </found>
 		<createDate> 2013-10-02 </createDate>
-		<createdBy> 0 </createdBy>
+		<author> 0 </author>
 		<modifyDate> </modifyDate>
-		<modifiedBy> </modifiedBy>
+		<modifier> </modifier>
 	</issue>
 </issues>

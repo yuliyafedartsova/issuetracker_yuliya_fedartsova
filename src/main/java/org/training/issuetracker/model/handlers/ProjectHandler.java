@@ -27,8 +27,8 @@ public class ProjectHandler extends DefaultHandler {
 	private int currentId;
 	private String currentName;
 	private String currentDescription;
-	private String currentManager;
-	private String currentBuild;
+	private User currentManager;
+	private PropertyParameter currentVersion;
 	ProjectDAO projectDAO = ProjectFactory.getClassFromFactory();
 	UserDAO userDAO = UserFactory.getClassFromFactory();
 	
@@ -55,7 +55,8 @@ public class ProjectHandler extends DefaultHandler {
 		if(currentEnum == ProjectXMLEnum.MANAGER) {
 			String s = new String(ch, start, length).trim();
 			if(!s.isEmpty()){
-				currentManager = s;
+				int id = Integer.parseInt(s);
+				currentManager = userDAO.getUserById(id);
 			}
 		}
 		
@@ -69,27 +70,19 @@ public class ProjectHandler extends DefaultHandler {
 		if(currentEnum == ProjectXMLEnum.BUILD) {
 			String s = new String(ch, start, length).trim();
 			if(!s.isEmpty()){
-				currentBuild = s;
+				int id = Integer.parseInt(s);
+				currentVersion = projectDAO.getVersionById(id);
 			}
 		}
 	}
 	
 	public void endElement(String uri, 
 			String localName, String qName) { 
-			currentEnum = ProjectXMLEnum.valueOf(qName.toUpperCase()); //!!!
+			currentEnum = ProjectXMLEnum.valueOf(qName.toUpperCase()); 
 			if(currentEnum == ProjectXMLEnum.PROJECT) {
 				List<PropertyParameter> buildVersions = projectDAO.getVersionsOfProject(currentId);
-				PropertyParameter version = null;
-				//		projectDAO.getVersionById(Integer.parseInt(currentBuild));
-			    for(PropertyParameter v : buildVersions) {
-			    	if(v.getId() == Integer.parseInt(currentBuild)) {
-			    		version = v;
-			    	}
-			    }
-				User manager = userDAO.getUserById(Integer.parseInt(currentManager));
-			    projects.add(new Project(currentId, currentName, manager, 
-			    		buildVersions, version.getName(), currentDescription));
-			
+				projects.add(new Project(currentId, currentName, currentManager, 
+			    	buildVersions, currentVersion.getName(), currentDescription));
 			}
 	} 
 	

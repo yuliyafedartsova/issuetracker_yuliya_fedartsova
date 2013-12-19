@@ -18,7 +18,7 @@ public class ParametrsHandler extends DefaultHandler {
 	
 	List<PropertyParameter> parametrs;
 	private ParametrsXMLEnum currentEnum = null;
-	private String currentId;
+	private int currentId;
 	private String currentName;
 	
 	public void startElement(String uri, String localName, String qName, Attributes attrs) {
@@ -29,7 +29,7 @@ public class ParametrsHandler extends DefaultHandler {
 		if(currentEnum == ParametrsXMLEnum.ID) {
 			String s = new String(ch, start, length).trim();
 			if(!s.isEmpty()){
-				currentId = s;
+				currentId = Integer.parseInt(s);
 			}
 		}
 		
@@ -43,9 +43,9 @@ public class ParametrsHandler extends DefaultHandler {
 	
 	public void endElement(String uri, 
 			String localName, String qName) { 
-			currentEnum = ParametrsXMLEnum.valueOf(qName.toUpperCase()); //!!!
+			currentEnum = ParametrsXMLEnum.valueOf(qName.toUpperCase());
 			if(currentEnum == ParametrsXMLEnum.PARAMETER) {
-				parametrs.add(new PropertyParameter(Integer.parseInt(currentId), currentName));
+				parametrs.add(new PropertyParameter(currentId, currentName));
 			}
 	} 
 }

@@ -30,7 +30,7 @@ public class XMLProjectImpl implements ProjectDAO {
 		List<PropertyParameter> versions = new ArrayList<PropertyParameter>();
 		try {
 			XMLReader reader = XMLReaderFactory.createXMLReader();
-			VersionsHandler handler = new VersionsHandler(id, versions, "Version");
+			VersionsHandler handler = new VersionsHandler(id, versions, Constants.VERSION);
 			reader.setContentHandler(handler);
 			reader.parse(Constants.REAL_PATH + "build_versions.xml");
 			}catch (SAXException e) {
@@ -62,7 +62,7 @@ public class XMLProjectImpl implements ProjectDAO {
 		List<PropertyParameter> versions = new ArrayList<PropertyParameter>();
 		try {
 			XMLReader reader = XMLReaderFactory.createXMLReader();
-			VersionsHandler handler = new VersionsHandler(projectId, versions, "Project");
+			VersionsHandler handler = new VersionsHandler(projectId, versions, Constants.PROJECT);
 			reader.setContentHandler(handler);
 			reader.parse(Constants.REAL_PATH + "build_versions.xml");
 			}catch (SAXException e) {

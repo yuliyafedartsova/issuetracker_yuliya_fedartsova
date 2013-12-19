@@ -42,10 +42,6 @@ public class IssueUpdateView extends AbstractController {
 				(List<PropertyParameter>)request.getAttribute(Constants.TYPES);
  	   List<PropertyParameter> resolutions = 
 				(List<PropertyParameter>)request.getAttribute(Constants.RESOLUTIONS);
- 	   
- 	   
- 	   
- 	   
  	   PrintWriter out = response.getWriter();
  	   request.setAttribute(Constants.WRITER, out);
 		RequestDispatcher rd = getServletContext().getRequestDispatcher("/HeaderView");
@@ -58,14 +54,14 @@ public class IssueUpdateView extends AbstractController {
  		
  		out.println("Id " + issue.getId() + "<br>");
  		out.println("Create Date " + issue.getCreateDate() + "<br>");
- 		out.println("Created By " + issue.getCreatedBy().getFirstName() + " "
- 				+ issue.getCreatedBy().getLastName() + "<br>");
+ 		out.println("Created By " + issue.getAuthor().getFirstName() + " "
+ 				+ issue.getAuthor().getLastName() + "<br>");
  		if(issue.getModifyDate() != null) {
  			out.println("Modify Date " + issue.getModifyDate() + "<br>");
  		}
- 		if(issue.getModifiedBy() != null) {
- 			out.println("Modified By " + issue.getModifiedBy().getFirstName() + " " 
- 		      + issue.getModifiedBy().getLastName() + "<br>");
+ 		if(issue.getModifier() != null) {
+ 			out.println("Modified By " + issue.getModifier().getFirstName() + " " 
+ 		      + issue.getModifier().getLastName() + "<br>");
  		}
  		out.println("<form action=''>");
  		out.println("Summary");

@@ -15,12 +15,12 @@ public class Issue {
 	private String buildFound;
 	private Date createDate;
 	private Date modifyDate;
-	private User createdBy;
-	private User modifiedBy;
+	private User author;
+	private User modifier;
 	
 	public Issue(int id, String priority, String type,
 			String summary, String description, String status, Project project,
-			String buildFound, Date createDate, User createdBy) {
+			String buildFound, Date createDate, User author) {
 		super();
 		this.id = id;
 		this.priority = priority;
@@ -31,7 +31,7 @@ public class Issue {
 		this.project = project;
 		this.buildFound = buildFound;
 		this.createDate = createDate;
-		this.createdBy = createdBy;
+		this.author = author;
 	}
 
 	public int getId() {
@@ -122,20 +122,20 @@ public class Issue {
 		this.modifyDate = modifyDate;
 	}
 
-	public User getCreatedBy() {
-		return createdBy;
+	public User getAuthor() {
+		return author;
 	}
 
-	public void setCreatedBy(User createdBy) {
-		this.createdBy = createdBy;
+	public void setAuthorBy(User author) {
+		this.author = author;
 	}
 
-	public User getModifiedBy() {
-		return modifiedBy;
+	public User getModifier() {
+		return modifier;
 	}
 
-	public void setModifiedBy(User modifiedBy) {
-		this.modifiedBy = modifiedBy;
+	public void setModifier(User modifier) {
+		this.modifier = modifier;
 	}
 
 	public String getResolution() {
