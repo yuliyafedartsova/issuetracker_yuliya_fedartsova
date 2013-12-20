@@ -25,6 +25,9 @@ public class ProjectController extends AbstractController {
     }
     
     protected void performTask(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+    	System.out.println("IN PROJECT CONTROLLER");
+    	
+    	
     	ProjectDAO projectDAO = ProjectFactory.getClassFromFactory();
     	String action = request.getParameter(Constants.ACTION);
     	List<Project> projects = null;
