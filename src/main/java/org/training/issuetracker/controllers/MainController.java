@@ -27,9 +27,12 @@ public class MainController extends AbstractController {
 				 "WEB-INF\\classes\\";
 		
 		Constants.REAL_PATH = realPath;
+		
+		
 	}
 
     protected void performTask(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+    	
     	IssueDAO issuesDao = IssueFactory.getClassFromFactory();
     	List<Issue> issues = null;
     	User user = (User)request.getSession().getAttribute(Constants.USER);

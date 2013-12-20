@@ -2,11 +2,10 @@ package org.training.issuetracker.model.impl;
 
 import java.io.IOException;
 import java.util.ArrayList;
-import java.util.HashSet;
+import java.util.Collections;
 import java.util.List;
 import java.util.Set;
 import java.util.TreeSet;
-
 import org.training.issuetracker.constants.Constants;
 import org.training.issuetracker.exceptions.DaoException;
 import org.training.issuetracker.ifaces.IssueDAO;
@@ -20,19 +19,18 @@ import org.xml.sax.helpers.XMLReaderFactory;
 
 public class XMLIssueImpl implements IssueDAO {
 	public List<Issue> getIssues() throws DaoException { 
-		Set<Issue> set_issues = new TreeSet<Issue>(new IssueComparatorByDate()); 
+		List<Issue> issues = new ArrayList<Issue>(); 
 		try {
 			XMLReader reader = XMLReaderFactory.createXMLReader();
-			IssuesHandler handler = new IssuesHandler(set_issues);
+			IssuesHandler handler = new IssuesHandler(issues);
 			reader.setContentHandler(handler);
-			reader.parse(Constants.REAL_PATH + "issues.xml");
+			reader.parse(Constants.REAL_PATH + Constants.ISSUES_SOURCE_NAME + Constants.FILE_EXT);
 			}catch (SAXException e) {
 				throw new DaoException();
 			}catch (IOException e) {
 				throw new DaoException();
 			}
-		
-		List<Issue> issues = new ArrayList<Issue>(set_issues);
+		Collections.sort(issues, new IssueComparatorByDate());
 		return issues;
 	}
 	
@@ -65,8 +63,7 @@ public class XMLIssueImpl implements IssueDAO {
 	    List<Issue> allAssigned = new ArrayList<Issue>();
 		List<Issue> n_assigned = new ArrayList<Issue>();
 		List<Issue> issues = getIssues();
-	    
-		for(Issue issue : issues) {
+	    for(Issue issue : issues) {
 	    	if(issue.getAssignee() != null) {
 	    		if(issue.getAssignee().getId() == user.getId()) {
 		    		allAssigned.add(issue);

@@ -1,7 +1,7 @@
 package org.training.issuetracker.constants;
 
 public class Constants {
-    public static String REAL_PATH;
+	public static String REAL_PATH;
     public static final String ACTION = "action";
     public static final String ADD = "add";
     public static final String UPDATE = "update";
@@ -31,6 +31,10 @@ public class Constants {
     public static final String RESOLUTIONS_SOURCE_NAME = "resolutions";
     public static final String TYPES_SOURCE_NAME = "types";
     public static final String ROLES_SOURCE_NAME = "roles";
+    public static final String USERS_SOURCE_NAME = "users";
+    public static final String ISSUES_SOURCE_NAME = "issues";
+    public static final String VERSIONS_SOURCE_NAME = "build_versions";
+    public static final String PROJECTS_SOURCE_NAME = "projects";
     public static final String ROLES = "roles";
     public static final String STATUSES = "statuses";
     public static final String PRIORITIES = "priorities";
@@ -63,5 +67,6 @@ public class Constants {
     public static final String REOPENED = "Reopened";
     public static final String RESOLVED = "Resolved";
     public static final String ERROR = "/error.html";
+    public static final String FILE_EXT = ".xml";
     
 }

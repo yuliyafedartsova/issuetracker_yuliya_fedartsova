@@ -2,8 +2,7 @@ package org.training.issuetracker.model.handlers;
 
 
 import java.sql.Date;
-import java.util.Set;
-import org.training.issuetracker.constants.Constants;
+import java.util.List;
 import org.training.issuetracker.exceptions.DaoException;
 import org.training.issuetracker.ifaces.ProjectDAO;
 import org.training.issuetracker.ifaces.PropertyDAO;
@@ -20,7 +19,7 @@ import org.xml.sax.helpers.DefaultHandler;
 
 public class IssuesHandler extends DefaultHandler {
 	
-	public IssuesHandler(Set<Issue> issues) {
+	public IssuesHandler(List <Issue> issues) {
 		this.issues = issues;
 	}
 	
@@ -29,7 +28,7 @@ public class IssuesHandler extends DefaultHandler {
 		STATUS, PROJECT, RESOLUTION, FOUND, CREATEDATE, AUTHOR, MODIFYDATE, MODIFIER;
 	}
 	
-	private Set<Issue> issues;
+	private List <Issue> issues;
 	private IssuesXMLEnum currentEnum = null;
 	private int currentId;
 	private PropertyParameter currentPriority;
