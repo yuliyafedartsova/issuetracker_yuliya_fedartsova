@@ -2,14 +2,11 @@ package org.training.issuetracker.controllers;
 
 import java.io.IOException;
 import java.util.List;
-
-import javax.servlet.RequestDispatcher;
 import javax.servlet.ServletException;
-import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
-
 import org.training.issuetracker.constants.Constants;
+import org.training.issuetracker.exceptions.DaoException;
 import org.training.issuetracker.ifaces.AbstractController;
 import org.training.issuetracker.ifaces.ProjectDAO;
 import org.training.issuetracker.ifaces.UserDAO;
@@ -18,9 +15,7 @@ import org.training.issuetracker.model.beans.User;
 import org.training.issuetracker.model.factories.ProjectFactory;
 import org.training.issuetracker.model.factories.UserFactory;
 
-/**
- * Servlet implementation class ProjectController
- */
+
 public class ProjectController extends AbstractController {
 	private static final long serialVersionUID = 1L;
        
@@ -31,34 +26,44 @@ public class ProjectController extends AbstractController {
     
     protected void performTask(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
     	ProjectDAO projectDAO = ProjectFactory.getClassFromFactory();
-    	String action = request.getParameter("action");
-    	UserDAO userDAO = UserFactory.getClassFromFactory();
-		List<User> users = userDAO.getUsers();
-    	
-    	
-    	switch(action) {
-    	case "show":
-    		List<Project> projects = projectDAO.getProjects();
+    	String action = request.getParameter(Constants.ACTION);
+    	List<Project> projects = null;
+    	List<User> users = null;
+    	Project project = null;
+    	if(Constants.REVIEW.equals(action)) {
+    		try {
+    		projects = projectDAO.getProjects();
+    		}catch (DaoException e) {
+    			jumpPage(Constants.ERROR, request, response);
+    			return;
+    		}
     		cutDescriptionsOff(projects);
     		request.setAttribute(Constants.PROJECTS, projects);
-    		jumpPage("/ProjectsView", request, response);
-    	    break;
-    	case "update":
-    		String projectId = request.getParameter(Constants.ID);
-    		int id = Integer.parseInt(projectId);
-    		Project project = projectDAO.getProjectById(id);
-    		request.setAttribute(Constants.PROJECT, project);
+    		jumpPage(Constants.JUMP_PROJECTS, request, response);
+    	} else {
+    		UserDAO userDAO = UserFactory.getClassFromFactory();
+    		try {
+    		users = userDAO.getUsers();
+    		}catch (DaoException e) {
+    			jumpPage(Constants.ERROR, request, response);
+    			return;
+    		}
     		request.setAttribute(Constants.USERS, users);
-    		jumpPage("/ProjectUpdateView", request, response);
-    		break;
-    	case "add":
-    		request.setAttribute(Constants.USERS, users);
-    		jumpPage("/AddProjectView", request, response);
-    		break;
+    	    if(Constants.ADD.equals(action)) {
+    	    	jumpPage(Constants.JUMP_ADD_PROJECT, request, response);
+    	    } else {
+    	    	String projectId = request.getParameter(Constants.ID);
+        		int id = Integer.parseInt(projectId);
+        		try {
+        		project = projectDAO.getProjectById(id);
+        		}catch (DaoException e) {
+        			jumpPage(Constants.ERROR, request, response);
+        			return;
+        		}
+        		request.setAttribute(Constants.PROJECT, project);
+        		jumpPage(Constants.JUMP_UPDATE_PROJECT, request, response);
+    	    }
     	}
-    	
-    	
-    	
     }
     
     protected void cutDescriptionsOff(List<Project> projects) {
@@ -72,7 +77,4 @@ public class ProjectController extends AbstractController {
     		}
     	}
     }
-
-	
-
 }

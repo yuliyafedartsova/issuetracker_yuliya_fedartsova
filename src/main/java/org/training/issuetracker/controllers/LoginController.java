@@ -11,6 +11,7 @@ import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 
 import org.training.issuetracker.constants.Constants;
+import org.training.issuetracker.exceptions.DaoException;
 import org.training.issuetracker.exceptions.ValidationException;
 import org.training.issuetracker.ifaces.AbstractController;
 import org.training.issuetracker.ifaces.UserDAO;
@@ -35,11 +36,14 @@ public class LoginController extends AbstractController {
 		try {
 		user = userDAO.getUser(email, password);
 		}catch (ValidationException e) {
-			jumpError("/MainController", e.getMessage(), request, response);
+			jumpError(Constants.MAIN, e.getMessage(), request, response);
 			return;
-		} 
+		}catch (DaoException e) {
+			jumpPage(Constants.ERROR, request, response);
+			return;
+		}
 		HttpSession session = request.getSession();
 		session.setAttribute(Constants.USER, user);
-		jumpPage("/MainController", request, response);
+		jumpPage(Constants.MAIN, request, response);
 	}
 }

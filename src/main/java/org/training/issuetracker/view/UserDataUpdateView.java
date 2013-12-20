@@ -18,7 +18,6 @@ public class UserDataUpdateView extends AbstractController {
     
     public UserDataUpdateView() {
         super();
-        
     }
 
     protected void performTask(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
@@ -27,29 +26,31 @@ public class UserDataUpdateView extends AbstractController {
 		PrintWriter out = response.getWriter();
 		out.println("<html>");
 		out.println("<head>");
-		out.println("<title>Sample Servlet interface implementation</title>");
+		out.println("<title>Update user's date</title>");
 		out.println("</head>");
 		out.println("<body>");
+		out.println("Update your data:" + "<br>");
 		out.println("<form name='update' method='POST' action=''>");
-		out.println("First Name <br>");
-		out.println("<input type='text' name='firstName' value=''><br>");
-		out.println("Last Name <br>");
-		out.println("<input type='text' name='lastName' value=''><br>");
-		out.println("Email Address <br>");
-		out.println("<input type='text' name='email' value=''><br>");
+		out.println("<table>");
+		out.println("<tr>" + "<td>" + "First Name:" + "</td>");
+		out.println("<td>" + "<input type='text' name='firstName' value=''>" + "</td>" + "</tr>");
+		out.println("<tr>" + "<td>" + "Last Name:" + "</td>");
+		out.println("<td>" + "<input type='text' name='lastName' value=''>" + "</td>" + "</tr>");
+		out.println("<tr>" + "<td>" + "Email Address:" + "</td>");
+		out.println("<td>" + "<input type='text' name='email' value=''>" + "</td>" + "</tr>");
 		if(user.getRole() == Constants.ADMINISTRATOR) {
-			out.println("Role <br>");
-			out.println("<select name='role' size='1'>");
+			out.println("<tr>" + "<td>" + "Role:" + "</td>");
+			out.println("<td>" + "<select name='role' size='1'>");
 			for(PropertyParameter role : roles) {
 					out.println("<option value='" + role.getId() + 
 						"' selected >" + role.getName() + "</option>");
 			}
+			out.println("</select>" + "</td>" + "</tr>");
 		}
+		out.println("</table>");
 		out.println("</form>");
 		out.println("</body>");
 		out.println("</html>");
 		out.close();
-	
 	}
-	
 }

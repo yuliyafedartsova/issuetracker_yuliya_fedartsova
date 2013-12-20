@@ -26,11 +26,11 @@ public class IssueReviewView extends AbstractController {
 		Issue issue = (Issue) request.getAttribute(Constants.ISSUE);
 	 	PrintWriter out = response.getWriter();
 	 	request.setAttribute(Constants.WRITER, out);
-		RequestDispatcher rd = getServletContext().getRequestDispatcher("/HeaderView");
+		RequestDispatcher rd = getServletContext().getRequestDispatcher(Constants.HEADER);
 		rd.include(request, response);
 	 	out.println("<html>");
 	    out.println("<head>");
-	 	out.println("<title>Sample Servlet interface implementation</title>");
+	 	out.println("<title>Issue review</title>");
 	 	out.println("</head>");
 	 	out.println("<body>");
 	 	out.println("Id " + issue.getId() + "<br>");
@@ -47,7 +47,9 @@ public class IssueReviewView extends AbstractController {
 	 	out.println("Summary: " + issue.getSummary() + "<br>");
 	    out.println("Description: " + issue.getDescription() + "<br>");
 	 	out.println("Status: " + issue.getStatus() + "<br>");
-	 	out.println("Resolution: " + issue.getResolution() + "<br>");
+	 	if(issue.getStatus().equals(Constants.CLOSED)) {
+	 		out.println("Resolution: " + issue.getResolution() + "<br>");
+	 	}
 	 	out.println("Type: " + issue.getType() + "<br>");
 	 	out.println("Priority: " + issue.getPriority() + "<br>");
 	 	out.println("Project: " + issue.getProject().getName() + "<br>");

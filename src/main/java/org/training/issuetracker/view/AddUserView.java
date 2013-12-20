@@ -34,35 +34,33 @@ public class AddUserView extends AbstractController {
 		rd.include(request, response);
 	 	out.println("<html>");
 	    out.println("<head>");
-	 	out.println("<title>Sample Servlet interface implementation</title>");
+	 	out.println("<title>Add user</title>");
 	 	out.println("</head>");
 	 	out.println("<body>");
+	 	out.println("Add user:");
+	 	out.println("<br>");
 	 	out.println("<form action=''>");
-	 	out.println("First Name: ");
-	 	out.println("<input type='text' name='firstName' value=''>");
- 		out.println("<br>");
- 		out.println("Last Name: ");
-	 	out.println("<input type='text' name='lastName' value=''>");
- 		out.println("<br>");
- 		out.println("Email Address: ");
-	 	out.println("<input type='text' name='email' value=''>");
- 		out.println("<br>");
- 		out.println("Role: ");
- 		out.println("<select name='role' size='1'>");
+	 	out.println("<table>");
+	 	out.println("<tr>" + "<td>" + "First Name: " + "</td>");
+	 	out.println("<td>" + "<input type='text' name='firstName' value=''>" + "</td>" + "</tr>");
+ 		out.println("<tr>" + "<td>" + "Last Name: " + "</td>");
+	 	out.println("<td>" + "<input type='text' name='lastName' value=''>" + "</td>" + "</tr>");
+ 		out.println("<tr>" + "<td>" + "Email Address: " + "</td>");
+	 	out.println("<td>" + "<input type='text' name='email' value=''>" + "</td>" + "</tr>");
+ 		out.println("<tr>" + "<td>" + "Role: " + "</td>");
+ 		out.println("<td>" + "<select name='role' size='1'>");
  		for(PropertyParameter role : roles) {
- 			if(role.getName() != Constants.GUEST) {
+ 			if(!role.getName().equals(Constants.GUEST)) {
  				out.println("<option value='" + role.getId() + "'>" + role.getName() 
  					+ "</option>");
  			}
  		}
- 		out.println("</select>");
- 		out.println("<br>");
- 		out.println("Password: ");
-	 	out.println("<input type='text' name='password' value=''>");
- 		out.println("<br>");
- 		out.println("Confirm password: ");
-	 	out.println("<input type='text' name='password2' value=''>");
- 		out.println("<br>");
+ 		out.println("</select>" + "</td>" + "</tr>");
+ 		out.println("<tr>" + "<td>" + "Password: " + "</td>");
+	 	out.println("<td>" + "<input type='text' name='password' value=''>" + "</td>" + "</tr>");
+ 		out.println("<tr>" + "<td>" + "Confirm password: " + "</td>");
+	 	out.println("<td>" +  "<input type='text' name='password2' value=''>" + "</td>" + "</tr>");
+ 		out.println("</table>");
  		out.println("</form>");
 	 	out.println("</body>");
 	 	out.println("</html>");

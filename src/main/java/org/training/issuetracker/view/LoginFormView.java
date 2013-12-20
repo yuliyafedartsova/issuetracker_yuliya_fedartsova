@@ -17,13 +17,11 @@ import org.training.issuetracker.ifaces.AbstractController;
 public class LoginFormView extends AbstractController {
 	private static final long serialVersionUID = 1L;
        
-    
     public LoginFormView() {
         super();
       
     }
 
-	
 	protected void performTask(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		String errorMessage = (String)request.getAttribute(Constants.ERROR_MESSAGE);
 		PrintWriter out = (PrintWriter)request.getAttribute(Constants.WRITER);
@@ -35,13 +33,16 @@ public class LoginFormView extends AbstractController {
 	    if(errorMessage != null) {
 	    	out.println(errorMessage);
 	    }
-		out.println("<form name='loginForm' method='POST' action='LoginController'>");
-		out.println("email:<br>");
-		out.println("<input type='text' name='email' value=''><br>");
-		out.println("password:<br>");
-		out.println("<input type='password' name='password' value=''><br>");
-		out.println("<input type='submit' value='Enter'>");
-		out.println("<br></form>");
+		out.println("<form name='loginForm' method='POST' action='login-controller'>");
+		out.println("<table>");
+		out.println("<tr>" + "<td>" + "email:" + "</td>");
+		out.println("<td>" + "<input type='text' name='email' value=''>" + "</td>" + "</tr>");
+		out.println("<tr>" + "<td>" + "password:" + "</td>");
+		out.println("<td>" + "<input type='password' name='password' value=''>" + "</td>" + "</tr>");
+		out.println("</table>");
+		out.println("<br>");
+		out.println("<input type='submit' value='Login'>");
+		out.println("</form>");
 	    out.println("</body>");
 		out.println("</html>");
 	}

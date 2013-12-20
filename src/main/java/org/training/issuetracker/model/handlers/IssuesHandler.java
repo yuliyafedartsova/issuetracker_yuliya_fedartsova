@@ -4,6 +4,7 @@ package org.training.issuetracker.model.handlers;
 import java.sql.Date;
 import java.util.Set;
 import org.training.issuetracker.constants.Constants;
+import org.training.issuetracker.exceptions.DaoException;
 import org.training.issuetracker.ifaces.ProjectDAO;
 import org.training.issuetracker.ifaces.PropertyDAO;
 import org.training.issuetracker.ifaces.UserDAO;
@@ -54,6 +55,7 @@ public class IssuesHandler extends DefaultHandler {
 	}
 	
 	public void characters(char[] ch, int start, int length) {
+		try {
 		if(currentEnum == IssuesXMLEnum.ID) {
 			String s = new String(ch, start, length).trim();
 			if(!s.isEmpty()){
@@ -64,9 +66,7 @@ public class IssuesHandler extends DefaultHandler {
 			String s = new String(ch, start, length).trim();
 			if(!s.isEmpty()){
 				int id = Integer.parseInt(s);
-				currentPriority = 
-					propertyDAO.getPriorityById(id);
-					
+				currentPriority = propertyDAO.getPriorityById(id);
 			}
 		}
 		if(currentEnum == IssuesXMLEnum.ASSIGNEE) {
@@ -156,8 +156,12 @@ public class IssuesHandler extends DefaultHandler {
 			String s = new String(ch, start, length).trim();
 			if(!s.isEmpty()){
 				int id = Integer.parseInt(s);
-				currentModifier = usersDAO.getUserById(id);
+			    currentModifier = usersDAO.getUserById(id);
+				
 			} 
+		}
+		}catch (DaoException e) {
+			throw new RuntimeException(e);
 		}
 		
 	}

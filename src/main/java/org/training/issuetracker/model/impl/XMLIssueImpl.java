@@ -8,6 +8,7 @@ import java.util.Set;
 import java.util.TreeSet;
 
 import org.training.issuetracker.constants.Constants;
+import org.training.issuetracker.exceptions.DaoException;
 import org.training.issuetracker.ifaces.IssueDAO;
 import org.training.issuetracker.model.beans.Issue;
 import org.training.issuetracker.model.beans.User;
@@ -18,7 +19,7 @@ import org.xml.sax.XMLReader;
 import org.xml.sax.helpers.XMLReaderFactory;
 
 public class XMLIssueImpl implements IssueDAO {
-	public List<Issue> getIssues() { //возможно этот метод нужно сделать private
+	public List<Issue> getIssues() throws DaoException { 
 		Set<Issue> set_issues = new TreeSet<Issue>(new IssueComparatorByDate()); 
 		try {
 			XMLReader reader = XMLReaderFactory.createXMLReader();
@@ -26,16 +27,16 @@ public class XMLIssueImpl implements IssueDAO {
 			reader.setContentHandler(handler);
 			reader.parse(Constants.REAL_PATH + "issues.xml");
 			}catch (SAXException e) {
-				e.printStackTrace();
+				throw new DaoException();
 			}catch (IOException e) {
-				e.printStackTrace();
+				throw new DaoException();
 			}
 		
 		List<Issue> issues = new ArrayList<Issue>(set_issues);
 		return issues;
 	}
 	
-	public Issue getIssueById(int id) {
+	public Issue getIssueById(int id) throws DaoException {
 		Issue issue = null;
 		List<Issue> issues = getIssues();
 		for(Issue i : issues) {
@@ -47,7 +48,7 @@ public class XMLIssueImpl implements IssueDAO {
 	
 	}
 	
-	public List<Issue> getNLastAddedIssues(int n) {
+	public List<Issue> getNLastAddedIssues(int n) throws DaoException {
 		List<Issue> lastAdded = new ArrayList<Issue>();
 		List<Issue> issues = getIssues();
 		if(issues.size() < n) {
@@ -60,7 +61,7 @@ public class XMLIssueImpl implements IssueDAO {
 		return lastAdded;
 	}
 	
-	public List<Issue> getNAssignedIssues(int n, User user) {
+	public List<Issue> getNAssignedIssues(int n, User user) throws DaoException {
 	    List<Issue> allAssigned = new ArrayList<Issue>();
 		List<Issue> n_assigned = new ArrayList<Issue>();
 		List<Issue> issues = getIssues();
@@ -80,8 +81,5 @@ public class XMLIssueImpl implements IssueDAO {
 	    	
 		}
 	    return n_assigned;
-	
-	
 	}
-
 }

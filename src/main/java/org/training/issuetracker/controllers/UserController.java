@@ -6,6 +6,7 @@ import javax.servlet.ServletException;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import org.training.issuetracker.constants.Constants;
+import org.training.issuetracker.exceptions.DaoException;
 import org.training.issuetracker.ifaces.AbstractController;
 import org.training.issuetracker.ifaces.PropertyDAO;
 import org.training.issuetracker.model.beans.PropertyParameter;
@@ -24,15 +25,18 @@ public class UserController extends AbstractController {
     protected void performTask(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
     	String action = request.getParameter(Constants.ACTION);
     	PropertyDAO propertyDAO = PropertyFactory.getClassFromFactory();
-    	List<PropertyParameter> roles = propertyDAO.getRoles();
+    	List<PropertyParameter> roles = null;
+    	try {
+    	roles = propertyDAO.getRoles();
+    	}catch (DaoException e) {
+			jumpPage(Constants.ERROR, request, response);
+			return;
+		}
     	request.setAttribute(Constants.ROLES, roles);
     	if(Constants.ADD.equals(action)) {
-    		jumpPage("/AddUserView", request, response);
+    		jumpPage(Constants.JUMP_ADD_USER, request, response);
     	} else {
-    		jumpPage("/UserDataUpdateView", request, response);
+    		jumpPage(Constants.JUMP_USER_DATA_UPDATE, request, response);
     	}
-    	
-    	
-    	
-	}
+    }
 }

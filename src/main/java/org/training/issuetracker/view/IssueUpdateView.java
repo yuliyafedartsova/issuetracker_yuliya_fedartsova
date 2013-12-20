@@ -5,7 +5,6 @@ import java.io.PrintWriter;
 import java.util.List;
 import javax.servlet.RequestDispatcher;
 import javax.servlet.ServletException;
-import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import org.training.issuetracker.constants.Constants;
@@ -16,18 +15,13 @@ import org.training.issuetracker.model.beans.PropertyParameter;
 import org.training.issuetracker.model.beans.User;
 
 
-/**
- * Servlet implementation class IssueUpdateView
- */
 public class IssueUpdateView extends AbstractController {
 	private static final long serialVersionUID = 1L;
        
-    /**
-     * @see HttpServlet#HttpServlet()
-     */
+    
     public IssueUpdateView() {
         super();
-        // TODO Auto-generated constructor stub
+        
     }
 
     protected void performTask(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
@@ -44,90 +38,90 @@ public class IssueUpdateView extends AbstractController {
 				(List<PropertyParameter>)request.getAttribute(Constants.RESOLUTIONS);
  	   PrintWriter out = response.getWriter();
  	   request.setAttribute(Constants.WRITER, out);
-		RequestDispatcher rd = getServletContext().getRequestDispatcher("/HeaderView");
-		rd.include(request, response);
-		out.println("<html>");
- 		out.println("<head>");
- 		out.println("<title>Sample Servlet interface implementation</title>");
- 		out.println("</head>");
- 		out.println("<body>");
- 		
- 		out.println("Id " + issue.getId() + "<br>");
- 		out.println("Create Date " + issue.getCreateDate() + "<br>");
- 		out.println("Created By " + issue.getAuthor().getFirstName() + " "
- 				+ issue.getAuthor().getLastName() + "<br>");
- 		if(issue.getModifyDate() != null) {
- 			out.println("Modify Date " + issue.getModifyDate() + "<br>");
+ 	   RequestDispatcher rd = getServletContext().getRequestDispatcher(Constants.HEADER);
+ 	   rd.include(request, response);
+ 	   out.println("<html>");
+ 	   out.println("<head>");
+ 	   out.println("<title>Update issue</title>");
+ 	   out.println("</head>");
+ 	   out.println("<body>");
+ 	   out.println("Update issue:" + "<br>");
+ 	  out.println("<table>");
+ 	   out.println("<tr>" + "<td>" + "Id" + "</td>" + "<td>" + issue.getId() + "</td>" + "</tr>");
+ 	   out.println("<tr>" + "<td>" +"Create Date" +  "</td>" + "<td>"  + issue.getCreateDate() + "</td>" + "</tr>");
+ 	   out.println("<tr>" + "<td>" + "Created By " + "</td>" + "<td>"  + issue.getAuthor().getFirstName() + " "
+ 				+ issue.getAuthor().getLastName() + "</td>" + "</tr>");
+ 	   
+ 	  
+ 	   if(issue.getModifyDate() != null) {
+ 			out.println("<tr>" + "<td>" + "Modify Date" + "</td>" + "<td>"  + issue.getModifyDate() + "</td>" + "</tr>");
  		}
- 		if(issue.getModifier() != null) {
- 			out.println("Modified By " + issue.getModifier().getFirstName() + " " 
- 		      + issue.getModifier().getLastName() + "<br>");
+ 	   if(issue.getModifier() != null) {
+ 			out.println("<tr>" + "<td>" + "Modified By" + "</td>" + "<td>" + issue.getModifier().getFirstName() + " " 
+ 		      + issue.getModifier().getLastName() + "</td>" + "</tr>");
  		}
- 		out.println("<form action=''>");
- 		out.println("Summary");
- 		out.println("<input type='text' name='summary' value=" + issue.getSummary() + ">");
- 		out.println("<br>");
- 		out.println("Description");
- 		out.println("<input type='text' name='description' value=" + issue.getDescription() + ">");
- 		out.println("<br>");
- 		out.println("Status");
- 		out.println("<select name='status' size='1'>");
- 		for(PropertyParameter par : statuses) {
- 			out.println("<option value='" + par.getId() + "'>" + par.getName() + 
- 					"</option>");
+ 	   out.println("<form action=''>");
+ 	   out.println("<tr>" + "<td>" + "Summary" + "</td>");
+ 	   out.println("<td>" + "<input type='text' name='summary' value=" + issue.getSummary() + ">" + "</td>" + "</tr>");
+ 	   out.println("<tr>" + "<td>" + "Description" + "</td>");
+ 	   out.println("<td>" + "<input type='text' name='description' value=" + issue.getDescription() + ">" + "</td>" + "</tr>");
+ 	   out.println("<tr>" + "<td>" + "Status" + "</td>");
+ 	   out.println("<td>" + "<select name='status' size='1'>");
+ 	   for(PropertyParameter par : statuses) {
+ 		   out.println("<option value='" + par.getId() + "'>" + par.getName() + "</option>");
+ 	   }
+ 	   out.println("</select>" + "</td>" + "</tr>");
+ 	  
+ 	   //////////////////////////////
+ 	   out.println("<tr>" + "<td>" + "Resolution" + "</td>");
+ 	   out.println("<td>" + "<select name='resolution' size='1'>");
+ 	   for(PropertyParameter par : resolutions) {
+ 		   out.println("<option value='" + par.getId() + "'>" + par.getName() + 
+ 				"</option>");
+ 	   }
+ 	   out.println("</select>" + "</td>" + "</tr>");
+ 	   ////////////////////////////////
+ 	   out.println("<tr>" + "<td>" + "Type" + "</td>");
+ 	   out.println("<td>" + "<select name='type' size='1'>");
+ 	   for(PropertyParameter par : types) {
+ 		   out.println("<option value='" + par.getId() + "'>" + par.getName() + 
+ 				"</option>");
  		}
- 		out.println("</select>");
- 		out.println("<br>");
- 		out.println("Resolution");
- 		out.println("<select name='resolution' size='1'>");
- 		for(PropertyParameter par : resolutions) {
- 			out.println("<option value='" + par.getId() + "'>" + par.getName() + 
- 					"</option>");
- 		}
- 		out.println("</select>");
- 		out.println("<br>");
- 		out.println("Type");
- 		out.println("<select name='type' size='1'>");
- 		for(PropertyParameter par : types) {
- 			out.println("<option value='" + par.getId() + "'>" + par.getName() + 
- 					"</option>");
- 		}
- 		out.println("</select>");
- 		out.println("<br>");
- 		out.println("Priority");
- 		out.println("<select name='priority' size='1'>");
- 		for(PropertyParameter par : priorities) {
- 			out.println("<option value='" + par.getId() + "'>" + par.getName() + 
- 					"</option>");
- 		}
- 		out.println("</select>");
- 		out.println("<br>");
- 		out.println("Project");
- 		out.println("<select name='project' size='1'>");
- 		for(Project project : projects) {
- 			out.println("<option value='" + project.getId() + "'>" + 
- 					project.getName() + "</option>");
- 		}
- 		out.println("</select>");
- 		out.println("<br>");
- 		out.println("Build found");
- 		out.println("<select name='version' size='1'>");
- 		for(PropertyParameter version : issue.getProject().getBuildVersions()) {
- 			out.println("<option value='" + version.getId() + "'>" + 
- 					version.getName() + "</option>");
- 		}
- 		out.println("</select>");
- 		out.println("<br>");
- 		out.println("Assignee");
- 		out.println("<select name='assignee' size='1'>");
- 		for(User user : users) {
- 			out.println("<option value='" + user.getId() + "'>" + user.getFirstName() 
- 					+ user.getLastName() + "</option>");
- 		}
- 		out.println("</select>");
- 		out.println("</form>");
- 		out.println("</body>");
- 		out.println("</html>");
- 		out.close();
+ 	   out.println("</select>" + "</td>" + "</tr>");
+ 	   
+ 	   out.println("<tr>" + "<td>" + "Priority" + "</td>");
+ 	   out.println("<td>" + "<select name='priority' size='1'>");
+ 	   for(PropertyParameter par : priorities) {
+ 		   out.println("<option value='" + par.getId() + "'>" + par.getName() + 
+ 				"</option>");
+ 	   }
+ 	   out.println("</select>" + "</td>" + "</tr>");
+ 	   out.println("<tr>" + "<td>" + "Project" + "</td>");
+ 	   out.println("<td>" + "<select name='project' size='1'>");
+ 	   for(Project project : projects) {
+ 		   out.println("<option value='" + project.getId() + "'>" + 
+ 				project.getName() + "</option>");
+ 	   }
+ 	   out.println("</select>" + "</td>" + "</tr>");
+ 	   out.println("<tr>" + "<td>" + "Build found" + "</td>");
+ 	   out.println("<td>" + "<select name='version' size='1'>");
+ 	   for(Project project : projects) {
+ 		   for(PropertyParameter version : project.getBuildVersions())
+ 			   out.println("<option value='" + version.getId() + "'>" + 
+ 					   version.getName() + "</option>");
+ 	   }
+ 	   out.println("</select>" + "</td>" + "</tr>");
+ 	   out.println("<tr>" + "<td>" + "Assignee" + "</td>");
+ 	   out.println("<td>" + "<select name='assignee' size='1'>");
+ 	   for(User user : users) {
+ 		   out.println("<option value='" + user.getId() + "'>" + user.getFirstName() 
+ 				+ user.getLastName() + "</option>");
+ 	   }
+ 	   out.println("</select>" + "</td>" + "</tr>");
+ 	   out.println("</table>");
+ 	   out.println("</form>");
+ 	   out.println("</body>");
+ 	   out.println("</html>");
+ 	   out.close();
  	}
 }

@@ -14,9 +14,7 @@ import org.training.issuetracker.constants.Constants;
 import org.training.issuetracker.ifaces.AbstractController;
 import org.training.issuetracker.model.beans.User;
 
-/**
- * Servlet implementation class HeaderView
- */
+
 public class HeaderView extends AbstractController {
 	private static final long serialVersionUID = 1L;
        
@@ -26,26 +24,23 @@ public class HeaderView extends AbstractController {
         
     }
 
-	
 	protected void performTask(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		PrintWriter out = (PrintWriter)request.getAttribute(Constants.WRITER);
 		HttpSession session = request.getSession();
 		User user = (User)session.getAttribute(Constants.USER);
 		out.println("<html>");
 		out.println("<head>");
-		out.println("<title>Sample Servlet interface implementation</title>");
 		out.println("</head>");
 		out.println("<body>");
-
 		if(user != null) {
 			out.println("Hello, " + user.getFirstName());
 			out.println("<br>");
 			out.println("<a href='/issuetracker/changePasswordForm.html'>"+ "Change password" +"</a>");
 			out.println("<br>");
-			out.println("<a href='UserController?action=update'>"+ "Update your data" +"</a>");
+			out.println("<a href='user-controller?action=update'>"+ "Update your data" +"</a>");
 			out.println("<br><br>");
 		} else {
-			RequestDispatcher rd = getServletContext().getRequestDispatcher("/LoginFormView");
+			RequestDispatcher rd = getServletContext().getRequestDispatcher(Constants.LOGIN_FORM);
 			rd.include(request, response);
 		}
 		out.println("</body>");

@@ -2,6 +2,7 @@ package org.training.issuetracker.model.handlers;
 
 import java.util.List;
 
+import org.training.issuetracker.exceptions.DaoException;
 import org.training.issuetracker.ifaces.ProjectDAO;
 import org.training.issuetracker.ifaces.UserDAO;
 import org.training.issuetracker.model.beans.Project;
@@ -56,7 +57,11 @@ public class ProjectHandler extends DefaultHandler {
 			String s = new String(ch, start, length).trim();
 			if(!s.isEmpty()){
 				int id = Integer.parseInt(s);
+				try {
 				currentManager = userDAO.getUserById(id);
+				}catch (DaoException e) {
+					throw new RuntimeException(e);
+				}
 			}
 		}
 		
@@ -71,7 +76,11 @@ public class ProjectHandler extends DefaultHandler {
 			String s = new String(ch, start, length).trim();
 			if(!s.isEmpty()){
 				int id = Integer.parseInt(s);
+				try {
 				currentVersion = projectDAO.getVersionById(id);
+				}catch (DaoException e) {
+					throw new RuntimeException(e);
+				}
 			}
 		}
 	}
@@ -80,7 +89,12 @@ public class ProjectHandler extends DefaultHandler {
 			String localName, String qName) { 
 			currentEnum = ProjectXMLEnum.valueOf(qName.toUpperCase()); 
 			if(currentEnum == ProjectXMLEnum.PROJECT) {
-				List<PropertyParameter> buildVersions = projectDAO.getVersionsOfProject(currentId);
+				List<PropertyParameter> buildVersions = null;
+				try {
+				buildVersions = projectDAO.getVersionsOfProject(currentId);
+				}catch (DaoException e) {
+					throw new RuntimeException(e);
+				}
 				projects.add(new Project(currentId, currentName, currentManager, 
 			    	buildVersions, currentVersion.getName(), currentDescription));
 			}

@@ -6,6 +6,7 @@ import org.training.issuetracker.model.beans.PropertyParameter;
 import org.training.issuetracker.model.beans.User;
 import org.training.issuetracker.model.factories.PropertyFactory;
 import org.training.issuetracker.constants.Constants;
+import org.training.issuetracker.exceptions.DaoException;
 import org.xml.sax.Attributes;
 import org.xml.sax.helpers.DefaultHandler;
 
@@ -66,7 +67,11 @@ public class UsersHandler extends DefaultHandler {
 			String s = new String(ch, start, length).trim();
 			if(!s.isEmpty()){
 				int id = Integer.parseInt(s);
+				try {
 				currentRole = propertyDAO.getRoleById(id);
+				} catch (DaoException e) {
+					throw new RuntimeException(e);
+				}
 			}
 		}
 		if(currentEnum == UsersXMLEnum.PASSWORD) {

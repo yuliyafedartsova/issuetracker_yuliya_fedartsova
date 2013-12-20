@@ -2,16 +2,8 @@
 <web-app xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns="http://java.sun.com/xml/ns/javaee" xmlns:web="http://java.sun.com/xml/ns/javaee/web-app_2_5.xsd" xsi:schemaLocation="http://java.sun.com/xml/ns/javaee http://java.sun.com/xml/ns/javaee/web-app_2_5.xsd" version="2.5">
   <display-name>Issue Tracker</display-name>
   <description>JEE training project implementation by Yuliya Fedartsova</description>
-  <servlet>
-    <servlet-name>SampleServlet</servlet-name>
-    <servlet-class>org.training.issuetracker.SampleServlet</servlet-class>
-  </servlet>
-  <servlet-mapping>
-    <servlet-name>SampleServlet</servlet-name>
-    <url-pattern>/SampleServlet</url-pattern>
-  </servlet-mapping>
   <welcome-file-list>
-    <welcome-file>MainController</welcome-file>
+    <welcome-file>main-controller</welcome-file>
   </welcome-file-list>
   <servlet>
     <description></description>
@@ -21,7 +13,7 @@
   </servlet>
   <servlet-mapping>
     <servlet-name>LoginController</servlet-name>
-    <url-pattern>/LoginController</url-pattern>
+    <url-pattern>/login-controller</url-pattern>
   </servlet-mapping>
   <servlet>
     <description></description>
@@ -31,37 +23,7 @@
   </servlet>
   <servlet-mapping>
     <servlet-name>MainController</servlet-name>
-    <url-pattern>/MainController</url-pattern>
-  </servlet-mapping>
-  <servlet>
-    <description></description>
-    <display-name>PropertiesView</display-name>
-    <servlet-name>PropertiesView</servlet-name>
-    <servlet-class>org.training.issuetracker.view.PropertiesView</servlet-class>
-  </servlet>
-  <servlet-mapping>
-    <servlet-name>PropertiesView</servlet-name>
-    <url-pattern>/PropertiesView</url-pattern>
-  </servlet-mapping>
-  <servlet>
-    <description></description>
-    <display-name>PropertyUpdateView</display-name>
-    <servlet-name>PropertyUpdateView</servlet-name>
-    <servlet-class>org.training.issuetracker.view.PropertyUpdateView</servlet-class>
-  </servlet>
-  <servlet-mapping>
-    <servlet-name>PropertyUpdateView</servlet-name>
-    <url-pattern>/PropertyUpdateView</url-pattern>
-  </servlet-mapping>
-  <servlet>
-    <description></description>
-    <display-name>AbstractController</display-name>
-    <servlet-name>AbstractController</servlet-name>
-    <servlet-class>org.training.issuetracker.ifaces.AbstractController</servlet-class>
-  </servlet>
-  <servlet-mapping>
-    <servlet-name>AbstractController</servlet-name>
-    <url-pattern>/AbstractController</url-pattern>
+    <url-pattern>/main-controller</url-pattern>
   </servlet-mapping>
   <servlet>
     <description></description>
@@ -95,33 +57,13 @@
   </servlet-mapping>
   <servlet>
     <description></description>
-    <display-name>MainUserView</display-name>
-    <servlet-name>MainUserView</servlet-name>
-    <servlet-class>org.training.issuetracker.view.MainUserView</servlet-class>
-  </servlet>
-  <servlet-mapping>
-    <servlet-name>MainUserView</servlet-name>
-    <url-pattern>/MainUserView</url-pattern>
-  </servlet-mapping>
-  <servlet>
-    <description></description>
-    <display-name>RequestForIssueUpdateController</display-name>
-    <servlet-name>RequestForIssueUpdateController</servlet-name>
-    <servlet-class>org.training.issuetracker.controllers.RequestForIssueUpdateController</servlet-class>
-  </servlet>
-  <servlet-mapping>
-    <servlet-name>RequestForIssueUpdateController</servlet-name>
-    <url-pattern>/RequestForIssueUpdateController</url-pattern>
-  </servlet-mapping>
-  <servlet>
-    <description></description>
     <display-name>IssueController</display-name>
     <servlet-name>IssueController</servlet-name>
     <servlet-class>org.training.issuetracker.controllers.IssueController</servlet-class>
   </servlet>
   <servlet-mapping>
     <servlet-name>IssueController</servlet-name>
-    <url-pattern>/IssueController</url-pattern>
+    <url-pattern>/issue-controller</url-pattern>
   </servlet-mapping>
   <servlet>
     <description></description>
@@ -151,7 +93,7 @@
   </servlet>
   <servlet-mapping>
     <servlet-name>PropertyController</servlet-name>
-    <url-pattern>/PropertyController</url-pattern>
+    <url-pattern>/property-controller</url-pattern>
   </servlet-mapping>
   <servlet>
     <description></description>
@@ -165,16 +107,6 @@
   </servlet-mapping>
   <servlet>
     <description></description>
-    <display-name>ParameterUpdateController</display-name>
-    <servlet-name>ParameterUpdateController</servlet-name>
-    <servlet-class>org.training.issuetracker.controllers.ParameterUpdateController</servlet-class>
-  </servlet>
-  <servlet-mapping>
-    <servlet-name>ParameterUpdateController</servlet-name>
-    <url-pattern>/ParameterUpdateController</url-pattern>
-  </servlet-mapping>
-  <servlet>
-    <description></description>
     <display-name>ParametersView</display-name>
     <servlet-name>ParametersView</servlet-name>
     <servlet-class>org.training.issuetracker.view.ParametersView</servlet-class>
@@ -182,16 +114,6 @@
   <servlet-mapping>
     <servlet-name>ParametersView</servlet-name>
     <url-pattern>/ParametersView</url-pattern>
-  </servlet-mapping>
-  <servlet>
-    <description></description>
-    <display-name>AddUserController</display-name>
-    <servlet-name>AddUserController</servlet-name>
-    <servlet-class>org.training.issuetracker.controllers.AddUserController</servlet-class>
-  </servlet>
-  <servlet-mapping>
-    <servlet-name>AddUserController</servlet-name>
-    <url-pattern>/AddUserController</url-pattern>
   </servlet-mapping>
   <servlet>
     <description></description>
@@ -221,7 +143,7 @@
   </servlet>
   <servlet-mapping>
     <servlet-name>ProjectController</servlet-name>
-    <url-pattern>/ProjectController</url-pattern>
+    <url-pattern>/project-controller</url-pattern>
   </servlet-mapping>
   <servlet>
     <description></description>
@@ -265,32 +187,22 @@
   </servlet-mapping>
   <servlet>
     <description></description>
-    <display-name>IssueReviewController</display-name>
-    <servlet-name>IssueReviewController</servlet-name>
-    <servlet-class>org.training.issuetracker.controllers.IssueReviewController</servlet-class>
-  </servlet>
-  <servlet-mapping>
-    <servlet-name>IssueReviewController</servlet-name>
-    <url-pattern>/IssueReviewController</url-pattern>
-  </servlet-mapping>
-  <servlet>
-    <description></description>
-    <display-name>AddIssueController</display-name>
-    <servlet-name>AddIssueController</servlet-name>
-    <servlet-class>org.training.issuetracker.controllers.AddIssueController</servlet-class>
-  </servlet>
-  <servlet-mapping>
-    <servlet-name>AddIssueController</servlet-name>
-    <url-pattern>/AddIssueController</url-pattern>
-  </servlet-mapping>
-  <servlet>
-    <description></description>
     <display-name>UserController</display-name>
     <servlet-name>UserController</servlet-name>
     <servlet-class>org.training.issuetracker.controllers.UserController</servlet-class>
   </servlet>
   <servlet-mapping>
     <servlet-name>UserController</servlet-name>
-    <url-pattern>/UserController</url-pattern>
+    <url-pattern>/user-controller</url-pattern>
+  </servlet-mapping>
+  <servlet>
+    <description></description>
+    <display-name>SubmitIssueController</display-name>
+    <servlet-name>SubmitIssueController</servlet-name>
+    <servlet-class>org.training.issuetracker.controllers.SubmitIssueController</servlet-class>
+  </servlet>
+  <servlet-mapping>
+    <servlet-name>SubmitIssueController</servlet-name>
+    <url-pattern>/submit-issue</url-pattern>
   </servlet-mapping>
 </web-app>

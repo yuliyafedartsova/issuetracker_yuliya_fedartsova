@@ -36,9 +36,32 @@ public class Constants {
     public static final String PRIORITIES = "priorities";
     public static final String RESOLUTIONS = "resolutions";
     public static final String TYPES = "types";
-    public static final String ADMINISTRATOR = "administrator";
-    public static final String GUEST = "guest";
+    public static final String ROLE = "role";
+    public static final String STATUS = "status";
+    public static final String PRIORITY = "priority";
+    public static final String RESOLUTION = "resolution";
+    public static final String TYPE = "type";
+    public static final String ADMINISTRATOR = "Administrator";
+    public static final String GUEST = "Guest";
     public static final String REVIEW = "review";
     public static final String VERSION = "version";
+    public static final String JUMP_MAIN = "/MainView";
+    public static final String JUMP_ADD_ISSUE = "/AddIssueView";
+    public static final String JUMP_ADD_PROJECT = "/AddProjectView";
+    public static final String JUMP_ADD_USER = "/AddUserView";
+    public static final String JUMP_ISSUE_REVIEW = "/IssueReviewView";
+    public static final String JUMP_ISSUE_UPDATE = "/IssueUpdateView";
+    public static final String JUMP_PARAMETERS = "/ParametersView";
+    public static final String JUMP_PROJECTS = "/ProjectsView";
+    public static final String JUMP_UPDATE_PROJECT = "/ProjectUpdateView";
+    public static final String JUMP_USER_DATA_UPDATE = "/UserDataUpdateView";
+    public static final String HEADER = "/HeaderView";
+    public static final String LOGIN_FORM = "/LoginFormView";
+    public static final String MAIN = "/main-controller";
+    public static final String IN_PROGRESS = "In Progress";
+    public static final String CLOSED = "Closed";
+    public static final String REOPENED = "Reopened";
+    public static final String RESOLVED = "Resolved";
+    public static final String ERROR = "/error.html";
     
 }

@@ -5,6 +5,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 import org.training.issuetracker.constants.Constants;
+import org.training.issuetracker.exceptions.DaoException;
 import org.training.issuetracker.exceptions.ValidationException;
 import org.training.issuetracker.ifaces.UserDAO;
 import org.training.issuetracker.model.beans.User;
@@ -14,7 +15,7 @@ import org.xml.sax.XMLReader;
 import org.xml.sax.helpers.XMLReaderFactory;
 
 public class XMLUserImpl implements UserDAO {
-	public List<User> getUsers() {
+	public List<User> getUsers() throws DaoException {
 		List<User> users = new ArrayList<User>();
 		try {
 			XMLReader reader = XMLReaderFactory.createXMLReader();
@@ -22,14 +23,14 @@ public class XMLUserImpl implements UserDAO {
 			reader.setContentHandler(handler);
 			reader.parse(Constants.REAL_PATH + "users.xml");
 			}catch (SAXException e) {
-				e.printStackTrace();
+				throw new DaoException();
 			}catch (IOException e) {
-				e.printStackTrace();
+				throw new DaoException();
 			}
 		return users;
 	}
 	
-	public User getUser(String email, String password) throws ValidationException {
+	public User getUser(String email, String password) throws ValidationException, DaoException {
 		List<User> users = getUsers();
 		User user = null;
 		for(User u : users) {
@@ -41,7 +42,7 @@ public class XMLUserImpl implements UserDAO {
 		return user;
 	}
 	
-	public User getUserById(int id) {
+	public User getUserById(int id) throws DaoException {
 		List<User> users = getUsers();
 		User user = null;
 		for(User u : users) {
