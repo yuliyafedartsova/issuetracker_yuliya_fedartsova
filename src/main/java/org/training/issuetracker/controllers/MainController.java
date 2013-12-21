@@ -46,18 +46,29 @@ public class MainController extends AbstractController {
     		if(sort != null) {
     			sortIssues(sort, issues);
     		}
+    		if(issues.size() == Constants.NULL) {
+    			request.setAttribute(Constants.MESSAGE, Constants.EMPTY_MESSAGE_FOR_USER);
+    		}
     	} else {
     		issues = issuesDao.getNLastAddedIssues(10);
     		if(sort != null) {
     			sortIssues(sort, issues);
     		}
+    		if(issues.size() == Constants.NULL) {
+    			request.setAttribute(Constants.MESSAGE, Constants.EMPTY_MESSAGE_FOR_GUEST);
+    		}
     	}
     	}catch (DaoException e) {
-			System.out.println(e);
-    		jumpPage(Constants.ERROR, request, response);
+			jumpPage(Constants.ERROR, request, response);
+			return;
+		}catch (Exception e) {
+			jumpPage(Constants.ERROR, request, response);
 			return;
 		}
-    	request.setAttribute(Constants.ISSUES, issues);
+    	
+    	if(issues.size() != Constants.NULL) {
+    		request.setAttribute(Constants.ISSUES, issues);
+    	}
     	jumpPage(Constants.JUMP_MAIN, request, response);
     }
     

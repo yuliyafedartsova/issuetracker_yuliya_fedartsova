@@ -27,6 +27,9 @@ public class PropertyController extends AbstractController {
     	}catch (DaoException e) {
 			jumpPage(Constants.ERROR, request, response);
 			return;
+		}catch (Exception e) {
+			jumpPage(Constants.ERROR, request, response);
+			return;
 		}
     	request.setAttribute(Constants.PARAMETRES, parametres);
     	jumpPage(Constants.JUMP_PARAMETERS, request, response);

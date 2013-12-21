@@ -57,7 +57,7 @@ public class Constants {
     public static final String JUMP_ADD_PROJECT = "/AddProjectView";
     public static final String JUMP_ADD_USER = "/AddUserView";
     public static final String JUMP_ISSUE_REVIEW = "/IssueReviewView";
-    public static final String JUMP_ISSUE_UPDATE = "/IssueUpdateView"; //////////////
+    public static final String JUMP_ISSUE_UPDATE = "/IssueUpdateView"; 
     public static final String JUMP_PARAMETERS = "/ParametersView";
     public static final String JUMP_PROJECTS = "/ProjectsView";
     public static final String JUMP_UPDATE_PROJECT = "/ProjectUpdateView";
@@ -69,7 +69,11 @@ public class Constants {
     public static final String CLOSED = "Closed";
     public static final String REOPENED = "Reopened";
     public static final String RESOLVED = "Resolved";
-    public static final String ERROR = "/error.html";
+    public static final String ERROR = "/error_page.html";
     public static final String FILE_EXT = ".xml";
     public static final String SORTING = "sorting";
+    public static final String EMPTY_MESSAGE_FOR_GUEST = "There are no issues";
+    public static final String EMPTY_MESSAGE_FOR_USER = "There are no issues aasigned to you";
+    public static final String MESSAGE = "collection is empty";
+    
 }

@@ -34,7 +34,10 @@ public class ProjectController extends AbstractController {
     	}catch (DaoException e) {
     		jumpPage(Constants.ERROR, request, response);
     		return;
-    	}
+    	}catch (Exception e) {
+			jumpPage(Constants.ERROR, request, response);
+			return;
+		}
     	request.setAttribute(Constants.USERS, users);
     	if(Constants.ADD.equals(action)) {
     	    jumpPage(Constants.JUMP_ADD_PROJECT, request, response);
@@ -46,9 +49,12 @@ public class ProjectController extends AbstractController {
         	}catch (DaoException e) {
         		jumpPage(Constants.ERROR, request, response);
         		return;
-        	}
-        		request.setAttribute(Constants.PROJECT, project);
-        		jumpPage(Constants.JUMP_UPDATE_PROJECT, request, response);
+        	}catch (Exception e) {
+    			jumpPage(Constants.ERROR, request, response);
+    			return;
+    		}
+        	request.setAttribute(Constants.PROJECT, project);
+        	jumpPage(Constants.JUMP_UPDATE_PROJECT, request, response);
     	    }
     	}
   }

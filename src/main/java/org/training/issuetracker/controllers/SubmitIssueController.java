@@ -49,6 +49,9 @@ public class SubmitIssueController extends AbstractController {
     	}catch (DaoException e) {
 			jumpPage(Constants.ERROR, request, response);
 			return;
+		}catch (Exception e) {
+			jumpPage(Constants.ERROR, request, response);
+			return;
 		}
     	statuses = getAvailableStatuses(statuses);
     	request.setAttribute(Constants.STATUSES, statuses);

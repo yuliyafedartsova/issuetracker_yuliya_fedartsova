@@ -24,7 +24,7 @@
 </xs:simpleType>
 <xs:simpleType name="Password">
     <xs:restriction base="xs:string">
-    	<xs:pattern value=".{5,}" />
+    	<xs:pattern value=".{4,}" />
     </xs:restriction>
 </xs:simpleType>
 </xs:schema>

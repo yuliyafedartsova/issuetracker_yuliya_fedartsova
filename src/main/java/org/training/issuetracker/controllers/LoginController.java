@@ -41,6 +41,9 @@ public class LoginController extends AbstractController {
 		}catch (DaoException e) {
 			jumpPage(Constants.ERROR, request, response);
 			return;
+		}catch (Exception e) {
+			jumpPage(Constants.ERROR, request, response);
+			return;
 		}
 		HttpSession session = request.getSession();
 		session.setAttribute(Constants.USER, user);

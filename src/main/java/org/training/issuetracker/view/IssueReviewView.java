@@ -10,16 +10,11 @@ import org.training.issuetracker.constants.Constants;
 import org.training.issuetracker.ifaces.AbstractController;
 import org.training.issuetracker.model.beans.Issue;
 
-
-/**
- * Servlet implementation class IssueReviewView
- */
 public class IssueReviewView extends AbstractController {
 	private static final long serialVersionUID = 1L;
        
     public IssueReviewView() {
         super();
-        
     }
 
 	protected void performTask(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {

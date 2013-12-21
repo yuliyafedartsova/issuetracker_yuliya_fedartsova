@@ -37,10 +37,12 @@ public class HeaderView extends AbstractController {
 			out.println("<br>");
 			out.println("<a href='main'>"+ "Main page" +"</a>");
 			out.println("<br>");
-			out.println("<a href='/issuetracker/changePasswordForm.html'>"+ "Change password" +"</a>");
+			out.println("<a href='/issuetracker/change_password.html'>"+ "Change password" +"</a>");
 			out.println("<br>");
 			out.println("<a href='user?action=update'>"+ "Update your data" +"</a>");
-			out.println("<br><br>");
+			out.println("<br>");
+			out.println("<a href='logout'>"+ "Logout" +"</a>");
+			out.println("<br>" + "<br>");
 		} else {
 			RequestDispatcher rd = getServletContext().getRequestDispatcher(Constants.LOGIN_FORM);
 			rd.include(request, response);

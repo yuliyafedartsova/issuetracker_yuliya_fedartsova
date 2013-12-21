@@ -39,7 +39,7 @@ public class ProjectUpdateView extends AbstractController {
 	 	out.println("<tr>" + "<td>" + "Name:" + "</td>");
  		out.println("<td>" + "<input type='text' name='name' value=" + project.getName() + ">" + "</td>" + "</tr>");
  		out.println("<tr>" + "<td>" + "Description:" + "</td>");
- 		out.println("<td>" + "<input type='text' name='description' value=" + project.getDescription() + ">" + "</td>" + "</tr>");
+ 		out.println("<td>" + "<input type='text' name='description' value=''>" + "</td>" + "</tr>");
  		out.println("<tr>" + "<td>" + "Builds:" + "</td>");
  		out.println("<td>" + "<select name='build' size='1'>");
  		for(PropertyParameter version : project.getBuildVersions()) {

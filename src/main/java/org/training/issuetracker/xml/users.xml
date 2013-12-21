@@ -2,34 +2,82 @@
 <users xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="users.xsd">
   <user>
 		<id> 0 </id>
-		<firstName> Tom </firstName>
-		<lastName> Travis </lastName>
-		<email>tom@mail.ru</email>
+		<firstName> Roger </firstName>
+		<lastName> Glover </lastName>
+		<email>roger@gmail.com</email>
 		<role> 1 </role>
-		<password> aaas </password>
+		<password> aaaa </password>
 	</user>
 	<user>
 		<id> 1 </id>
-		<firstName> Ann </firstName>
-		<lastName> Rand </lastName>
-		<email> ann@mail.ru </email>
+		<firstName> Ian </firstName>
+		<lastName> Gillan </lastName>
+		<email> ian@gmail.com </email>
 		<role> 2 </role>
-		<password> 1a1111 </password>
+		<password> 1111 </password>
 	</user>
 	<user>
 		<id> 2 </id>
-		<firstName> Sid </firstName>
-		<lastName> Wishes </lastName>
-		<email> sid@mail.ru </email>
+		<firstName> Steve </firstName>
+		<lastName> Morse </lastName>
+		<email> steve@gmail.com </email>
 		<role> 2 </role>
 		<password> 22222 </password>
 	</user>
 	<user>
 		<id> 3 </id>
-		<firstName> Bob </firstName>
-		<lastName> Dylon </lastName>
-		<email> bob@mail.ru </email>
+		<firstName> David </firstName>
+		<lastName> Coverdale </lastName>
+		<email> david@gmail.com </email>
 		<role> 1 </role>
-		<password> 3456 </password>
+		<password> 3333 </password>
+	</user>
+	<user>
+		<id> 4 </id>
+		<firstName> Nick </firstName>
+		<lastName> Simper </lastName>
+		<email> nick@gmail.com </email>
+		<role> 1 </role>
+		<password> 4444 </password>
+	</user>
+	<user>
+		<id> 5 </id>
+		<firstName> Don </firstName>
+		<lastName> Airey </lastName>
+		<email> don@gmail.com </email>
+		<role> 1 </role>
+		<password> 5555 </password>
+	</user>
+	<user>
+		<id> 6 </id>
+		<firstName> Glenn </firstName>
+		<lastName> Hughes </lastName>
+		<email> glenn@gmail.com </email>
+		<role> 2 </role>
+		<password> 6666 </password>
+	</user>
+	<user>
+		<id> 7 </id>
+		<firstName> Rod </firstName>
+		<lastName> Evans </lastName>
+		<email> rod@gmail.com </email>
+		<role> 1 </role>
+		<password> 7777 </password>
+	</user>
+	<user>
+		<id> 8 </id>
+		<firstName> Tom </firstName>
+		<lastName> Bolin </lastName>
+		<email> tom@gmail.com </email>
+		<role> 1 </role>
+		<password> 8888 </password>
+	</user>
+	<user>
+		<id> 9 </id>
+		<firstName> Joe </firstName>
+		<lastName> Satriani </lastName>
+		<email> joe@gmail.com </email>
+		<role> 2 </role>
+		<password> 9999 </password>
 	</user>
 </users>

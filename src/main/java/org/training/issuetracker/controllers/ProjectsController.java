@@ -2,12 +2,9 @@ package org.training.issuetracker.controllers;
 
 import java.io.IOException;
 import java.util.List;
-
 import javax.servlet.ServletException;
-import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
-
 import org.training.issuetracker.constants.Constants;
 import org.training.issuetracker.exceptions.DaoException;
 import org.training.issuetracker.ifaces.AbstractController;
@@ -30,10 +27,13 @@ public class ProjectsController extends AbstractController {
     	List<Project> projects = null;
     	try {
     		projects = projectDAO.getProjects();
-    		}catch (DaoException e) {
-    			jumpPage(Constants.ERROR, request, response);
-    			return;
-    	}
+    	}catch (DaoException e) {
+    		jumpPage(Constants.ERROR, request, response);
+    		return;
+    	}catch (Exception e) {
+			jumpPage(Constants.ERROR, request, response);
+			return;
+		}
     	cutDescriptionsOff(projects);
 		request.setAttribute(Constants.PROJECTS, projects);
 		jumpPage(Constants.JUMP_PROJECTS, request, response);

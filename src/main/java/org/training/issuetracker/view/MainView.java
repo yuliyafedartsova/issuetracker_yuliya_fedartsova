@@ -25,6 +25,7 @@ public class MainView extends AbstractController {
 	protected void performTask(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		User user = (User)request.getSession().getAttribute(Constants.USER);
 		List<Issue> issues = (List<Issue>)request.getAttribute(Constants.ISSUES);
+		String message = (String)request.getAttribute(Constants.MESSAGE);
 		PrintWriter out = response.getWriter();
 		request.setAttribute(Constants.WRITER, out);
 		RequestDispatcher rd = getServletContext().getRequestDispatcher(Constants.HEADER);
@@ -54,6 +55,7 @@ public class MainView extends AbstractController {
 			out.println("<a href='project?action=add'>" + "Add project" +"</a>");
 			out.println("<a href='user?action=add'>" + "Add user" +"</a>");
 		}
+		if(message == null) {
 		out.println("<form action='main'>");
 		out.println("<select name='sorting' size='1'>");
 		out.println("<option value=id>" + "Sort by id" + "</option>"); 
@@ -86,6 +88,9 @@ public class MainView extends AbstractController {
 				out.println("</tr>");
 		}
 		out.println("</table>");
+		}else {
+			out.println(message);
+		}
 		out.println("</body>");
 		out.println("</html>");
 		out.close();

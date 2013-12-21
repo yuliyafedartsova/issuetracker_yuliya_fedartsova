@@ -31,6 +31,9 @@ public class UserController extends AbstractController {
     	}catch (DaoException e) {
 			jumpPage(Constants.ERROR, request, response);
 			return;
+		}catch (Exception e) {
+			jumpPage(Constants.ERROR, request, response);
+			return;
 		}
     	request.setAttribute(Constants.ROLES, roles);
     	if(Constants.ADD.equals(action)) {
