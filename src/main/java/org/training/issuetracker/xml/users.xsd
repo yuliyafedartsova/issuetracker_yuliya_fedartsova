@@ -1,0 +1,30 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<xs:schema xmlns:xs="http://www.w3.org/2001/XMLSchema">
+<xs:element name="users">
+	<xs:complexType>
+		<xs:sequence>
+			<xs:element name="user" type="User"  minOccurs="1" maxOccurs="unbounded" /> 
+		</xs:sequence>
+	</xs:complexType>
+</xs:element>
+<xs:complexType name="User">
+	<xs:sequence> 
+		<xs:element name="id" type="xs:integer" minOccurs="1" maxOccurs="1"/>
+		<xs:element name="firstName" type="xs:string" minOccurs="1" maxOccurs="1" />
+		<xs:element name="lastName" type="xs:string" minOccurs="1" maxOccurs="1"/>
+		<xs:element name="email" type="Email" minOccurs="1" maxOccurs="1"/>
+		<xs:element name="role" type="xs:integer" minOccurs="1" maxOccurs="1"/>
+		<xs:element name="password" type="Password" minOccurs="1" maxOccurs="1"/>
+	</xs:sequence> 
+</xs:complexType>
+<xs:simpleType name="Email">
+    <xs:restriction base="xs:string">
+		<xs:pattern value=".+@.+"/>
+	</xs:restriction>
+</xs:simpleType>
+<xs:simpleType name="Password">
+    <xs:restriction base="xs:string">
+    	<xs:pattern value=".{5,}" />
+    </xs:restriction>
+</xs:simpleType>
+</xs:schema>

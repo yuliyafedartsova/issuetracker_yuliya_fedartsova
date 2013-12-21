@@ -33,7 +33,7 @@ public class LoginFormView extends AbstractController {
 	    if(errorMessage != null) {
 	    	out.println(errorMessage);
 	    }
-		out.println("<form name='loginForm' method='POST' action='login-controller'>");
+		out.println("<form name='loginForm' method='POST' action='login'>");
 		out.println("<table>");
 		out.println("<tr>" + "<td>" + "email:" + "</td>");
 		out.println("<td>" + "<input type='text' name='email' value=''>" + "</td>" + "</tr>");

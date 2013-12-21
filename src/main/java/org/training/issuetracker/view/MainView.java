@@ -10,6 +10,7 @@ import javax.servlet.http.HttpServletResponse;
 import org.training.issuetracker.constants.Constants;
 import org.training.issuetracker.ifaces.AbstractController;
 import org.training.issuetracker.model.beans.Issue;
+import org.training.issuetracker.model.beans.PropertyParameter;
 import org.training.issuetracker.model.beans.User;
 
 
@@ -40,19 +41,30 @@ public class MainView extends AbstractController {
 			out.println("<br>");
 		}
 		if(user != null && user.getRole().equals(Constants.ADMINISTRATOR)) {
-			out.println("<a href='project-controller?action=review'>" + "Projects" +"</a>");
-			out.println("<a href='property-controller?property=" + 
+			out.println("<a href='projects'>" + "Projects" +"</a>");
+			out.println("<a href='property?property=" + 
 					Constants.TYPE + "'" + ">"+ "Types" +"</a>");
-			out.println("<a href='property-controller?property=" + 
+			out.println("<a href='property?property=" + 
 					Constants.STATUS + "'" + ">"+ "Statuses" +"</a>");
-			out.println("<a href='property-controller?property=" + 
+			out.println("<a href='property?property=" + 
 					Constants.RESOLUTION + "'" + ">"+ "Resolutions" +"</a>");
-			out.println("<a href='property-controller?property=" + 
+			out.println("<a href='property?property=" + 
 					Constants.PRIORITY + "'" + ">"+ "Priorities" +"</a>");
 			out.println("<br>");
-			out.println("<a href='project-controller?action=add'>" + "Add project" +"</a>");
-			out.println("<a href='user-controller?action=add'>" + "Add user" +"</a>");
+			out.println("<a href='project?action=add'>" + "Add project" +"</a>");
+			out.println("<a href='user?action=add'>" + "Add user" +"</a>");
 		}
+		out.println("<form action='main'>");
+		out.println("<select name='sorting' size='1'>");
+		out.println("<option value=id>" + "Sort by id" + "</option>"); 
+		out.println("<option value=type>" + "Sort by type"  + "</option>"); 
+		out.println("<option value=priority>" + "Sort by priority" +  "</option>"); 
+		out.println("<option value=assignee>" + "Sort by assignee" + "</option>"); 
+		out.println("<option value=status>" + "Sort by status" + "</option>"); 
+	 	out.println("</select>");
+	 	out.println("<input type='submit' value='Sort'>");
+	 	out.println("</form>");
+	 	out.println("<br>");
 		out.println("<table>");
 		out.println("<tr>" + "<td> Id </td>" + "<td> Priority </td>" + 
 				"<td> Assignee </td>" + "<td> Type </td>" + "<td> Status </td>" + 
@@ -60,7 +72,7 @@ public class MainView extends AbstractController {
 		out.println("<br>");
 		for(Issue is : issues) {
 			out.println("<tr>");
-			out.println("<td>" + "<a href='issue-controller?id=" + is.getId() + "'" + ">"+ is.getId() +"</a>" + "</td>");
+			out.println("<td>" + "<a href='issue?id=" + is.getId() + "'" + ">"+ is.getId() +"</a>" + "</td>");
 				out.println("<td>" + is.getPriority() + "</td>");
 				if(is.getAssignee() != null) {
 					out.println("<td>" + is.getAssignee().getFirstName() + " " + 
@@ -77,7 +89,5 @@ public class MainView extends AbstractController {
 		out.println("</body>");
 		out.println("</html>");
 		out.close();
-	
 	}
-
 }

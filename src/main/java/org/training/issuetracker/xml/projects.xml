@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<projects>
-	<project> 
-		<id> 0 </id>
+<projects xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="projects.xsd">
+  <project> 
+	    <id> 0 </id>
 	    <name> Project1 </name>
 	    <description> description </description>
 	    <manager> 0 </manager>

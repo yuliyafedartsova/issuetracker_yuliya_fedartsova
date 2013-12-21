@@ -35,9 +35,11 @@ public class HeaderView extends AbstractController {
 		if(user != null) {
 			out.println("Hello, " + user.getFirstName());
 			out.println("<br>");
+			out.println("<a href='main'>"+ "Main page" +"</a>");
+			out.println("<br>");
 			out.println("<a href='/issuetracker/changePasswordForm.html'>"+ "Change password" +"</a>");
 			out.println("<br>");
-			out.println("<a href='user-controller?action=update'>"+ "Update your data" +"</a>");
+			out.println("<a href='user?action=update'>"+ "Update your data" +"</a>");
 			out.println("<br><br>");
 		} else {
 			RequestDispatcher rd = getServletContext().getRequestDispatcher(Constants.LOGIN_FORM);

@@ -1,8 +1,10 @@
 package org.training.issuetracker.constants;
 
 public class Constants {
-	public static String REAL_PATH;
-    public static final String ACTION = "action";
+	public static String PATH;
+	public static final String PATH_TO_FILES = "WEB-INF\\classes\\org/training/issuetracker/xml/";
+	public static final String DELIMITER = "/";
+	public static final String ACTION = "action";
     public static final String ADD = "add";
     public static final String UPDATE = "update";
     public static final String ID = "id";
@@ -14,6 +16,7 @@ public class Constants {
     public static final int DESCRIPTION_LENTH_LIMIT = 100;
     public static final int NULL = 0;
     public static final String NEW = "New";
+    public static final String ASSIGNEE = "assignee";
     public static final String ASSIGNED = "Assigned";
     public static final String ISSUE = "issue";
     public static final String ISSUES = "issues";
@@ -33,7 +36,7 @@ public class Constants {
     public static final String ROLES_SOURCE_NAME = "roles";
     public static final String USERS_SOURCE_NAME = "users";
     public static final String ISSUES_SOURCE_NAME = "issues";
-    public static final String VERSIONS_SOURCE_NAME = "build_versions";
+    public static final String VERSIONS_SOURCE_NAME = "versions";
     public static final String PROJECTS_SOURCE_NAME = "projects";
     public static final String ROLES = "roles";
     public static final String STATUSES = "statuses";
@@ -54,19 +57,19 @@ public class Constants {
     public static final String JUMP_ADD_PROJECT = "/AddProjectView";
     public static final String JUMP_ADD_USER = "/AddUserView";
     public static final String JUMP_ISSUE_REVIEW = "/IssueReviewView";
-    public static final String JUMP_ISSUE_UPDATE = "/IssueUpdateView";
+    public static final String JUMP_ISSUE_UPDATE = "/IssueUpdateView"; //////////////
     public static final String JUMP_PARAMETERS = "/ParametersView";
     public static final String JUMP_PROJECTS = "/ProjectsView";
     public static final String JUMP_UPDATE_PROJECT = "/ProjectUpdateView";
     public static final String JUMP_USER_DATA_UPDATE = "/UserDataUpdateView";
     public static final String HEADER = "/HeaderView";
     public static final String LOGIN_FORM = "/LoginFormView";
-    public static final String MAIN = "/main-controller";
+    public static final String MAIN = "/main";
     public static final String IN_PROGRESS = "In Progress";
     public static final String CLOSED = "Closed";
     public static final String REOPENED = "Reopened";
     public static final String RESOLVED = "Resolved";
     public static final String ERROR = "/error.html";
     public static final String FILE_EXT = ".xml";
-    
+    public static final String SORTING = "sorting";
 }

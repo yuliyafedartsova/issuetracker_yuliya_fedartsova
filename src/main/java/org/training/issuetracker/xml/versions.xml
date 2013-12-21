@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<versions>
-	<version> 
-		<id> 0 </id>
+<versions xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="versions.xsd">
+  <version> 
+	    <id> 0 </id>
 	    <name> 1.0.0.1 beta </name>
 	    <project> 0 </project>
 	</version>

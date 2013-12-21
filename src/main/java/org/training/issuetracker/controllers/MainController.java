@@ -1,6 +1,8 @@
 package org.training.issuetracker.controllers;
 
 import java.io.IOException;
+import java.util.Collections;
+import java.util.Comparator;
 import java.util.List;
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServletRequest;
@@ -11,6 +13,11 @@ import org.training.issuetracker.ifaces.AbstractController;
 import org.training.issuetracker.ifaces.IssueDAO;
 import org.training.issuetracker.model.beans.Issue;
 import org.training.issuetracker.model.beans.User;
+import org.training.issuetracker.model.beans.comparators.IssueComparatorByAssignee;
+import org.training.issuetracker.model.beans.comparators.IssueComparatorById;
+import org.training.issuetracker.model.beans.comparators.IssueComparatorByPriority;
+import org.training.issuetracker.model.beans.comparators.IssueComparatorByStatus;
+import org.training.issuetracker.model.beans.comparators.IssueComparatorByType;
 import org.training.issuetracker.model.factories.IssueFactory;
 
 
@@ -23,30 +30,55 @@ public class MainController extends AbstractController {
     }
 
     public void init() {
-		String realPath = getServletContext().getRealPath( "/") +
-				 "WEB-INF\\classes\\";
-		
-		Constants.REAL_PATH = realPath;
-		
-		
+		String realPath = getServletContext().getRealPath(Constants.DELIMITER) +
+				 Constants.PATH_TO_FILES;
+		Constants.PATH = realPath;
 	}
 
     protected void performTask(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-    	
     	IssueDAO issuesDao = IssueFactory.getClassFromFactory();
     	List<Issue> issues = null;
     	User user = (User)request.getSession().getAttribute(Constants.USER);
+    	String sort = request.getParameter(Constants.SORTING);
     	try {
     	if(user != null) {
     		issues = issuesDao.getNAssignedIssues(10, user);
+    		if(sort != null) {
+    			sortIssues(sort, issues);
+    		}
     	} else {
     		issues = issuesDao.getNLastAddedIssues(10);
+    		if(sort != null) {
+    			sortIssues(sort, issues);
+    		}
     	}
     	}catch (DaoException e) {
-			jumpPage(Constants.ERROR, request, response);
+			System.out.println(e);
+    		jumpPage(Constants.ERROR, request, response);
 			return;
 		}
     	request.setAttribute(Constants.ISSUES, issues);
     	jumpPage(Constants.JUMP_MAIN, request, response);
+    }
+    
+    private void sortIssues(String sort, List<Issue> issues) {
+    	switch(sort) {
+    		case Constants.TYPE:
+    			Collections.sort(issues, new IssueComparatorByType());
+    			break;
+    		case Constants.STATUS:
+    			Collections.sort(issues, new IssueComparatorByStatus());
+    			break;
+    		case Constants.PRIORITY:
+    			Collections.sort(issues, new IssueComparatorByPriority());
+    			break;
+    		case Constants.ID:
+    			Collections.sort(issues, new IssueComparatorById());
+    			break;
+    		case Constants.ASSIGNEE:
+    			Collections.sort(issues, new IssueComparatorByAssignee());
+    			break;
+    	}
+   
     }
 }

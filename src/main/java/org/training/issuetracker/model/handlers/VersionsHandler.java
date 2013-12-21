@@ -14,7 +14,7 @@ public class VersionsHandler extends DefaultHandler {
 		this.id = id;
 		this.idOf = idOf;
 	}
-	
+
 	private static enum VersionsXMLEnum {
 		VERSIONS, VERSION, ID, NAME, PROJECT;
 	}

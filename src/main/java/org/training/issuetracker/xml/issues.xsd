@@ -1,3 +1,28 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<schema xmlns="http://www.w3.org/2001/XMLSchema" targetNamespace="http://www.example.org/issues" xmlns:tns="http://www.example.org/issues" elementFormDefault="qualified">
-</schema>
+<xs:schema xmlns:xs="http://www.w3.org/2001/XMLSchema">
+<xs:element name="issues">
+	<xs:complexType>
+		<xs:sequence>
+			<xs:element name="issue" type="Issue"  minOccurs="1" maxOccurs="unbounded" /> 
+		</xs:sequence>
+	</xs:complexType>
+</xs:element>
+<xs:complexType name="Issue">
+	<xs:sequence> 
+		<xs:element name="id" type="xs:integer" minOccurs="1" maxOccurs="1"/>
+		<xs:element name="priority" type="xs:integer" minOccurs="1" maxOccurs="1" />
+		<xs:element name="assignee" type="xs:integer" minOccurs="0" maxOccurs="1"/>
+		<xs:element name="type" type="xs:integer" minOccurs="1" maxOccurs="1"/>
+		<xs:element name="summary" type="xs:string" minOccurs="1" maxOccurs="1"/>
+		<xs:element name="description" type="xs:string" minOccurs="1" maxOccurs="1"/>
+		<xs:element name="status" type="xs:integer" minOccurs="1" maxOccurs="1"/>
+		<xs:element name="project" type="xs:integer" minOccurs="1" maxOccurs="1"/>
+		<xs:element name="resolution" type="xs:integer" minOccurs="0" maxOccurs="1"/>
+		<xs:element name="found" type="xs:integer" minOccurs="1" maxOccurs="1"/>
+		<xs:element name="createDate" type="xs:date" minOccurs="1" maxOccurs="1"/>
+		<xs:element name="author" type="xs:integer" minOccurs="1" maxOccurs="1"/>
+		<xs:element name="modifyDate" type="xs:date" minOccurs="0" maxOccurs="1"/>
+		<xs:element name="modifier" type="xs:integer" minOccurs="0" maxOccurs="1"/>
+	</xs:sequence> 
+</xs:complexType>
+</xs:schema>

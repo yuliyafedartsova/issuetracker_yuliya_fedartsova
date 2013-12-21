@@ -21,7 +21,7 @@ public class XMLUserImpl implements UserDAO {
 			XMLReader reader = XMLReaderFactory.createXMLReader();
 			UsersHandler handler = new UsersHandler(users);
 			reader.setContentHandler(handler);
-			reader.parse(Constants.REAL_PATH + Constants.USERS_SOURCE_NAME + Constants.FILE_EXT);
+			reader.parse(Constants.PATH + Constants.USERS_SOURCE_NAME + Constants.FILE_EXT);
 			}catch (SAXException e) {
 				throw new DaoException();
 			}catch (IOException e) {

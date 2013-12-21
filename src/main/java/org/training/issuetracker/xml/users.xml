@@ -1,12 +1,12 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<users>
-	<user>
+<users xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="users.xsd">
+  <user>
 		<id> 0 </id>
 		<firstName> Tom </firstName>
 		<lastName> Travis </lastName>
-		<email> tom@mail.ru </email>
+		<email>tom@mail.ru</email>
 		<role> 1 </role>
-		<password> 11223 </password>
+		<password> aaas </password>
 	</user>
 	<user>
 		<id> 1 </id>
@@ -14,7 +14,7 @@
 		<lastName> Rand </lastName>
 		<email> ann@mail.ru </email>
 		<role> 2 </role>
-		<password> 11111 </password>
+		<password> 1a1111 </password>
 	</user>
 	<user>
 		<id> 2 </id>

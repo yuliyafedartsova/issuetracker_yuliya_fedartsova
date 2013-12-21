@@ -2,19 +2,14 @@ package org.training.issuetracker.view;
 
 import java.io.IOException;
 import java.io.PrintWriter;
-
 import javax.servlet.RequestDispatcher;
 import javax.servlet.ServletException;
-import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
-
 import org.training.issuetracker.constants.Constants;
 import org.training.issuetracker.ifaces.AbstractController;
 
-/**
- * Servlet implementation class ParameterUpdateView
- */
+
 public class ParameterUpdateView extends AbstractController {
 	private static final long serialVersionUID = 1L;
        
@@ -61,7 +56,6 @@ public class ParameterUpdateView extends AbstractController {
 	   out.println("</body>");
 	   out.println("</html>");
 	   out.close();
-	
 	}
 
 }

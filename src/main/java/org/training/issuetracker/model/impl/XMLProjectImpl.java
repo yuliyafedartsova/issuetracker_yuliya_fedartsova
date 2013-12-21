@@ -33,7 +33,7 @@ public class XMLProjectImpl implements ProjectDAO {
 			XMLReader reader = XMLReaderFactory.createXMLReader();
 			VersionsHandler handler = new VersionsHandler(id, versions, Constants.VERSION);
 			reader.setContentHandler(handler);
-			reader.parse(Constants.REAL_PATH + Constants.VERSIONS_SOURCE_NAME + Constants.FILE_EXT);
+			reader.parse(Constants.PATH + Constants.VERSIONS_SOURCE_NAME + Constants.FILE_EXT);
 			}catch (SAXException e) {
 				throw new DaoException();
 			}catch (IOException e) {
@@ -50,7 +50,7 @@ public class XMLProjectImpl implements ProjectDAO {
 			XMLReader reader = XMLReaderFactory.createXMLReader();
 			ProjectHandler handler = new ProjectHandler(projects);
 			reader.setContentHandler(handler);
-			reader.parse(Constants.REAL_PATH + Constants.PROJECTS_SOURCE_NAME + Constants.FILE_EXT);
+			reader.parse(Constants.PATH + Constants.PROJECTS_SOURCE_NAME + Constants.FILE_EXT);
 			}catch (SAXException e) {
 				throw new DaoException();
 			}catch (IOException e) {
@@ -65,7 +65,7 @@ public class XMLProjectImpl implements ProjectDAO {
 			XMLReader reader = XMLReaderFactory.createXMLReader();
 			VersionsHandler handler = new VersionsHandler(projectId, versions, Constants.PROJECT);
 			reader.setContentHandler(handler);
-			reader.parse(Constants.REAL_PATH + Constants.PROJECTS_SOURCE_NAME + Constants.FILE_EXT);
+			reader.parse(Constants.PATH + Constants.VERSIONS_SOURCE_NAME + Constants.FILE_EXT);
 			}catch (SAXException e) {
 				throw new DaoException();
 			}catch (IOException e) {

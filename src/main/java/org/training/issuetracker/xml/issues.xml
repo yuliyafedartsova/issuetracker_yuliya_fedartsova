@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<issues>
-	<issue>
+<issues xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="issues.xsd">
+  <issue>
 		<id> 1 </id>
 		<priority> 0 </priority>
 		<assignee> 1 </assignee>
@@ -9,8 +9,7 @@
 		<description> Description1 </description>
 	    <status> 1 </status>
 		<project> 0 </project>
-		<resolution> </resolution>
-		<found> 1  </found>
+		<found> 1 </found>
 		<createDate> 2013-12-02 </createDate>
 		<author> 2 </author>
 		<modifyDate> 2013-12-04 </modifyDate>
@@ -25,7 +24,6 @@
 		<description> Description2 </description>
 	    <status> 1 </status>
 		<project> 1 </project>
-		<resolution> </resolution>
 		<found> 2 </found>
 		<createDate> 2013-12-03 </createDate>
 		<author> 3 </author>
@@ -41,27 +39,20 @@
 		<description> Description3 </description>
 	    <status> 1 </status>
 		<project> 2 </project>
-		<resolution> </resolution>
 		<found> 3 </found>
 		<createDate> 2013-09-02 </createDate>
 		<author> 1 </author>
-		<modifyDate> </modifyDate>
-		<modifier> </modifier>
 	</issue>
 	<issue>
 		<id> 4 </id>
 		<priority> 1 </priority>
-		<assignee> </assignee>
 		<type> 1 </type>
 		<summary> Summary4 </summary>
 		<description> Description4 </description>
 	    <status> 0 </status>
 		<project> 3 </project>
-		<resolution> </resolution>
 		<found> 4  </found>
 		<createDate> 2013-10-02 </createDate>
 		<author> 0 </author>
-		<modifyDate> </modifyDate>
-		<modifier> </modifier>
 	</issue>
 </issues>

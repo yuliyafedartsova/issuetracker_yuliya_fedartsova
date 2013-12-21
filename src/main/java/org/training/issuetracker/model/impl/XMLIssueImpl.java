@@ -24,7 +24,7 @@ public class XMLIssueImpl implements IssueDAO {
 			XMLReader reader = XMLReaderFactory.createXMLReader();
 			IssuesHandler handler = new IssuesHandler(issues);
 			reader.setContentHandler(handler);
-			reader.parse(Constants.REAL_PATH + Constants.ISSUES_SOURCE_NAME + Constants.FILE_EXT);
+			reader.parse(Constants.PATH + Constants.ISSUES_SOURCE_NAME + Constants.FILE_EXT);
 			}catch (SAXException e) {
 				throw new DaoException();
 			}catch (IOException e) {

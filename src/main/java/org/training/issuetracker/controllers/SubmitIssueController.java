@@ -13,6 +13,7 @@ import org.training.issuetracker.ifaces.AbstractController;
 import org.training.issuetracker.ifaces.ProjectDAO;
 import org.training.issuetracker.ifaces.PropertyDAO;
 import org.training.issuetracker.ifaces.UserDAO;
+import org.training.issuetracker.model.beans.Issue;
 import org.training.issuetracker.model.beans.Project;
 import org.training.issuetracker.model.beans.PropertyParameter;
 import org.training.issuetracker.model.beans.User;
@@ -33,7 +34,7 @@ public class SubmitIssueController extends AbstractController {
     protected void performTask(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
     	PropertyDAO propertyDAO = PropertyFactory.getClassFromFactory();
     	UserDAO userDAO = UserFactory.getClassFromFactory();
-    	ProjectDAO projectDAO = null;
+    	ProjectDAO projectDAO = ProjectFactory.getClassFromFactory();
     	List<PropertyParameter> statuses = null;
     	List<PropertyParameter> priorities = null;
     	List<PropertyParameter> types = null;
@@ -49,18 +50,22 @@ public class SubmitIssueController extends AbstractController {
 			jumpPage(Constants.ERROR, request, response);
 			return;
 		}
-    	List<PropertyParameter> availableStatuses = new ArrayList<PropertyParameter>();
-    	for(PropertyParameter par : statuses) {
-    		if(par.getName().equals(Constants.NEW) || par.getName().equals(Constants.ASSIGNED) ) {
-    			availableStatuses.add(par);
-    		}
-    	}
-    	statuses = availableStatuses;
+    	statuses = getAvailableStatuses(statuses);
     	request.setAttribute(Constants.STATUSES, statuses);
     	request.setAttribute(Constants.TYPES, types);
     	request.setAttribute(Constants.PRIORITIES, priorities);
     	request.setAttribute(Constants.USERS, users);
     	request.setAttribute(Constants.PROJECTS, projects);
     	jumpPage(Constants.JUMP_ADD_ISSUE, request, response);
+    }
+    
+    private List<PropertyParameter> getAvailableStatuses(List<PropertyParameter> statuses) {
+    	List<PropertyParameter> availableStatuses = new ArrayList<PropertyParameter>();
+    	for(PropertyParameter par : statuses) {
+    		if(par.getName().equals(Constants.NEW) || par.getName().equals(Constants.ASSIGNED) ) {
+    			availableStatuses.add(par);
+    		}
+    	}
+    	return availableStatuses;
     }
 }

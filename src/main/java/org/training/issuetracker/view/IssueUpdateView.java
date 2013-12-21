@@ -43,6 +43,7 @@ public class IssueUpdateView extends AbstractController {
  	   out.println("<html>");
  	   out.println("<head>");
  	   out.println("<title>Update issue</title>");
+ 	   out.println("<script src='/issuetracker/scr.js'></script>");
  	   out.println("</head>");
  	   out.println("<body>");
  	   out.println("Update issue:" + "<br>");
@@ -51,8 +52,6 @@ public class IssueUpdateView extends AbstractController {
  	   out.println("<tr>" + "<td>" +"Create Date" +  "</td>" + "<td>"  + issue.getCreateDate() + "</td>" + "</tr>");
  	   out.println("<tr>" + "<td>" + "Created By " + "</td>" + "<td>"  + issue.getAuthor().getFirstName() + " "
  				+ issue.getAuthor().getLastName() + "</td>" + "</tr>");
- 	   
- 	  
  	   if(issue.getModifyDate() != null) {
  			out.println("<tr>" + "<td>" + "Modify Date" + "</td>" + "<td>"  + issue.getModifyDate() + "</td>" + "</tr>");
  		}
@@ -60,7 +59,7 @@ public class IssueUpdateView extends AbstractController {
  			out.println("<tr>" + "<td>" + "Modified By" + "</td>" + "<td>" + issue.getModifier().getFirstName() + " " 
  		      + issue.getModifier().getLastName() + "</td>" + "</tr>");
  		}
- 	   out.println("<form action=''>");
+ 	   out.println("<form id=form action=''>");
  	   out.println("<tr>" + "<td>" + "Summary" + "</td>");
  	   out.println("<td>" + "<input type='text' name='summary' value=" + issue.getSummary() + ">" + "</td>" + "</tr>");
  	   out.println("<tr>" + "<td>" + "Description" + "</td>");
@@ -71,16 +70,6 @@ public class IssueUpdateView extends AbstractController {
  		   out.println("<option value='" + par.getId() + "'>" + par.getName() + "</option>");
  	   }
  	   out.println("</select>" + "</td>" + "</tr>");
- 	  
- 	   //////////////////////////////
- 	   out.println("<tr>" + "<td>" + "Resolution" + "</td>");
- 	   out.println("<td>" + "<select name='resolution' size='1'>");
- 	   for(PropertyParameter par : resolutions) {
- 		   out.println("<option value='" + par.getId() + "'>" + par.getName() + 
- 				"</option>");
- 	   }
- 	   out.println("</select>" + "</td>" + "</tr>");
- 	   ////////////////////////////////
  	   out.println("<tr>" + "<td>" + "Type" + "</td>");
  	   out.println("<td>" + "<select name='type' size='1'>");
  	   for(PropertyParameter par : types) {

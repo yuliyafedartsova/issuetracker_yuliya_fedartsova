@@ -38,7 +38,7 @@ public class ProjectsView extends  AbstractController {
 		out.println("<br>");
 	 	for(Project project : projects) {
 	 		out.println("<tr>");
-	 		out.println("<td>" + "<a href='project-controller?action=update&id=" + 
+	 		out.println("<td>" + "<a href='project?action=update&id=" + 
 	 				project.getId() + "'" + ">" +  project.getName() +"</a>" + "</td>");
 	    	out.println("<td>" + project.getManager().getFirstName() 
 	    			+  " " + project.getManager().getLastName() + "</td>");
@@ -50,5 +50,4 @@ public class ProjectsView extends  AbstractController {
  		out.println("</html>");
  		out.close();
 	}
-
 }

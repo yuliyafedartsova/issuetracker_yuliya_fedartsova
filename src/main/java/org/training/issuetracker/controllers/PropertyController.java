@@ -17,33 +17,38 @@ public class PropertyController extends AbstractController {
        
     public PropertyController() {
         super();
-        
     }
 
     protected void performTask(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
     	String property = request.getParameter(Constants.PROPERTY);
     	List<PropertyParameter> parametres = null;
-    	PropertyDAO propertyDAO = PropertyFactory.getClassFromFactory();
     	try {
-    	switch(property) {
-    		case Constants.STATUS:
-    			parametres = propertyDAO.getStatuses();
-    			break;
-    		case Constants.TYPE:
-    			parametres = propertyDAO.getTypes();
-    			break;
-    		case Constants.PRIORITY:
-    			parametres = propertyDAO.getPriorities();
-    			break;
-    		case Constants.RESOLUTION:
-    			parametres = propertyDAO.getResolutions();
-    			break;
-    	}
+    		parametres = getParameters(property);
     	}catch (DaoException e) {
 			jumpPage(Constants.ERROR, request, response);
 			return;
 		}
     	request.setAttribute(Constants.PARAMETRES, parametres);
     	jumpPage(Constants.JUMP_PARAMETERS, request, response);
+    }
+    
+    private List<PropertyParameter> getParameters(String propertyName) throws DaoException {
+    	List<PropertyParameter> parametres = null;
+    	PropertyDAO propertyDAO = PropertyFactory.getClassFromFactory();
+    	switch(propertyName) {
+		case Constants.STATUS:
+			parametres = propertyDAO.getStatuses();
+			break;
+		case Constants.TYPE:
+			parametres = propertyDAO.getTypes();
+			break;
+		case Constants.PRIORITY:
+			parametres = propertyDAO.getPriorities();
+			break;
+		case Constants.RESOLUTION:
+			parametres = propertyDAO.getResolutions();
+			break;
+    	}
+    	return parametres;
     }
 }

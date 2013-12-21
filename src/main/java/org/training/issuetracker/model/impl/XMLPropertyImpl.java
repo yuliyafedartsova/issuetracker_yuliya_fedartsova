@@ -21,7 +21,7 @@ public class XMLPropertyImpl implements PropertyDAO {
 			XMLReader reader = XMLReaderFactory.createXMLReader();
 			ParametrsHandler handler = new ParametrsHandler(parameters);
 			reader.setContentHandler(handler);
-			reader.parse(Constants.REAL_PATH + resourceName + Constants.FILE_EXT);
+			reader.parse(Constants.PATH + resourceName + Constants.FILE_EXT);
 			}catch (SAXException e) {
 				throw new DaoException();
 			}catch (IOException e) {

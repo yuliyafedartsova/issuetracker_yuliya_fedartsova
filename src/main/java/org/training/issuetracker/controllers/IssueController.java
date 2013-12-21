@@ -56,6 +56,8 @@ public class IssueController extends AbstractController {
   	   	if(user == null) {
     		jumpPage(Constants.JUMP_ISSUE_REVIEW, request, response);
     	} else {
+    		
+    		
     		ProjectDAO projectDAO = ProjectFactory.getClassFromFactory();
       	   	UserDAO userDAO = UserFactory.getClassFromFactory();
       	    PropertyDAO propertyDAO = PropertyFactory.getClassFromFactory();
@@ -66,7 +68,7 @@ public class IssueController extends AbstractController {
         	priorities = propertyDAO.getPriorities();
         	types = propertyDAO.getTypes();
         	resolutions = propertyDAO.getResolutions();
-        	getAvailableStatuses(statuses, issue);
+        	statuses = getAvailableStatuses(statuses, issue);
        		}catch (DaoException e) {
     			jumpPage(Constants.ERROR, request, response);
     			return;
