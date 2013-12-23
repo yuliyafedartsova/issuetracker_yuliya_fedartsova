@@ -1,4 +1,4 @@
-package org.training.issuetracker.ifaces;
+package DAO;
 
 import java.util.List;
 

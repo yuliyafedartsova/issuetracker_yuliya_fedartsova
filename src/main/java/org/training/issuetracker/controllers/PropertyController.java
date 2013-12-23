@@ -7,10 +7,10 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import org.training.issuetracker.constants.Constants;
 import org.training.issuetracker.exceptions.DaoException;
-import org.training.issuetracker.ifaces.AbstractController;
-import org.training.issuetracker.ifaces.PropertyDAO;
 import org.training.issuetracker.model.beans.PropertyParameter;
 import org.training.issuetracker.model.factories.PropertyFactory;
+
+import DAO.PropertyDAO;
 
 public class PropertyController extends AbstractController {
 	private static final long serialVersionUID = 1L;

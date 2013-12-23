@@ -1,4 +1,4 @@
-package org.training.issuetracker.ifaces;
+package org.training.issuetracker.controllers;
 
 import java.io.IOException;
 
@@ -10,9 +10,7 @@ import javax.servlet.http.HttpServletResponse;
 
 import org.training.issuetracker.constants.Constants;
 
-/**
- * Servlet implementation class AbstractController
- */
+
 public abstract class AbstractController extends HttpServlet {
 	private static final long serialVersionUID = 1L;
        
@@ -43,5 +41,3 @@ public abstract class AbstractController extends HttpServlet {
 
 
 }
-
-	

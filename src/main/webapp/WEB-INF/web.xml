@@ -225,4 +225,14 @@
     <servlet-name>LogoutController</servlet-name>
     <url-pattern>/logout</url-pattern>
   </servlet-mapping>
+  <servlet>
+    <description></description>
+    <display-name>AbstractController</display-name>
+    <servlet-name>AbstractController</servlet-name>
+    <servlet-class>org.training.issuetracker.controllers.AbstractController</servlet-class>
+  </servlet>
+  <servlet-mapping>
+    <servlet-name>AbstractController</servlet-name>
+    <url-pattern>/AbstractController</url-pattern>
+  </servlet-mapping>
 </web-app>

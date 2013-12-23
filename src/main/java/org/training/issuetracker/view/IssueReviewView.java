@@ -7,7 +7,7 @@ import javax.servlet.ServletException;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import org.training.issuetracker.constants.Constants;
-import org.training.issuetracker.ifaces.AbstractController;
+import org.training.issuetracker.controllers.AbstractController;
 import org.training.issuetracker.model.beans.Issue;
 
 public class IssueReviewView extends AbstractController {

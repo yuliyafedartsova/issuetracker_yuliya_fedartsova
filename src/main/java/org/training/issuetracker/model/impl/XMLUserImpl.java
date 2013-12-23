@@ -5,11 +5,12 @@ import java.util.List;
 import org.training.issuetracker.constants.Constants;
 import org.training.issuetracker.exceptions.DaoException;
 import org.training.issuetracker.exceptions.ValidationException;
-import org.training.issuetracker.ifaces.UserDAO;
 import org.training.issuetracker.model.beans.User;
 import org.xml.sax.SAXException;
 import org.xml.sax.XMLReader;
 import org.xml.sax.helpers.XMLReaderFactory;
+
+import DAO.UserDAO;
 
 import utils.handlers.UsersHandler;
 

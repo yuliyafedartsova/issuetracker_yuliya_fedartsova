@@ -5,13 +5,12 @@ import java.util.ArrayList;
 import java.util.List;
 import org.training.issuetracker.constants.Constants;
 import org.training.issuetracker.exceptions.DaoException;
-import org.training.issuetracker.ifaces.ProjectDAO;
 import org.training.issuetracker.model.beans.Project;
 import org.training.issuetracker.model.beans.PropertyParameter;
 import org.xml.sax.SAXException;
 import org.xml.sax.XMLReader;
 import org.xml.sax.helpers.XMLReaderFactory;
-
+import DAO.ProjectDAO;
 import utils.handlers.ProjectHandler;
 import utils.handlers.VersionsHandler;
 

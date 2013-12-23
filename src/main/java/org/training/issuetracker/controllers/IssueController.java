@@ -7,14 +7,8 @@ import javax.servlet.ServletException;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
-
 import org.training.issuetracker.constants.Constants;
 import org.training.issuetracker.exceptions.DaoException;
-import org.training.issuetracker.ifaces.AbstractController;
-import org.training.issuetracker.ifaces.IssueDAO;
-import org.training.issuetracker.ifaces.ProjectDAO;
-import org.training.issuetracker.ifaces.PropertyDAO;
-import org.training.issuetracker.ifaces.UserDAO;
 import org.training.issuetracker.model.beans.Issue;
 import org.training.issuetracker.model.beans.Project;
 import org.training.issuetracker.model.beans.PropertyParameter;
@@ -23,6 +17,11 @@ import org.training.issuetracker.model.factories.IssueFactory;
 import org.training.issuetracker.model.factories.ProjectFactory;
 import org.training.issuetracker.model.factories.PropertyFactory;
 import org.training.issuetracker.model.factories.UserFactory;
+
+import DAO.IssueDAO;
+import DAO.ProjectDAO;
+import DAO.PropertyDAO;
+import DAO.UserDAO;
 
 
 public class IssueController extends AbstractController {

@@ -6,9 +6,8 @@ import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
-
 import org.training.issuetracker.constants.Constants;
-import org.training.issuetracker.ifaces.AbstractController;
+
 
 
 public class LogoutController extends AbstractController {

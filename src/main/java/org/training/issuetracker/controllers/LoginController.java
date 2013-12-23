@@ -9,15 +9,14 @@ import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
-
 import org.training.issuetracker.constants.Constants;
 import org.training.issuetracker.exceptions.DaoException;
 import org.training.issuetracker.exceptions.ValidationException;
-import org.training.issuetracker.ifaces.AbstractController;
-import org.training.issuetracker.ifaces.UserDAO;
 import org.training.issuetracker.model.beans.Issue;
 import org.training.issuetracker.model.beans.User;
 import org.training.issuetracker.model.factories.UserFactory;
+
+import DAO.UserDAO;
 
 
 public class LoginController extends AbstractController {

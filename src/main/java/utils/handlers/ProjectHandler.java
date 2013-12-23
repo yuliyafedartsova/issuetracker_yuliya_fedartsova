@@ -3,8 +3,6 @@ package utils.handlers;
 import java.util.List;
 
 import org.training.issuetracker.exceptions.DaoException;
-import org.training.issuetracker.ifaces.ProjectDAO;
-import org.training.issuetracker.ifaces.UserDAO;
 import org.training.issuetracker.model.beans.Project;
 import org.training.issuetracker.model.beans.PropertyParameter;
 import org.training.issuetracker.model.beans.User;
@@ -12,6 +10,9 @@ import org.training.issuetracker.model.factories.ProjectFactory;
 import org.training.issuetracker.model.factories.UserFactory;
 import org.xml.sax.Attributes;
 import org.xml.sax.helpers.DefaultHandler;
+
+import DAO.ProjectDAO;
+import DAO.UserDAO;
 
 public class ProjectHandler extends DefaultHandler {
 	

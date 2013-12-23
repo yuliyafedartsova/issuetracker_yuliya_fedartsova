@@ -10,7 +10,7 @@ import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import org.training.issuetracker.constants.Constants;
-import org.training.issuetracker.ifaces.AbstractController;
+import org.training.issuetracker.controllers.AbstractController;
 import org.training.issuetracker.model.beans.PropertyParameter;
 import org.training.issuetracker.model.beans.User;
 

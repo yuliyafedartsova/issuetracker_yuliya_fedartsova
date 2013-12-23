@@ -8,7 +8,6 @@ import java.util.Set;
 import java.util.TreeSet;
 import org.training.issuetracker.constants.Constants;
 import org.training.issuetracker.exceptions.DaoException;
-import org.training.issuetracker.ifaces.IssueDAO;
 import org.training.issuetracker.model.beans.Issue;
 import org.training.issuetracker.model.beans.User;
 import org.training.issuetracker.model.beans.comparators.IssueComparatorByDate;
@@ -16,6 +15,8 @@ import org.training.issuetracker.model.beans.comparators.IssueComparatorByDate;
 import org.xml.sax.SAXException;
 import org.xml.sax.XMLReader;
 import org.xml.sax.helpers.XMLReaderFactory;
+
+import DAO.IssueDAO;
 
 import utils.handlers.IssuesHandler;
 

@@ -9,8 +9,6 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import org.training.issuetracker.constants.Constants;
 import org.training.issuetracker.exceptions.DaoException;
-import org.training.issuetracker.ifaces.AbstractController;
-import org.training.issuetracker.ifaces.IssueDAO;
 import org.training.issuetracker.model.beans.Issue;
 import org.training.issuetracker.model.beans.User;
 import org.training.issuetracker.model.beans.comparators.IssueComparatorByAssignee;
@@ -19,6 +17,8 @@ import org.training.issuetracker.model.beans.comparators.IssueComparatorByPriori
 import org.training.issuetracker.model.beans.comparators.IssueComparatorByStatus;
 import org.training.issuetracker.model.beans.comparators.IssueComparatorByType;
 import org.training.issuetracker.model.factories.IssueFactory;
+
+import DAO.IssueDAO;
 
 
 public class MainController extends AbstractController {

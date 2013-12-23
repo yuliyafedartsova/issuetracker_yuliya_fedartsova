@@ -6,11 +6,12 @@ import java.util.List;
 
 import org.training.issuetracker.constants.Constants;
 import org.training.issuetracker.exceptions.DaoException;
-import org.training.issuetracker.ifaces.PropertyDAO;
 import org.training.issuetracker.model.beans.PropertyParameter;
 import org.xml.sax.SAXException;
 import org.xml.sax.XMLReader;
 import org.xml.sax.helpers.XMLReaderFactory;
+
+import DAO.PropertyDAO;
 
 import utils.handlers.ParametrsHandler;
 
