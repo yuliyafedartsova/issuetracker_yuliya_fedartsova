@@ -41,14 +41,14 @@ public class IssueReviewView extends AbstractController {
 	 	}
 	 	out.println("Summary: " + issue.getSummary() + "<br>");
 	    out.println("Description: " + issue.getDescription() + "<br>");
-	 	out.println("Status: " + issue.getStatus() + "<br>");
+	 	out.println("Status: " + issue.getStatus().getName() + "<br>");
 	 	if(issue.getStatus().equals(Constants.CLOSED)) {
 	 		out.println("Resolution: " + issue.getResolution() + "<br>");
 	 	}
-	 	out.println("Type: " + issue.getType() + "<br>");
-	 	out.println("Priority: " + issue.getPriority() + "<br>");
+	 	out.println("Type: " + issue.getType().getName() + "<br>");
+	 	out.println("Priority: " + issue.getPriority().getName() + "<br>");
 	 	out.println("Project: " + issue.getProject().getName() + "<br>");
-	 	out.println("Build found: " + issue.getBuildFound() + "<br>");
+	 	out.println("Build found: " + issue.getBuildFound().getName() + "<br>");
 	 	if(issue.getAssignee() != null) {
 	 		out.println("Assignee: " + issue.getAssignee().getFirstName() + 
 	 				" " + issue.getAssignee().getLastName()  + "<br>");

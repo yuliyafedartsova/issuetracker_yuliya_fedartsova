@@ -75,15 +75,15 @@ public class MainView extends AbstractController {
 		for(Issue is : issues) {
 			out.println("<tr>");
 			out.println("<td>" + "<a href='issue?id=" + is.getId() + "'" + ">"+ is.getId() +"</a>" + "</td>");
-				out.println("<td>" + is.getPriority() + "</td>");
+				out.println("<td>" + is.getPriority().getName() + "</td>");
 				if(is.getAssignee() != null) {
 					out.println("<td>" + is.getAssignee().getFirstName() + " " + 
 							is.getAssignee().getLastName() + "</td>");
 				} else {
 					out.println("<td>" + "</td>");
 				}
-				out.println("<td>" + is.getType() + "</td>");
-				out.println("<td>" + is.getStatus() + "</td>");
+				out.println("<td>" + is.getType().getName() + "</td>");
+				out.println("<td>" + is.getStatus().getName() + "</td>");
 				out.println("<td>" + is.getSummary() + "</td>");
 				out.println("</tr>");
 		}

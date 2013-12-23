@@ -33,7 +33,11 @@ public class MainController extends AbstractController {
 		String realPath = getServletContext().getRealPath(Constants.DELIMITER) +
 				 Constants.PATH_TO_FILES;
 		Constants.PATH = realPath;
-	}
+		System.out.println(Constants.PATH);
+    
+    
+    
+    }
 
     protected void performTask(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
     	IssueDAO issuesDao = IssueFactory.getClassFromFactory();

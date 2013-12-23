@@ -4,23 +4,23 @@ import java.util.Date;
 
 public class Issue {
 	private int id;
-	private String priority;
+	private PropertyParameter priority;
 	private User assignee;
-	private String type;
+	private PropertyParameter type;
 	private String summary;
 	private String description;
-	private String status;
+	private PropertyParameter status;
 	private Project project;
-	private String resolution;
-	private String buildFound;
+	private PropertyParameter resolution;
+	private PropertyParameter buildFound;
 	private Date createDate;
 	private Date modifyDate;
 	private User author;
 	private User modifier;
 	
-	public Issue(int id, String priority, String type,
-			String summary, String description, String status, Project project,
-			String buildFound, Date createDate, User author) {
+	public Issue(int id, PropertyParameter priority, PropertyParameter type,
+			String summary, String description, PropertyParameter status, Project project,
+			PropertyParameter buildFound, Date createDate, User author) {
 		super();
 		this.id = id;
 		this.priority = priority;
@@ -42,11 +42,11 @@ public class Issue {
 		this.id = id;
 	}
 
-	public String getPriority() {
+	public PropertyParameter getPriority() {
 		return priority;
 	}
 
-	public void setPriority(String priority) {
+	public void setPriority(PropertyParameter priority) {
 		this.priority = priority;
 	}
 
@@ -58,11 +58,11 @@ public class Issue {
 		this.assignee = assignee;
 	}
 
-	public String getType() {
+	public PropertyParameter getType() {
 		return type;
 	}
 
-	public void setType(String type) {
+	public void setType(PropertyParameter type) {
 		this.type = type;
 	}
 
@@ -82,11 +82,11 @@ public class Issue {
 		this.description = description;
 	}
 
-	public String getStatus() {
+	public PropertyParameter getStatus() {
 		return status;
 	}
 
-	public void setStatus(String status) {
+	public void setStatus(PropertyParameter status) {
 		this.status = status;
 	}
 
@@ -98,11 +98,11 @@ public class Issue {
 		this.project = project;
 	}
 
-	public String getBuildFound() {
+	public PropertyParameter getBuildFound() {
 		return buildFound;
 	}
 
-	public void setBuildFound(String buildFound) {
+	public void setBuildFound(PropertyParameter buildFound) {
 		this.buildFound = buildFound;
 	}
 
@@ -138,11 +138,11 @@ public class Issue {
 		this.modifier = modifier;
 	}
 
-	public String getResolution() {
+	public PropertyParameter getResolution() {
 		return resolution;
 	}
 
-	public void setResolution(String resolution) {
+	public void setResolution(PropertyParameter resolution) {
 		this.resolution = resolution;
 	}
 	

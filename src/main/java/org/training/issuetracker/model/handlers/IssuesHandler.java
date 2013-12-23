@@ -169,9 +169,9 @@ public class IssuesHandler extends DefaultHandler {
 			String localName, String qName) { 
 			currentEnum = IssuesXMLEnum.valueOf(qName.toUpperCase()); 
 			if(currentEnum == IssuesXMLEnum.ISSUE) {
-				Issue issue = new Issue(currentId, currentPriority.getName(),
-						currentType.getName(), currentSummary, currentDescription, currentStatus.getName(),
-							currentProject, currentVersion.getName(), currentCreateDate, currentAuthor);
+				Issue issue = new Issue(currentId, currentPriority,
+						currentType, currentSummary, currentDescription, currentStatus,
+							currentProject, currentVersion, currentCreateDate, currentAuthor);
 				if(currentAssignee != null) {
 					 issue.setAssignee(currentAssignee);
 					 currentAssignee = null;
@@ -185,7 +185,7 @@ public class IssuesHandler extends DefaultHandler {
 					 currentModifier = null;
 				}
 				if(currentResolution != null) {
-					issue.setResolution(currentResolution.getName());
+					issue.setResolution(currentResolution);
 					currentResolution = null;
 				}
 				

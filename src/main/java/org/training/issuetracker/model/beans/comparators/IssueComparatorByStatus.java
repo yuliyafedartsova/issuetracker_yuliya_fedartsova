@@ -8,6 +8,6 @@ public class IssueComparatorByStatus implements Comparator <Issue> {
 	
 	@Override
 	public int compare(Issue ob1, Issue ob2) {
-		return ob1.getStatus().compareTo(ob2.getStatus());
+		return ob1.getStatus().getName().compareTo(ob2.getStatus().getName());
 	}
 }

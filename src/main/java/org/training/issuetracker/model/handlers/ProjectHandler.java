@@ -96,7 +96,7 @@ public class ProjectHandler extends DefaultHandler {
 					throw new RuntimeException(e);
 				}
 				projects.add(new Project(currentId, currentName, currentManager, 
-			    	buildVersions, currentVersion.getName(), currentDescription));
+			    	buildVersions, currentVersion, currentDescription));
 			}
 	} 
 	

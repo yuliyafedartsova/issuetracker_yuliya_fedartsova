@@ -7,11 +7,11 @@ public class Project {
 	int id;
 	User manager;
 	List<PropertyParameter> buildVersions;
-	String currentVersion;
+	PropertyParameter currentVersion;
 	String description;
 	
 	public Project(int id, String name, User manager,
-			List<PropertyParameter> buildVersions, String currentVersion, String description) {
+			List<PropertyParameter> buildVersions, PropertyParameter currentVersion, String description) {
 		super();
 		this.name = name;
 		this.id = id;
@@ -72,12 +72,12 @@ public class Project {
 	}
 
 
-	public String getCurrentVersion() {
+	public PropertyParameter getCurrentVersion() {
 		return currentVersion;
 	}
 
 
-	public void setCurrentVersion(String currentVersion) {
+	public void setCurrentVersion(PropertyParameter currentVersion) {
 		this.currentVersion = currentVersion;
 	}
 	

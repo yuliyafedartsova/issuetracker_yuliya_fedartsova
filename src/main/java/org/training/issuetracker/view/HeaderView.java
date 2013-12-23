@@ -32,10 +32,10 @@ public class HeaderView extends AbstractController {
 		out.println("<head>");
 		out.println("</head>");
 		out.println("<body>");
+		out.println("<a href='main'>"+ "Main page" +"</a>");
 		if(user != null) {
 			out.println("Hello, " + user.getFirstName());
 			out.println("<br>");
-			out.println("<a href='main'>"+ "Main page" +"</a>");
 			out.println("<br>");
 			out.println("<a href='/issuetracker/change_password.html'>"+ "Change password" +"</a>");
 			out.println("<br>");

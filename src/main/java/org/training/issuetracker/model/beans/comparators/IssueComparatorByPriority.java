@@ -8,6 +8,6 @@ public class IssueComparatorByPriority implements Comparator <Issue> {
 	
 	@Override
 	public int compare(Issue ob1, Issue ob2) {
-		return ob1.getPriority().compareTo(ob2.getPriority());
+		return ob1.getPriority().getName().compareTo(ob2.getPriority().getName());
 	}
 }

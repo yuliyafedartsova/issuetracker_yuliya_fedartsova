@@ -90,7 +90,7 @@ public class IssueController extends AbstractController {
     
     private List<PropertyParameter> getAvailableStatuses(List<PropertyParameter> statuses, Issue issue) {
     	List<PropertyParameter> availableStatuses = new ArrayList<PropertyParameter>();
-    	switch(issue.getStatus()) {
+    	switch(issue.getStatus().getName()) {
     		case Constants.NEW:
     			for(PropertyParameter par : statuses) {
         			if(par.getName().equals(Constants.NEW) || par.getName().equals(Constants.ASSIGNED)) {

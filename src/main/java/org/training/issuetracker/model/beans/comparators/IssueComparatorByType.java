@@ -8,6 +8,6 @@ public class IssueComparatorByType implements Comparator <Issue> {
 	
 	@Override
 	public int compare(Issue ob1, Issue ob2) {
-		return ob1.getType().compareTo(ob2.getType());
+		return ob1.getType().getName().compareTo(ob2.getType().getName());
 	}
 }
