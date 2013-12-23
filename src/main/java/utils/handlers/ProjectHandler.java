@@ -1,4 +1,4 @@
-package org.training.issuetracker.model.handlers;
+package utils.handlers;
 
 import java.util.List;
 
@@ -102,3 +102,4 @@ public class ProjectHandler extends DefaultHandler {
 	
 
 }
+

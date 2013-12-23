@@ -1,7 +1,6 @@
-package org.training.issuetracker.model.handlers;
+package utils.handlers;
 
 import java.util.List;
-
 import org.training.issuetracker.constants.Constants;
 import org.training.issuetracker.model.beans.PropertyParameter;
 import org.xml.sax.Attributes;

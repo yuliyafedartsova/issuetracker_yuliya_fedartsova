@@ -1,18 +1,17 @@
 package org.training.issuetracker.model.impl;
-
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
-
 import org.training.issuetracker.constants.Constants;
 import org.training.issuetracker.exceptions.DaoException;
 import org.training.issuetracker.exceptions.ValidationException;
 import org.training.issuetracker.ifaces.UserDAO;
 import org.training.issuetracker.model.beans.User;
-import org.training.issuetracker.model.handlers.UsersHandler;
 import org.xml.sax.SAXException;
 import org.xml.sax.XMLReader;
 import org.xml.sax.helpers.XMLReaderFactory;
+
+import utils.handlers.UsersHandler;
 
 public class XMLUserImpl implements UserDAO {
 	public List<User> getUsers() throws DaoException {

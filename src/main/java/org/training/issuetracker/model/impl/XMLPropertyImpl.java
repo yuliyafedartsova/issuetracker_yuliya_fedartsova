@@ -8,10 +8,11 @@ import org.training.issuetracker.constants.Constants;
 import org.training.issuetracker.exceptions.DaoException;
 import org.training.issuetracker.ifaces.PropertyDAO;
 import org.training.issuetracker.model.beans.PropertyParameter;
-import org.training.issuetracker.model.handlers.ParametrsHandler;
 import org.xml.sax.SAXException;
 import org.xml.sax.XMLReader;
 import org.xml.sax.helpers.XMLReaderFactory;
+
+import utils.handlers.ParametrsHandler;
 
 public class XMLPropertyImpl implements PropertyDAO {
 	

@@ -12,10 +12,12 @@ import org.training.issuetracker.ifaces.IssueDAO;
 import org.training.issuetracker.model.beans.Issue;
 import org.training.issuetracker.model.beans.User;
 import org.training.issuetracker.model.beans.comparators.IssueComparatorByDate;
-import org.training.issuetracker.model.handlers.IssuesHandler;
+
 import org.xml.sax.SAXException;
 import org.xml.sax.XMLReader;
 import org.xml.sax.helpers.XMLReaderFactory;
+
+import utils.handlers.IssuesHandler;
 
 public class XMLIssueImpl implements IssueDAO {
 	public List<Issue> getIssues() throws DaoException { 

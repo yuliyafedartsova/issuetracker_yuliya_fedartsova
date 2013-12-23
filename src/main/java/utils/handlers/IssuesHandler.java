@@ -1,5 +1,4 @@
-package org.training.issuetracker.model.handlers;
-
+package utils.handlers;
 
 import java.sql.Date;
 import java.util.List;
@@ -193,3 +192,4 @@ public class IssuesHandler extends DefaultHandler {
 			}
 	} 
 }
+

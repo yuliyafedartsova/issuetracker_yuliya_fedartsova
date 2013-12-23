@@ -8,11 +8,12 @@ import org.training.issuetracker.exceptions.DaoException;
 import org.training.issuetracker.ifaces.ProjectDAO;
 import org.training.issuetracker.model.beans.Project;
 import org.training.issuetracker.model.beans.PropertyParameter;
-import org.training.issuetracker.model.handlers.ProjectHandler;
-import org.training.issuetracker.model.handlers.VersionsHandler;
 import org.xml.sax.SAXException;
 import org.xml.sax.XMLReader;
 import org.xml.sax.helpers.XMLReaderFactory;
+
+import utils.handlers.ProjectHandler;
+import utils.handlers.VersionsHandler;
 
 public class XMLProjectImpl implements ProjectDAO {
 	public Project getProjectById(int id) throws DaoException {

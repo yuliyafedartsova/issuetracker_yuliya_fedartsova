@@ -1,7 +1,6 @@
-package org.training.issuetracker.model.handlers;
+package utils.handlers;
 
 import java.util.List;
-
 import org.training.issuetracker.model.beans.PropertyParameter;
 import org.xml.sax.Attributes;
 import org.xml.sax.helpers.DefaultHandler;
@@ -49,5 +48,6 @@ public class ParametrsHandler extends DefaultHandler {
 			}
 	} 
 }
+
 
 
