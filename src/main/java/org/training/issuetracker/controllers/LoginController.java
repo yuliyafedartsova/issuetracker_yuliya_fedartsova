@@ -33,6 +33,7 @@ public class LoginController extends AbstractController {
 		String password = request.getParameter(Constants.PASSWORD);
 		User user = null;
 		try {
+		checkData(email, password);
 		user = userDAO.getUser(email, password);
 		}catch (ValidationException e) {
 			jumpError(Constants.MAIN, e.getMessage(), request, response);
@@ -48,4 +49,12 @@ public class LoginController extends AbstractController {
 		session.setAttribute(Constants.USER, user);
 		jumpPage(Constants.MAIN, request, response);
 	}
-}
+    
+    private void checkData(String login, String password) throws ValidationException {
+    	login = login.trim();
+		password = password.trim();
+		if (Constants.EMPTY.equals(login) || Constants.EMPTY.equals(password)) {
+			throw new ValidationException(Constants.LOGIN_EMPTY);
+		}
+	}
+  }

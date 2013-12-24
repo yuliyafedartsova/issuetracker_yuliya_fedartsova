@@ -75,5 +75,5 @@ public class Constants {
     public static final String EMPTY_MESSAGE_FOR_GUEST = "There are no issues";
     public static final String EMPTY_MESSAGE_FOR_USER = "There are no issues aasigned to you";
     public static final String MESSAGE = "collection is empty";
-    
+    public static final String LOGIN_EMPTY = "Email or password is empty";
 }
