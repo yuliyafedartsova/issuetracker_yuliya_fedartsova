@@ -49,7 +49,9 @@ public class AddUserView extends AbstractController {
 	 	out.println("<td>" + "<input type='text' name='email' value=''>" + "</td>" + "</tr>");
  		out.println("<tr>" + "<td>" + "Role: " + "</td>");
  		out.println("<td>" + "<select name='role' size='1'>");
+ 		
  		for(PropertyParameter role : roles) {
+ 			
  			if(!role.getName().equals(Constants.GUEST)) {
  				out.println("<option value='" + role.getId() + "'>" + role.getName() 
  					+ "</option>");

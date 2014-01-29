@@ -10,6 +10,10 @@ public class User {
 	private String role;
 	private String password;
 	
+	public User() {
+		super();
+	}
+	
 	public User(int id, String firstName, String lastName, String email, String role,
 			String password) {
 		super();

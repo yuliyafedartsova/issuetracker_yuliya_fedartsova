@@ -47,7 +47,7 @@ public class IssueUpdateView extends AbstractController {
  	   out.println("</head>");
  	   out.println("<body>");
  	   out.println("Update issue:" + "<br>");
- 	  out.println("<table>");
+ 	   out.println("<table>");
  	   out.println("<tr>" + "<td>" + "Id" + "</td>" + "<td>" + issue.getId() + "</td>" + "</tr>");
  	   out.println("<tr>" + "<td>" +"Create Date" +  "</td>" + "<td>"  + issue.getCreateDate() + "</td>" + "</tr>");
  	   out.println("<tr>" + "<td>" + "Created By " + "</td>" + "<td>"  + issue.getAuthor().getFirstName() + " "

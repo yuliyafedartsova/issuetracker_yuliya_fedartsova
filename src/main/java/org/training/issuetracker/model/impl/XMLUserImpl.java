@@ -52,4 +52,6 @@ public class XMLUserImpl implements UserDAO {
 		}
 		return user;
 	}
+	
+	
 }

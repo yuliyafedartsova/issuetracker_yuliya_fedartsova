@@ -25,7 +25,7 @@ public class MainView extends AbstractController {
 	protected void performTask(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		User user = (User)request.getSession().getAttribute(Constants.USER);
 		List<Issue> issues = (List<Issue>)request.getAttribute(Constants.ISSUES);
-		String message = (String)request.getAttribute(Constants.MESSAGE);
+		String message = (String)request.getAttribute(Constants.ERROR_MESSAGE);
 		PrintWriter out = response.getWriter();
 		request.setAttribute(Constants.WRITER, out);
 		RequestDispatcher rd = getServletContext().getRequestDispatcher(Constants.HEADER);

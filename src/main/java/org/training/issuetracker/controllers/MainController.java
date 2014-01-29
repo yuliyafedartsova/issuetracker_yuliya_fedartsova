@@ -1,9 +1,12 @@
 package org.training.issuetracker.controllers;
 
 import java.io.IOException;
+import java.util.ArrayList;
 import java.util.Collections;
 import java.util.Comparator;
 import java.util.List;
+
+import javax.servlet.ServletContext;
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
@@ -32,9 +35,15 @@ public class MainController extends AbstractController {
     public void init() {
 		String realPath = getServletContext().getRealPath(Constants.DELIMITER) +
 				 Constants.PATH_TO_FILES;
+	
 		Constants.PATH = realPath;
+		
 		System.out.println(Constants.PATH);
-    
+        //////
+		ServletContext context = getServletContext();
+		User guest = new User();
+		guest.setRole("Guest");
+		context.setAttribute(Constants.USER, guest);
     
     
     }
@@ -45,13 +54,13 @@ public class MainController extends AbstractController {
     	User user = (User)request.getSession().getAttribute(Constants.USER);
     	String sort = request.getParameter(Constants.SORTING);
     	try {
-    	if(user != null) {
+    	if(user != null) { //
     		issues = issuesDao.getNAssignedIssues(10, user);
     		if(sort != null) {
     			sortIssues(sort, issues);
     		}
     		if(issues.size() == Constants.NULL) {
-    			request.setAttribute(Constants.MESSAGE, Constants.EMPTY_MESSAGE_FOR_USER);
+    			request.setAttribute(Constants.ERROR_MESSAGE, Constants.EMPTY_MESSAGE_FOR_USER);
     		}
     	} else {
     		issues = issuesDao.getNLastAddedIssues(10);
@@ -59,21 +68,23 @@ public class MainController extends AbstractController {
     			sortIssues(sort, issues);
     		}
     		if(issues.size() == Constants.NULL) {
-    			request.setAttribute(Constants.MESSAGE, Constants.EMPTY_MESSAGE_FOR_GUEST);
+    			request.setAttribute(Constants.ERROR_MESSAGE, Constants.EMPTY_MESSAGE_FOR_GUEST);
     		}
     	}
     	}catch (DaoException e) {
-			jumpPage(Constants.ERROR, request, response);
+    		jumpPage(Constants.ERROR, request, response);
 			return;
-		}catch (Exception e) {
-			jumpPage(Constants.ERROR, request, response);
-			return;
-		}
+		} 
     	
     	if(issues.size() != Constants.NULL) {
     		request.setAttribute(Constants.ISSUES, issues);
+    	} else {
+    		String message = (user == null) ? Constants.EMPTY_MESSAGE_FOR_GUEST : 
+    			Constants.EMPTY_MESSAGE_FOR_USER;
+    		jumpError("/main.jsp", message, request, response);
+    		return;
     	}
-    	jumpPage(Constants.JUMP_MAIN, request, response);
+    	jumpPage("/main.jsp", request, response);
     }
     
     private void sortIssues(String sort, List<Issue> issues) {

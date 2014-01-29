@@ -47,6 +47,8 @@ public class ProjectUpdateView extends AbstractController {
  					version.getName() + "</option>");
  		}
  		out.println("</select>" + "</td>" + "</tr>");
+ 		
+ 		
  		out.println("<tr>" + "<td>" + "Manager:" + "</td>");
  		out.println("<td>" + "<select name='manager' size='1'>");
  		for(User user : users) {
