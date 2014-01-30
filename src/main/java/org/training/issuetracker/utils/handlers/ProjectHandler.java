@@ -1,4 +1,4 @@
-package utils.handlers;
+package org.training.issuetracker.utils.handlers;
 
 import java.util.List;
 
@@ -10,9 +10,8 @@ import org.training.issuetracker.model.factories.ProjectFactory;
 import org.training.issuetracker.model.factories.UserFactory;
 import org.xml.sax.Attributes;
 import org.xml.sax.helpers.DefaultHandler;
-
-import DAO.ProjectDAO;
-import DAO.UserDAO;
+import org.training.issuetracker.model.DAO.ProjectDAO;
+import org.training.issuetracker.model.DAO.UserDAO;
 
 public class ProjectHandler extends DefaultHandler {
 	

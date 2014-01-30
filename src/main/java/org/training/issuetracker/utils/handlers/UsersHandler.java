@@ -1,15 +1,13 @@
-package utils.handlers;
+package org.training.issuetracker.utils.handlers;
 
 import java.util.List;
-
 import org.training.issuetracker.exceptions.DaoException;
 import org.training.issuetracker.model.beans.PropertyParameter;
 import org.training.issuetracker.model.beans.User;
 import org.training.issuetracker.model.factories.PropertyFactory;
 import org.xml.sax.Attributes;
 import org.xml.sax.helpers.DefaultHandler;
-
-import DAO.PropertyDAO;
+import org.training.issuetracker.model.DAO.PropertyDAO;
 
 public class UsersHandler extends DefaultHandler {
 	

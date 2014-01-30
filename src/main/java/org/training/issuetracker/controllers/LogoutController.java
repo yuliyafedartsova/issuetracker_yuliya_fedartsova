@@ -16,7 +16,8 @@ public class LogoutController extends AbstractController {
     protected void performTask(HttpServletRequest request,
 			HttpServletResponse response) throws ServletException, IOException {
 		HttpSession session = request.getSession();
-		session.removeAttribute(Constants.USER);
-	    response.sendRedirect(request.getContextPath() + Constants.MAIN);
+	//	session.removeAttribute(Constants.USER); /////////////////////////
+		session.invalidate();
+		response.sendRedirect(request.getContextPath() + Constants.MAIN);
 	}
 }

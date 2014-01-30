@@ -1,4 +1,4 @@
-package DAO;
+package org.training.issuetracker.model.DAO;
 
 import java.util.List;
 
@@ -16,4 +16,7 @@ public interface PropertyDAO {
 	PropertyParameter getResolutionById(int id) throws DaoException;
 	List<PropertyParameter> getRoles() throws DaoException;
 	PropertyParameter getRoleById(int id) throws DaoException;
+	List<PropertyParameter> getParametersByPropertyName(String propertyName) throws DaoException;
+	PropertyParameter getParameter(String propertyName, int id) throws DaoException;
+
 }

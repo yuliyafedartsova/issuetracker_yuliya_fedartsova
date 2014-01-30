@@ -1,7 +1,6 @@
 package org.training.issuetracker.model.factories;
 import org.training.issuetracker.model.impl.XMLIssueImpl;
-
-import DAO.IssueDAO;
+import org.training.issuetracker.model.DAO.IssueDAO;
 
 public class IssueFactory {
 	public static IssueDAO getClassFromFactory() {

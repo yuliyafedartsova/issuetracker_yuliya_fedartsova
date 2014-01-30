@@ -6,11 +6,11 @@ import javax.servlet.ServletException;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import org.training.issuetracker.constants.Constants;
+import org.training.issuetracker.constants.Pages;
 import org.training.issuetracker.exceptions.DaoException;
 import org.training.issuetracker.model.beans.Project;
 import org.training.issuetracker.model.factories.ProjectFactory;
-
-import DAO.ProjectDAO;
+import org.training.issuetracker.model.DAO.ProjectDAO;
 
 
 public class ProjectsController extends AbstractController {
@@ -28,15 +28,15 @@ public class ProjectsController extends AbstractController {
     	try {
     		projects = projectDAO.getProjects();
     	}catch (DaoException e) {
-    		jumpPage(Constants.ERROR, request, response);
+    		jumpPage(Pages.ERROR_PAGE, request, response);
     		return;
     	}catch (Exception e) {
-			jumpPage(Constants.ERROR, request, response);
+			jumpPage(Pages.ERROR_PAGE, request, response);
 			return;
 		}
     	cutDescriptionsOff(projects);
 		request.setAttribute(Constants.PROJECTS, projects);
-		jumpPage(Constants.JUMP_PROJECTS, request, response);
+		jumpPage(Pages.PROJECTS_PAGE, request, response);
     }
     
     protected void cutDescriptionsOff(List<Project> projects) {

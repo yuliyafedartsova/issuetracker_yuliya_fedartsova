@@ -3,17 +3,15 @@ package org.training.issuetracker.model.impl;
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
-
 import org.training.issuetracker.constants.Constants;
 import org.training.issuetracker.exceptions.DaoException;
 import org.training.issuetracker.model.beans.PropertyParameter;
+import org.training.issuetracker.model.factories.PropertyFactory;
 import org.xml.sax.SAXException;
 import org.xml.sax.XMLReader;
 import org.xml.sax.helpers.XMLReaderFactory;
-
-import DAO.PropertyDAO;
-
-import utils.handlers.ParametrsHandler;
+import org.training.issuetracker.model.DAO.PropertyDAO;
+import org.training.issuetracker.utils.handlers.ParametrsHandler;
 
 public class XMLPropertyImpl implements PropertyDAO {
 	
@@ -23,7 +21,7 @@ public class XMLPropertyImpl implements PropertyDAO {
 			XMLReader reader = XMLReaderFactory.createXMLReader();
 			ParametrsHandler handler = new ParametrsHandler(parameters);
 			reader.setContentHandler(handler);
-			reader.parse(Constants.PATH + resourceName + Constants.FILE_EXT);
+			reader.parse(Constants.PATH + Constants.FILES_PACKAGE + resourceName + Constants.FILE_EXT);
 			}catch (SAXException e) {
 				throw new DaoException();
 			}catch (IOException e) {
@@ -42,6 +40,45 @@ public class XMLPropertyImpl implements PropertyDAO {
 		 }
 		 return parameter;
 	}
+	
+	public List<PropertyParameter> getParametersByPropertyName(String propertyName) throws DaoException {
+    	List<PropertyParameter> parametres = null;
+    	switch(propertyName) {
+		case Constants.STATUS:
+			parametres = getStatuses();
+			break;
+		case Constants.TYPE:
+			parametres = getTypes();
+			break;
+		case Constants.PRIORITY:
+			parametres = getPriorities();
+			break;
+		case Constants.RESOLUTION:
+			parametres = getResolutions();
+			break;
+    	}
+    	return parametres;
+    }
+	
+	public PropertyParameter getParameter(String propertyName, int id) throws DaoException {
+    	PropertyParameter parameter = null;
+    	switch(propertyName) {
+		case Constants.STATUS:
+			parameter = getStatusById(id);
+			break;
+		case Constants.TYPE:
+			parameter = getTypeById(id);
+			break;
+		case Constants.PRIORITY:
+			parameter = getPriorityById(id);
+			break;
+		case Constants.RESOLUTION:
+			parameter = getResolutionById(id);
+			break;
+    	}
+    	return parameter;
+    }
+	
 	
 	
 	

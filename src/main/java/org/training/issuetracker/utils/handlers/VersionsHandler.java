@@ -1,4 +1,4 @@
-package utils.handlers;
+package org.training.issuetracker.utils.handlers;
 
 import java.util.List;
 import org.training.issuetracker.constants.Constants;

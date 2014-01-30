@@ -8,6 +8,7 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 import org.training.issuetracker.constants.Constants;
+import org.training.issuetracker.constants.Pages;
 import org.training.issuetracker.exceptions.DaoException;
 import org.training.issuetracker.model.beans.Issue;
 import org.training.issuetracker.model.beans.Project;
@@ -17,11 +18,10 @@ import org.training.issuetracker.model.factories.IssueFactory;
 import org.training.issuetracker.model.factories.ProjectFactory;
 import org.training.issuetracker.model.factories.PropertyFactory;
 import org.training.issuetracker.model.factories.UserFactory;
-
-import DAO.IssueDAO;
-import DAO.ProjectDAO;
-import DAO.PropertyDAO;
-import DAO.UserDAO;
+import org.training.issuetracker.model.DAO.IssueDAO;
+import org.training.issuetracker.model.DAO.ProjectDAO;
+import org.training.issuetracker.model.DAO.PropertyDAO;
+import org.training.issuetracker.model.DAO.UserDAO;
 
 
 public class IssueController extends AbstractController {
@@ -46,17 +46,17 @@ public class IssueController extends AbstractController {
   	   	try {
   	   	issue = issuesDao.getIssueById(id);
   	   	}catch (DaoException e) {
-			jumpPage(Constants.ERROR, request, response);
+			jumpPage(Pages.ERROR_PAGE, request, response);
 			return;
 		}catch (Exception e) {
-			jumpPage(Constants.ERROR, request, response);
+			jumpPage(Pages.ERROR_PAGE, request, response);
 			return;
 		}
   	   	request.setAttribute(Constants.ISSUE, issue);
   	    HttpSession session = request.getSession();
   	   	User user = (User)session.getAttribute(Constants.USER);
   	   	if(user == null) {
-    		jumpPage(Constants.JUMP_ISSUE_REVIEW, request, response);
+    		jumpPage(Pages.REVIEW_ISSUE_PAGE, request, response);
     	} else {
     		ProjectDAO projectDAO = ProjectFactory.getClassFromFactory();
       	   	UserDAO userDAO = UserFactory.getClassFromFactory();
@@ -70,11 +70,11 @@ public class IssueController extends AbstractController {
         	resolutions = propertyDAO.getResolutions();
         	statuses = getAvailableStatuses(statuses, issue);
        		}catch (DaoException e) {
-    			jumpPage(Constants.ERROR, request, response);
+    			jumpPage(Pages.ERROR_PAGE, request, response);
     			return;
-    		}
+       		}
        		catch (Exception e) {
-    			jumpPage(Constants.ERROR, request, response);
+    			jumpPage(Pages.ERROR_PAGE, request, response);
     			return;
     		}
         	request.setAttribute(Constants.PROJECTS, projects);
@@ -83,7 +83,7 @@ public class IssueController extends AbstractController {
         	request.setAttribute(Constants.STATUSES, statuses);
         	request.setAttribute(Constants.TYPES, types);
         	request.setAttribute(Constants.RESOLUTIONS, resolutions);
-       		jumpPage(Constants.JUMP_ISSUE_UPDATE, request, response);
+       		jumpPage(Pages.UPDATE_ISSUE_PAGE, request, response);
     	}
     }
     

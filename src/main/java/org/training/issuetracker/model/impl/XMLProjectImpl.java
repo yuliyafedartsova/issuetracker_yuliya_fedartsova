@@ -10,9 +10,9 @@ import org.training.issuetracker.model.beans.PropertyParameter;
 import org.xml.sax.SAXException;
 import org.xml.sax.XMLReader;
 import org.xml.sax.helpers.XMLReaderFactory;
-import DAO.ProjectDAO;
-import utils.handlers.ProjectHandler;
-import utils.handlers.VersionsHandler;
+import org.training.issuetracker.model.DAO.ProjectDAO;
+import org.training.issuetracker.utils.handlers.ProjectHandler;
+import org.training.issuetracker.utils.handlers.VersionsHandler;
 
 public class XMLProjectImpl implements ProjectDAO {
 	public Project getProjectById(int id) throws DaoException {
@@ -33,7 +33,7 @@ public class XMLProjectImpl implements ProjectDAO {
 			XMLReader reader = XMLReaderFactory.createXMLReader();
 			VersionsHandler handler = new VersionsHandler(id, versions, Constants.VERSION);
 			reader.setContentHandler(handler);
-			reader.parse(Constants.PATH + Constants.VERSIONS_SOURCE_NAME + Constants.FILE_EXT);
+			reader.parse(Constants.PATH + Constants.FILES_PACKAGE + Constants.VERSIONS_SOURCE_NAME + Constants.FILE_EXT);
 			}catch (SAXException e) {
 				throw new DaoException();
 			}catch (IOException e) {
@@ -50,7 +50,7 @@ public class XMLProjectImpl implements ProjectDAO {
 			XMLReader reader = XMLReaderFactory.createXMLReader();
 			ProjectHandler handler = new ProjectHandler(projects);
 			reader.setContentHandler(handler);
-			reader.parse(Constants.PATH + Constants.PROJECTS_SOURCE_NAME + Constants.FILE_EXT);
+			reader.parse(Constants.PATH + Constants.FILES_PACKAGE + Constants.PROJECTS_SOURCE_NAME + Constants.FILE_EXT);
 			}catch (SAXException e) {
 				throw new DaoException();
 			}catch (IOException e) {
@@ -65,7 +65,7 @@ public class XMLProjectImpl implements ProjectDAO {
 			XMLReader reader = XMLReaderFactory.createXMLReader();
 			VersionsHandler handler = new VersionsHandler(projectId, versions, Constants.PROJECT);
 			reader.setContentHandler(handler);
-			reader.parse(Constants.PATH + Constants.VERSIONS_SOURCE_NAME + Constants.FILE_EXT);
+			reader.parse(Constants.PATH + Constants.FILES_PACKAGE + Constants.VERSIONS_SOURCE_NAME + Constants.FILE_EXT);
 			}catch (SAXException e) {
 				throw new DaoException();
 			}catch (IOException e) {

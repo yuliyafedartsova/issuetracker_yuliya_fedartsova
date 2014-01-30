@@ -5,12 +5,12 @@ import java.util.ArrayList;
 import java.util.Collections;
 import java.util.Comparator;
 import java.util.List;
-
 import javax.servlet.ServletContext;
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import org.training.issuetracker.constants.Constants;
+import org.training.issuetracker.constants.Pages;
 import org.training.issuetracker.exceptions.DaoException;
 import org.training.issuetracker.model.beans.Issue;
 import org.training.issuetracker.model.beans.User;
@@ -20,8 +20,7 @@ import org.training.issuetracker.model.beans.comparators.IssueComparatorByPriori
 import org.training.issuetracker.model.beans.comparators.IssueComparatorByStatus;
 import org.training.issuetracker.model.beans.comparators.IssueComparatorByType;
 import org.training.issuetracker.model.factories.IssueFactory;
-
-import DAO.IssueDAO;
+import org.training.issuetracker.model.DAO.IssueDAO;
 
 
 public class MainController extends AbstractController {
@@ -33,8 +32,7 @@ public class MainController extends AbstractController {
     }
 
     public void init() {
-		String realPath = getServletContext().getRealPath(Constants.DELIMITER) +
-				 Constants.PATH_TO_FILES;
+		String realPath = getServletContext().getRealPath(Constants.DELIMITER);
 	
 		Constants.PATH = realPath;
 		
@@ -74,17 +72,20 @@ public class MainController extends AbstractController {
     	}catch (DaoException e) {
     		jumpPage(Constants.ERROR, request, response);
 			return;
-		} 
+		}catch (Exception e) {
+		jumpPage(Pages.ERROR_PAGE, request, response);
+		return;
+	}
     	
     	if(issues.size() != Constants.NULL) {
     		request.setAttribute(Constants.ISSUES, issues);
     	} else {
     		String message = (user == null) ? Constants.EMPTY_MESSAGE_FOR_GUEST : 
     			Constants.EMPTY_MESSAGE_FOR_USER;
-    		jumpError("/main.jsp", message, request, response);
+    		jumpError(Pages.MAIN_PAGE, message, request, response);
     		return;
     	}
-    	jumpPage("/main.jsp", request, response);
+    	jumpPage(Pages.MAIN_PAGE, request, response);
     }
     
     private void sortIssues(String sort, List<Issue> issues) {

@@ -6,14 +6,14 @@ import javax.servlet.ServletException;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import org.training.issuetracker.constants.Constants;
+import org.training.issuetracker.constants.Pages;
 import org.training.issuetracker.exceptions.DaoException;
 import org.training.issuetracker.model.beans.Project;
 import org.training.issuetracker.model.beans.User;
 import org.training.issuetracker.model.factories.ProjectFactory;
 import org.training.issuetracker.model.factories.UserFactory;
-
-import DAO.ProjectDAO;
-import DAO.UserDAO;
+import org.training.issuetracker.model.DAO.ProjectDAO;
+import org.training.issuetracker.model.DAO.UserDAO;
 
 
 public class ProjectController extends AbstractController {
@@ -32,29 +32,29 @@ public class ProjectController extends AbstractController {
     	try {
     		users = userDAO.getUsers();
     	}catch (DaoException e) {
-    		jumpPage(Constants.ERROR, request, response);
+    		jumpPage(Pages.ERROR_PAGE, request, response);
     		return;
     	}catch (Exception e) {
-			jumpPage(Constants.ERROR, request, response);
+			jumpPage(Pages.ERROR_PAGE, request, response);
 			return;
 		}
     	request.setAttribute(Constants.USERS, users);
     	if(Constants.ADD.equals(action)) {
-    	    jumpPage(Constants.JUMP_ADD_PROJECT, request, response);
+    	    jumpPage(Pages.ADD_PROJECT_PAGE, request, response);
     	} else {
     	    String projectId = request.getParameter(Constants.ID);
         	int id = Integer.parseInt(projectId);
         	try {
         		project = projectDAO.getProjectById(id);
         	}catch (DaoException e) {
-        		jumpPage(Constants.ERROR, request, response);
+        		jumpPage(Pages.ERROR_PAGE, request, response);
         		return;
         	}catch (Exception e) {
-    			jumpPage(Constants.ERROR, request, response);
+    			jumpPage(Pages.ERROR_PAGE, request, response);
     			return;
     		}
         	request.setAttribute(Constants.PROJECT, project);
-        	jumpPage(Constants.JUMP_UPDATE_PROJECT, request, response);
+        	jumpPage(Pages.UPDATE_PROJECT_PAGE, request, response);
     	    }
     	}
   }

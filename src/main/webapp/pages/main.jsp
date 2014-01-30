@@ -8,16 +8,16 @@
 		<title>Welcome</title>
 	</head>
 	<body  bgcolor= "FA F0 E6">
-			<%@ include file="header.jsp" %> &nbsp;
+			<%@ include file="header.jsp" %> 
 			<c:if test="${user.role != 'Guest'}">
 				<a href='submit-issue'> Submit Issue </a> <br>
 			</c:if>
 	        <c:if test="${user.role eq 'Administrator'}">
 				<a href='projects'> Projects </a>
-			    <a href='property?property=type'> Types </a>
-			    <a href='property?property=status'> Statuses </a>
-			    <a href='property?property=resolution'> Resolutions</a>
-			    <a href='property?property=priority'> Priorities </a> <br>
+			    <a href='property?action=show&property=type'> Types </a>
+			    <a href='property?action=show&property=status'> Statuses </a>
+			    <a href='property?action=show&property=resolution'> Resolutions</a>
+			    <a href='property?action=show&property=priority'> Priorities </a> <br>
 			    <a href='project?action=add'> Add project </a>
 			    <a href='user?action=add'>Add user</a>
 			</c:if>

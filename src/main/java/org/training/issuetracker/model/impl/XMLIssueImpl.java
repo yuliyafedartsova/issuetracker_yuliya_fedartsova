@@ -11,14 +11,11 @@ import org.training.issuetracker.exceptions.DaoException;
 import org.training.issuetracker.model.beans.Issue;
 import org.training.issuetracker.model.beans.User;
 import org.training.issuetracker.model.beans.comparators.IssueComparatorByDate;
-
 import org.xml.sax.SAXException;
 import org.xml.sax.XMLReader;
 import org.xml.sax.helpers.XMLReaderFactory;
-
-import DAO.IssueDAO;
-
-import utils.handlers.IssuesHandler;
+import org.training.issuetracker.model.DAO.IssueDAO;
+import org.training.issuetracker.utils.handlers.IssuesHandler;
 
 public class XMLIssueImpl implements IssueDAO {
 	public List<Issue> getIssues() throws DaoException { 
@@ -27,7 +24,7 @@ public class XMLIssueImpl implements IssueDAO {
 			XMLReader reader = XMLReaderFactory.createXMLReader();
 			IssuesHandler handler = new IssuesHandler(issues);
 			reader.setContentHandler(handler);
-			reader.parse(Constants.PATH + Constants.ISSUES_SOURCE_NAME + Constants.FILE_EXT);
+			reader.parse(Constants.PATH + Constants.FILES_PACKAGE + Constants.ISSUES_SOURCE_NAME + Constants.FILE_EXT);
 			}catch (SAXException e) {
 				throw new DaoException();
 			}catch (IOException e) {

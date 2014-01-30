@@ -1,13 +1,12 @@
-<%@ page language="java" contentType="text/html; charset=ISO-8859-1"
-    pageEncoding="ISO-8859-1"%>
+<%@ page contentType="text/html;charset=UTF-8" language="java"%>
 <!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
 <html>
 <head>
-<meta http-equiv="Content-Type" content="text/html; charset=ISO-8859-1">
+<meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
 <title>Insert title here</title>
 </head>
 <body>
-<%@ include file="header.jsp" %> &nbsp;
+<%@ include file="header.jsp" %> 
 	<c:choose>
 		<c:when test="${property eq 'status'}">
 			Update status: <br>
@@ -22,11 +21,11 @@
 			Update resolution: <br>
 		</c:when>
 	</c:choose>
-	${value}
+	${parameter}
 	<form action=''>
-	<input type='text' name='value' value='${value}'><br>
-	<input type='hidden' name='property'  value='${property}'>
-	<input type='hidden' name='id'  value='${id}'>
+	<input type='text' name='value' value='${parameter}'><br>
+	<input type='hidden' name='property'  value='${parameter}'>
+	<input type='hidden' name='id'  value='${parameter.id}'>
 	</form>
 	</body>
 </html>

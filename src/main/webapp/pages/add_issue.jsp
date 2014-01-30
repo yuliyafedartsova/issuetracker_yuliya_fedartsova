@@ -8,7 +8,7 @@
 	<%@ include file="header.jsp" %> &nbsp;
 	<BR><BR>
 	Add issue: <br>
-	<form action=''>"
+	<form action=''>
 	<table>
 	<tr><td> Summary:  </td><td><input type='text' name='summary' value=''></td></tr>
 	<tr><td>Description: </td>

@@ -3,11 +3,11 @@ package org.training.issuetracker.controllers;
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
-
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import org.training.issuetracker.constants.Constants;
+import org.training.issuetracker.constants.Pages;
 import org.training.issuetracker.exceptions.DaoException;
 import org.training.issuetracker.model.beans.Issue;
 import org.training.issuetracker.model.beans.Project;
@@ -16,10 +16,9 @@ import org.training.issuetracker.model.beans.User;
 import org.training.issuetracker.model.factories.ProjectFactory;
 import org.training.issuetracker.model.factories.PropertyFactory;
 import org.training.issuetracker.model.factories.UserFactory;
-
-import DAO.ProjectDAO;
-import DAO.PropertyDAO;
-import DAO.UserDAO;
+import org.training.issuetracker.model.DAO.ProjectDAO;
+import org.training.issuetracker.model.DAO.PropertyDAO;
+import org.training.issuetracker.model.DAO.UserDAO;
 
 
 public class SubmitIssueController extends AbstractController {
@@ -47,10 +46,10 @@ public class SubmitIssueController extends AbstractController {
     	users = userDAO.getUsers();
     	projects = projectDAO.getProjects();
     	}catch (DaoException e) {
-			jumpPage(Constants.ERROR, request, response);
+			jumpPage(Pages.ERROR_PAGE, request, response);
 			return;
 		}catch (Exception e) {
-			jumpPage(Constants.ERROR, request, response);
+			jumpPage(Pages.ERROR_PAGE, request, response);
 			return;
 		}
     	statuses = getAvailableStatuses(statuses);
@@ -59,7 +58,7 @@ public class SubmitIssueController extends AbstractController {
     	request.setAttribute(Constants.PRIORITIES, priorities);
     	request.setAttribute(Constants.USERS, users);
     	request.setAttribute(Constants.PROJECTS, projects);
-    	jumpPage(Constants.JUMP_ADD_ISSUE, request, response);
+    	jumpPage(Pages.ADD_ISSUE_PAGE, request, response);
     }
     
     private List<PropertyParameter> getAvailableStatuses(List<PropertyParameter> statuses) {

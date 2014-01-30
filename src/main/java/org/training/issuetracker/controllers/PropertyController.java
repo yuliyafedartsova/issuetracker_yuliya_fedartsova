@@ -6,11 +6,11 @@ import javax.servlet.ServletException;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import org.training.issuetracker.constants.Constants;
+import org.training.issuetracker.constants.Pages;
 import org.training.issuetracker.exceptions.DaoException;
 import org.training.issuetracker.model.beans.PropertyParameter;
 import org.training.issuetracker.model.factories.PropertyFactory;
-
-import DAO.PropertyDAO;
+import org.training.issuetracker.model.DAO.PropertyDAO;
 
 public class PropertyController extends AbstractController {
 	private static final long serialVersionUID = 1L;
@@ -20,38 +20,38 @@ public class PropertyController extends AbstractController {
     }
 
     protected void performTask(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+    	String action = request.getParameter(Constants.ACTION);
     	String property = request.getParameter(Constants.PROPERTY);
-    	List<PropertyParameter> parametres = null;
-    	try {
-    		parametres = getParameters(property);
-    	}catch (DaoException e) {
-			jumpPage(Constants.ERROR, request, response);
-			return;
-		}catch (Exception e) {
-			jumpPage(Constants.ERROR, request, response);
-			return;
-		}
-    	request.setAttribute(Constants.PARAMETRES, parametres);
-    	jumpPage(Constants.JUMP_PARAMETERS, request, response);
-    }
-    
-    private List<PropertyParameter> getParameters(String propertyName) throws DaoException {
-    	List<PropertyParameter> parametres = null;
+    	request.setAttribute(Constants.PROPERTY, property);
     	PropertyDAO propertyDAO = PropertyFactory.getClassFromFactory();
-    	switch(propertyName) {
-		case Constants.STATUS:
-			parametres = propertyDAO.getStatuses();
-			break;
-		case Constants.TYPE:
-			parametres = propertyDAO.getTypes();
-			break;
-		case Constants.PRIORITY:
-			parametres = propertyDAO.getPriorities();
-			break;
-		case Constants.RESOLUTION:
-			parametres = propertyDAO.getResolutions();
-			break;
-    	}
-    	return parametres;
+    	if(action.equals("show")) {
+    		List<PropertyParameter> parametres = null;
+        	try {
+        		parametres = propertyDAO.getParametersByPropertyName(property);
+        	}catch (DaoException e) {
+    			jumpPage(Pages.ERROR_PAGE, request, response);
+    			return;
+    		}catch (Exception e) {
+    			jumpPage(Pages.ERROR_PAGE, request, response);
+    			return;
+    		}
+        	request.setAttribute(Constants.PARAMETRES, parametres);
+        	jumpPage(Pages.PARAMETERS_PAGE, request, response);
+        }else {
+        	int id = Integer.parseInt(request.getParameter(Constants.ID));
+        	PropertyParameter parameter = null;
+        	try {
+        		parameter = propertyDAO.getParameter(property, id);
+        		request.setAttribute(Constants.PARAMETER, parameter);
+        		jumpPage(Pages.UPDATE_PARAMETER_PAGE, request, response);
+        	}catch (DaoException e) {
+    			jumpPage(Pages.ERROR_PAGE, request, response);
+    			return;
+    		}catch (Exception e) {
+    			jumpPage(Pages.ERROR_PAGE, request, response);
+    			return;
+    		}
+        }
     }
-}
+    	
+ }

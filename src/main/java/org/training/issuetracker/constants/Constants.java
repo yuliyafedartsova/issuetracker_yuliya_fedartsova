@@ -1,8 +1,8 @@
 package org.training.issuetracker.constants;
 
-public class Constants {
+public class Constants {  //
 	public static String PATH;
-	public static final String PATH_TO_FILES = "WEB-INF\\classes\\org/training/issuetracker/xml/";
+	public static final String FILES_PACKAGE = "files/";
 	public static final String DELIMITER = "/";
 	public static final String ACTION = "action";
     public static final String ADD = "add";
@@ -76,4 +76,5 @@ public class Constants {
     public static final String EMPTY_MESSAGE_FOR_USER = "There are no issues aasigned to you";
 //    public static final String MESSAGE = "collection is empty";
     public static final String LOGIN_EMPTY = "Email or password is empty";
+    public static final String PARAMETER = "parameter";
 }

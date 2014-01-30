@@ -1,4 +1,4 @@
-package DAO;
+package org.training.issuetracker.model.DAO;
 
 import java.util.List;
 

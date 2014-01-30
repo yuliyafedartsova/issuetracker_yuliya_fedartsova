@@ -9,10 +9,8 @@ import org.training.issuetracker.model.beans.User;
 import org.xml.sax.SAXException;
 import org.xml.sax.XMLReader;
 import org.xml.sax.helpers.XMLReaderFactory;
-
-import DAO.UserDAO;
-
-import utils.handlers.UsersHandler;
+import org.training.issuetracker.model.DAO.UserDAO;
+import org.training.issuetracker.utils.handlers.UsersHandler;
 
 public class XMLUserImpl implements UserDAO {
 	public List<User> getUsers() throws DaoException {
@@ -21,7 +19,7 @@ public class XMLUserImpl implements UserDAO {
 			XMLReader reader = XMLReaderFactory.createXMLReader();
 			UsersHandler handler = new UsersHandler(users);
 			reader.setContentHandler(handler);
-			reader.parse(Constants.PATH + Constants.USERS_SOURCE_NAME + Constants.FILE_EXT);
+			reader.parse(Constants.PATH + Constants.FILES_PACKAGE + Constants.USERS_SOURCE_NAME + Constants.FILE_EXT);
 			}catch (SAXException e) {
 				throw new DaoException();
 			}catch (IOException e) {

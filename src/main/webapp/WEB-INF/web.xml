@@ -24,36 +24,7 @@
   <servlet-mapping>
     <servlet-name>MainController</servlet-name>
     <url-pattern>/main</url-pattern>
-  </servlet-mapping>
-  <servlet>
-    <description></description>
-    <display-name>IssueUpdateView</display-name>
-    <servlet-name>IssueUpdateView</servlet-name>
-    <servlet-class>org.training.issuetracker.view.IssueUpdateView</servlet-class>
-  </servlet>
-  <servlet-mapping>
-    <servlet-name>IssueUpdateView</servlet-name>
-    <url-pattern>/IssueUpdateView</url-pattern>
-  </servlet-mapping>
-  <servlet>
-    <description></description>
-    <display-name>UserDataUpdateView</display-name>
-    <servlet-name>UserDataUpdateView</servlet-name>
-    <servlet-class>org.training.issuetracker.view.UserDataUpdateView</servlet-class>
-  </servlet>
-  <servlet-mapping>
-    <servlet-name>UserDataUpdateView</servlet-name>
-    <url-pattern>/UserDataUpdateView</url-pattern>
-  </servlet-mapping>
-  <servlet>
-    <description></description>
-    <display-name>MainView</display-name>
-    <servlet-name>MainView</servlet-name>
-    <servlet-class>org.training.issuetracker.view.MainView</servlet-class>
-  </servlet>
-  <servlet-mapping>
-    <servlet-name>MainView</servlet-name>
-    <url-pattern>/MainView</url-pattern>
+ 	<url-pattern>/pages/main</url-pattern>
   </servlet-mapping>
   <servlet>
     <description></description>
@@ -67,26 +38,6 @@
   </servlet-mapping>
   <servlet>
     <description></description>
-    <display-name>HeaderView</display-name>
-    <servlet-name>HeaderView</servlet-name>
-    <servlet-class>org.training.issuetracker.view.HeaderView</servlet-class>
-  </servlet>
-  <servlet-mapping>
-    <servlet-name>HeaderView</servlet-name>
-    <url-pattern>/HeaderView</url-pattern>
-  </servlet-mapping>
-  <servlet>
-    <description></description>
-    <display-name>IssueReviewView</display-name>
-    <servlet-name>IssueReviewView</servlet-name>
-    <servlet-class>org.training.issuetracker.view.IssueReviewView</servlet-class>
-  </servlet>
-  <servlet-mapping>
-    <servlet-name>IssueReviewView</servlet-name>
-    <url-pattern>/IssueReviewView</url-pattern>
-  </servlet-mapping>
-  <servlet>
-    <description></description>
     <display-name>PropertyController</display-name>
     <servlet-name>PropertyController</servlet-name>
     <servlet-class>org.training.issuetracker.controllers.PropertyController</servlet-class>
@@ -94,86 +45,7 @@
   <servlet-mapping>
     <servlet-name>PropertyController</servlet-name>
     <url-pattern>/property</url-pattern>
-  </servlet-mapping>
-  <servlet>
-    <description></description>
-    <display-name>ParameterUpdateView</display-name>
-    <servlet-name>ParameterUpdateView</servlet-name>
-    <servlet-class>org.training.issuetracker.view.ParameterUpdateView</servlet-class>
-  </servlet>
-  <servlet-mapping>
-    <servlet-name>ParameterUpdateView</servlet-name>
-    <url-pattern>/ParameterUpdateView</url-pattern>
-  </servlet-mapping>
-  <servlet>
-    <description></description>
-    <display-name>ParametersView</display-name>
-    <servlet-name>ParametersView</servlet-name>
-    <servlet-class>org.training.issuetracker.view.ParametersView</servlet-class>
-  </servlet>
-  <servlet-mapping>
-    <servlet-name>ParametersView</servlet-name>
-    <url-pattern>/ParametersView</url-pattern>
-  </servlet-mapping>
-  <servlet>
-    <description></description>
-    <display-name>AddUserView</display-name>
-    <servlet-name>AddUserView</servlet-name>
-    <servlet-class>org.training.issuetracker.view.AddUserView</servlet-class>
-  </servlet>
-  <servlet-mapping>
-    <servlet-name>AddUserView</servlet-name>
-    <url-pattern>/AddUserView</url-pattern>
-  </servlet-mapping>
-  <servlet>
-    <description></description>
-    <display-name>AddIssueView</display-name>
-    <servlet-name>AddIssueView</servlet-name>
-    <servlet-class>org.training.issuetracker.view.AddIssueView</servlet-class>
-  </servlet>
-  <servlet-mapping>
-    <servlet-name>AddIssueView</servlet-name>
-    <url-pattern>/AddIssueView</url-pattern>
-  </servlet-mapping>
-  <servlet>
-    <description></description>
-    <display-name>ProjectsView</display-name>
-    <servlet-name>ProjectsView</servlet-name>
-    <servlet-class>org.training.issuetracker.view.ProjectsView</servlet-class>
-  </servlet>
-  <servlet-mapping>
-    <servlet-name>ProjectsView</servlet-name>
-    <url-pattern>/ProjectsView</url-pattern>
-  </servlet-mapping>
-  <servlet>
-    <description></description>
-    <display-name>ProjectUpdateView</display-name>
-    <servlet-name>ProjectUpdateView</servlet-name>
-    <servlet-class>org.training.issuetracker.view.ProjectUpdateView</servlet-class>
-  </servlet>
-  <servlet-mapping>
-    <servlet-name>ProjectUpdateView</servlet-name>
-    <url-pattern>/ProjectUpdateView</url-pattern>
-  </servlet-mapping>
-  <servlet>
-    <description></description>
-    <display-name>LoginFormView</display-name>
-    <servlet-name>LoginFormView</servlet-name>
-    <servlet-class>org.training.issuetracker.view.LoginFormView</servlet-class>
-  </servlet>
-  <servlet-mapping>
-    <servlet-name>LoginFormView</servlet-name>
-    <url-pattern>/LoginFormView</url-pattern>
-  </servlet-mapping>
-  <servlet>
-    <description></description>
-    <display-name>AddProjectView</display-name>
-    <servlet-name>AddProjectView</servlet-name>
-    <servlet-class>org.training.issuetracker.view.AddProjectView</servlet-class>
-  </servlet>
-  <servlet-mapping>
-    <servlet-name>AddProjectView</servlet-name>
-    <url-pattern>/AddProjectView</url-pattern>
+    <url-pattern>/pages/property</url-pattern>
   </servlet-mapping>
   <servlet>
     <description></description>
@@ -184,6 +56,7 @@
   <servlet-mapping>
     <servlet-name>UserController</servlet-name>
     <url-pattern>/user</url-pattern>
+    <url-pattern>/pages/user</url-pattern>
   </servlet-mapping>
   <servlet>
     <description></description>
@@ -194,6 +67,7 @@
   <servlet-mapping>
     <servlet-name>SubmitIssueController</servlet-name>
     <url-pattern>/submit-issue</url-pattern>
+  	<url-pattern>/pages/submit-issue</url-pattern>
   </servlet-mapping>
   <servlet>
     <description></description>
@@ -223,7 +97,7 @@
   </servlet>
   <servlet-mapping>
     <servlet-name>LogoutController</servlet-name>
-    <url-pattern>/logout</url-pattern>
+    <url-pattern>/pages/logout</url-pattern>
   </servlet-mapping>
   <servlet>
     <description></description>
