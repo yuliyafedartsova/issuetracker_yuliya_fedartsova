@@ -24,12 +24,12 @@ public class LoginController extends AbstractController {
    
     public LoginController() {
         super();
-    } //
+    } 
     
     protected void performTask(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
     	UserDAO userDAO = UserFactory.getClassFromFactory();
-    	String email = request.getParameter(Constants.EMAIL);
-		String password = request.getParameter(Constants.PASSWORD);
+    	String email = request.getParameter(Constants.EMAIL).trim();
+		String password = request.getParameter(Constants.PASSWORD).trim();
 		User user = null;
 		try {
 		checkData(email, password);
@@ -49,10 +49,8 @@ public class LoginController extends AbstractController {
 		jumpPage(Constants.MAIN, request, response);
 	}
     
-    private void checkData(String login, String password) throws ValidationException {
-    	login = login.trim();
-		password = password.trim();
-		if (Constants.EMPTY.equals(login) || Constants.EMPTY.equals(password)) {
+    private void checkData(String email, String password) throws ValidationException {
+    	if (Constants.EMPTY.equals(email) || Constants.EMPTY.equals(password)) {
 			throw new ValidationException(Constants.LOGIN_EMPTY);
 		}
 	}

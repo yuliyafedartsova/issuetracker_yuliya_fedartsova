@@ -33,8 +33,7 @@ public class MainController extends AbstractController {
 
     public void init() {
 		String realPath = getServletContext().getRealPath(Constants.DELIMITER);
-	
-		Constants.PATH = realPath;
+	    Constants.PATH = realPath;
 		
 		System.out.println(Constants.PATH);
         //////
@@ -50,21 +49,17 @@ public class MainController extends AbstractController {
     	IssueDAO issuesDao = IssueFactory.getClassFromFactory();
     	List<Issue> issues = null;
     	User user = (User)request.getSession().getAttribute(Constants.USER);
-    	String sort = request.getParameter(Constants.SORTING);
+    	String sortingType = request.getParameter(Constants.SORTING);
+    	sortingType = (sortingType == null) ? "default" : sortingType;
     	try {
     	if(user != null) { //
-    		issues = issuesDao.getNAssignedIssues(10, user);
-    		if(sort != null) {
-    			sortIssues(sort, issues);
-    		}
+    		issues = issuesDao.getNAssignedIssues(10, user, sortingType);
+    		
     		if(issues.size() == Constants.NULL) {
     			request.setAttribute(Constants.ERROR_MESSAGE, Constants.EMPTY_MESSAGE_FOR_USER);
     		}
     	} else {
-    		issues = issuesDao.getNLastAddedIssues(10);
-    		if(sort != null) {
-    			sortIssues(sort, issues);
-    		}
+    		issues = issuesDao.getNLastAddedIssues(10, sortingType);
     		if(issues.size() == Constants.NULL) {
     			request.setAttribute(Constants.ERROR_MESSAGE, Constants.EMPTY_MESSAGE_FOR_GUEST);
     		}
@@ -88,24 +83,4 @@ public class MainController extends AbstractController {
     	jumpPage(Pages.MAIN_PAGE, request, response);
     }
     
-    private void sortIssues(String sort, List<Issue> issues) {
-    	switch(sort) {
-    		case Constants.TYPE:
-    			Collections.sort(issues, new IssueComparatorByType());
-    			break;
-    		case Constants.STATUS:
-    			Collections.sort(issues, new IssueComparatorByStatus());
-    			break;
-    		case Constants.PRIORITY:
-    			Collections.sort(issues, new IssueComparatorByPriority());
-    			break;
-    		case Constants.ID:
-    			Collections.sort(issues, new IssueComparatorById());
-    			break;
-    		case Constants.ASSIGNEE:
-    			Collections.sort(issues, new IssueComparatorByAssignee());
-    			break;
-    	}
-   
-    }
-}
+ }

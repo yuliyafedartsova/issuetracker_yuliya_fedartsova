@@ -10,7 +10,12 @@ import org.training.issuetracker.constants.Constants;
 import org.training.issuetracker.exceptions.DaoException;
 import org.training.issuetracker.model.beans.Issue;
 import org.training.issuetracker.model.beans.User;
+import org.training.issuetracker.model.beans.comparators.IssueComparatorByAssignee;
 import org.training.issuetracker.model.beans.comparators.IssueComparatorByDate;
+import org.training.issuetracker.model.beans.comparators.IssueComparatorById;
+import org.training.issuetracker.model.beans.comparators.IssueComparatorByPriority;
+import org.training.issuetracker.model.beans.comparators.IssueComparatorByStatus;
+import org.training.issuetracker.model.beans.comparators.IssueComparatorByType;
 import org.xml.sax.SAXException;
 import org.xml.sax.XMLReader;
 import org.xml.sax.helpers.XMLReaderFactory;
@@ -46,7 +51,7 @@ public class XMLIssueImpl implements IssueDAO {
 	
 	}
 	
-	public List<Issue> getNLastAddedIssues(int n) throws DaoException {
+	public List<Issue> getNLastAddedIssues(int n, String sortingType) throws DaoException {
 		List<Issue> lastAdded = new ArrayList<Issue>();
 		List<Issue> issues = getIssues();
 		if(issues.size() < n) {
@@ -56,10 +61,11 @@ public class XMLIssueImpl implements IssueDAO {
 		for(int i = 0; i < n; i++) {
 			lastAdded.add(issues.get(i));
 		}
+		sortIssues(sortingType, lastAdded);
 		return lastAdded;
 	}
 	
-	public List<Issue> getNAssignedIssues(int n, User user) throws DaoException {
+	public List<Issue> getNAssignedIssues(int n, User user, String sortingType) throws DaoException {
 	    List<Issue> allAssigned = new ArrayList<Issue>();
 		List<Issue> n_assigned = new ArrayList<Issue>();
 		List<Issue> issues = getIssues();
@@ -77,6 +83,31 @@ public class XMLIssueImpl implements IssueDAO {
 	    	n_assigned.add(allAssigned.get(i));
 	    	
 		}
+	    sortIssues(sortingType, n_assigned);
 	    return n_assigned;
 	}
+	
+	private void sortIssues(String sortingType, List<Issue> issues) {
+    	switch(sortingType) {
+    	    case "default":
+    	    	
+    	    	break;
+    		case Constants.TYPE:
+    			Collections.sort(issues, new IssueComparatorByType());
+    			break;
+    		case Constants.STATUS:
+    			Collections.sort(issues, new IssueComparatorByStatus());
+    			break;
+    		case Constants.PRIORITY:
+    			Collections.sort(issues, new IssueComparatorByPriority());
+    			break;
+    		case Constants.ID:
+    			Collections.sort(issues, new IssueComparatorById());
+    			break;
+    		case Constants.ASSIGNEE:
+    			Collections.sort(issues, new IssueComparatorByAssignee());
+    			break;
+    	}
+   
+    }
 }

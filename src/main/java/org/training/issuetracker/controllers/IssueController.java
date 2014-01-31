@@ -22,6 +22,7 @@ import org.training.issuetracker.model.DAO.IssueDAO;
 import org.training.issuetracker.model.DAO.ProjectDAO;
 import org.training.issuetracker.model.DAO.PropertyDAO;
 import org.training.issuetracker.model.DAO.UserDAO;
+import org.training.issuetracker.utils.DisplayManager;
 
 
 public class IssueController extends AbstractController {
@@ -68,7 +69,7 @@ public class IssueController extends AbstractController {
         	priorities = propertyDAO.getPriorities();
         	types = propertyDAO.getTypes();
         	resolutions = propertyDAO.getResolutions();
-        	statuses = getAvailableStatuses(statuses, issue);
+        	statuses = DisplayManager.getAvailableStatuses(statuses, issue);
        		}catch (DaoException e) {
     			jumpPage(Pages.ERROR_PAGE, request, response);
     			return;
@@ -85,42 +86,5 @@ public class IssueController extends AbstractController {
         	request.setAttribute(Constants.RESOLUTIONS, resolutions);
        		jumpPage(Pages.UPDATE_ISSUE_PAGE, request, response);
     	}
-    }
-    
-    private List<PropertyParameter> getAvailableStatuses(List<PropertyParameter> statuses, Issue issue) {
-    	List<PropertyParameter> availableStatuses = new ArrayList<PropertyParameter>();
-    	switch(issue.getStatus().getName()) {
-    		case Constants.NEW:
-    			for(PropertyParameter par : statuses) {
-        			if(par.getName().equals(Constants.NEW) || par.getName().equals(Constants.ASSIGNED)) {
-        				availableStatuses.add(par);
-        			}
-        		}
-    			break;
-    		case Constants.ASSIGNED:
-    			for(PropertyParameter par : statuses) {
-        			if(par.getName().equals(Constants.IN_PROGRESS) || par.getName().equals(Constants.ASSIGNED)) {
-        				availableStatuses.add(par);
-        			}
-        		}
-    			break;	
-    		case Constants.CLOSED:
-    			for(PropertyParameter par : statuses) {
-        			if(par.getName().equals(Constants.CLOSED) || par.getName().equals(Constants.REOPENED)) {
-        				availableStatuses.add(par);
-        			}
-        		}
-    			break;
-    		case Constants.IN_PROGRESS:
-    			for(PropertyParameter par : statuses) {
-        			if(par.getName().equals(Constants.CLOSED) || par.getName().equals(Constants.IN_PROGRESS) ||
-        					par.getName().equals(Constants.RESOLVED)) {
-        				availableStatuses.add(par);
-        			}
-        		}
-    			break;
-    	}
-    	
-    	return availableStatuses;
     }
 }

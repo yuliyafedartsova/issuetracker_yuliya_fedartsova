@@ -11,6 +11,7 @@ import org.training.issuetracker.exceptions.DaoException;
 import org.training.issuetracker.model.beans.Project;
 import org.training.issuetracker.model.factories.ProjectFactory;
 import org.training.issuetracker.model.DAO.ProjectDAO;
+import org.training.issuetracker.utils.DisplayManager;
 
 
 public class ProjectsController extends AbstractController {
@@ -34,20 +35,10 @@ public class ProjectsController extends AbstractController {
 			jumpPage(Pages.ERROR_PAGE, request, response);
 			return;
 		}
-    	cutDescriptionsOff(projects);
+    	DisplayManager.cutDescriptionsOff(projects);
 		request.setAttribute(Constants.PROJECTS, projects);
 		jumpPage(Pages.PROJECTS_PAGE, request, response);
     }
     
-    protected void cutDescriptionsOff(List<Project> projects) {
-    	for(Project project : projects) {
-    		if(project.getDescription().length() > Constants.DESCRIPTION_LENTH_LIMIT){
-    			String description = 
-    					project.getDescription().substring(Constants.NULL, 
-    							Constants.DESCRIPTION_LENTH_LIMIT);
-    			description += Constants.THREE_DOTS;
-    			project.setDescription(description);
-    		}
-    	}
-    }
+   
 }

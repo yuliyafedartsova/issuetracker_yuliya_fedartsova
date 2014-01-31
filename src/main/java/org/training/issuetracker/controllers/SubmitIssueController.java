@@ -19,6 +19,7 @@ import org.training.issuetracker.model.factories.UserFactory;
 import org.training.issuetracker.model.DAO.ProjectDAO;
 import org.training.issuetracker.model.DAO.PropertyDAO;
 import org.training.issuetracker.model.DAO.UserDAO;
+import org.training.issuetracker.utils.DisplayManager;
 
 
 public class SubmitIssueController extends AbstractController {
@@ -52,7 +53,7 @@ public class SubmitIssueController extends AbstractController {
 			jumpPage(Pages.ERROR_PAGE, request, response);
 			return;
 		}
-    	statuses = getAvailableStatuses(statuses);
+    	statuses = DisplayManager.getAvailableStatusesForSubmitIssue(statuses);
     	request.setAttribute(Constants.STATUSES, statuses);
     	request.setAttribute(Constants.TYPES, types);
     	request.setAttribute(Constants.PRIORITIES, priorities);
@@ -61,13 +62,5 @@ public class SubmitIssueController extends AbstractController {
     	jumpPage(Pages.ADD_ISSUE_PAGE, request, response);
     }
     
-    private List<PropertyParameter> getAvailableStatuses(List<PropertyParameter> statuses) {
-    	List<PropertyParameter> availableStatuses = new ArrayList<PropertyParameter>();
-    	for(PropertyParameter par : statuses) {
-    		if(par.getName().equals(Constants.NEW) || par.getName().equals(Constants.ASSIGNED) ) {
-    			availableStatuses.add(par);
-    		}
-    	}
-    	return availableStatuses;
-    }
+    
 }
