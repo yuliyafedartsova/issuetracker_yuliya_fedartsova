@@ -1,6 +1,6 @@
 package org.training.issuetracker.constants;
 
-public class Constants {  
+public class Constants {  //
 	public static String PATH;
 	public static final String FILES_PACKAGE = "files/";
 	public static final String DELIMITER = "/";
