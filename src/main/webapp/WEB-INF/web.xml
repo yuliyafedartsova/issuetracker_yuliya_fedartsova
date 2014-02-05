@@ -24,7 +24,7 @@
   <servlet-mapping>
     <servlet-name>MainController</servlet-name>
     <url-pattern>/main</url-pattern>
- 	<url-pattern>/pages/main</url-pattern>
+    <url-pattern>/pages/main</url-pattern>
   </servlet-mapping>
   <servlet>
     <description></description>
@@ -67,7 +67,7 @@
   <servlet-mapping>
     <servlet-name>SubmitIssueController</servlet-name>
     <url-pattern>/submit-issue</url-pattern>
-  	<url-pattern>/pages/submit-issue</url-pattern>
+    <url-pattern>/pages/submit-issue</url-pattern>
   </servlet-mapping>
   <servlet>
     <description></description>
@@ -108,5 +108,45 @@
   <servlet-mapping>
     <servlet-name>AbstractController</servlet-name>
     <url-pattern>/AbstractController</url-pattern>
+  </servlet-mapping>
+  <servlet>
+    <description></description>
+    <display-name>AddProjectController</display-name>
+    <servlet-name>AddProjectController</servlet-name>
+    <servlet-class>org.training.issuetracker.controllers.AddProjectController</servlet-class>
+  </servlet>
+  <servlet-mapping>
+    <servlet-name>AddProjectController</servlet-name>
+    <url-pattern>/add-project</url-pattern>
+  </servlet-mapping>
+  <servlet>
+    <description></description>
+    <display-name>UpdateProjectController</display-name>
+    <servlet-name>UpdateProjectController</servlet-name>
+    <servlet-class>org.training.issuetracker.controllers.UpdateProjectController</servlet-class>
+  </servlet>
+  <servlet-mapping>
+    <servlet-name>UpdateProjectController</servlet-name>
+    <url-pattern>/UpdateProjectController</url-pattern>
+  </servlet-mapping>
+  <servlet>
+    <description></description>
+    <display-name>AddIssueController</display-name>
+    <servlet-name>AddIssueController</servlet-name>
+    <servlet-class>org.training.issuetracker.controllers.AddIssueController</servlet-class>
+  </servlet>
+  <servlet-mapping>
+    <servlet-name>AddIssueController</servlet-name>
+    <url-pattern>/add-issue</url-pattern>
+  </servlet-mapping>
+  <servlet>
+    <description></description>
+    <display-name>UpdateIssueController</display-name>
+    <servlet-name>UpdateIssueController</servlet-name>
+    <servlet-class>org.training.issuetracker.controllers.UpdateIssueController</servlet-class>
+  </servlet>
+  <servlet-mapping>
+    <servlet-name>UpdateIssueController</servlet-name>
+    <url-pattern>/update-issue</url-pattern>
   </servlet-mapping>
 </web-app>

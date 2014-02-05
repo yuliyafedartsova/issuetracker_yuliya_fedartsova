@@ -11,8 +11,9 @@ import org.training.issuetracker.constants.Constants;
 import org.training.issuetracker.constants.Pages;
 import org.training.issuetracker.exceptions.DaoException;
 import org.training.issuetracker.model.beans.Issue;
+import org.training.issuetracker.model.beans.Parameter;
 import org.training.issuetracker.model.beans.Project;
-import org.training.issuetracker.model.beans.PropertyParameter;
+
 import org.training.issuetracker.model.beans.User;
 import org.training.issuetracker.model.factories.IssueFactory;
 import org.training.issuetracker.model.factories.ProjectFactory;
@@ -40,10 +41,10 @@ public class IssueController extends AbstractController {
   	   	IssueDAO issuesDao = IssueFactory.getClassFromFactory();
   	   	List<User> users = null;
  		List<Project> projects = null;
- 		List<PropertyParameter> statuses = null;
- 		List<PropertyParameter> priorities = null;
- 		List<PropertyParameter> types = null;
- 		List<PropertyParameter> resolutions = null;
+ 		List<Parameter> statuses = null;
+ 		List<Parameter> priorities = null;
+ 		List<Parameter> types = null;
+ 		List<Parameter> resolutions = null;
   	   	try {
   	   	issue = issuesDao.getIssueById(id);
   	   	}catch (DaoException e) {

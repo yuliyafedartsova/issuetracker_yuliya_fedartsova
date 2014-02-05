@@ -10,8 +10,9 @@ import org.training.issuetracker.constants.Constants;
 import org.training.issuetracker.constants.Pages;
 import org.training.issuetracker.exceptions.DaoException;
 import org.training.issuetracker.model.beans.Issue;
+import org.training.issuetracker.model.beans.Parameter;
 import org.training.issuetracker.model.beans.Project;
-import org.training.issuetracker.model.beans.PropertyParameter;
+
 import org.training.issuetracker.model.beans.User;
 import org.training.issuetracker.model.factories.ProjectFactory;
 import org.training.issuetracker.model.factories.PropertyFactory;
@@ -35,9 +36,9 @@ public class SubmitIssueController extends AbstractController {
     	PropertyDAO propertyDAO = PropertyFactory.getClassFromFactory();
     	UserDAO userDAO = UserFactory.getClassFromFactory();
     	ProjectDAO projectDAO = ProjectFactory.getClassFromFactory();
-    	List<PropertyParameter> statuses = null;
-    	List<PropertyParameter> priorities = null;
-    	List<PropertyParameter> types = null;
+    	List<Parameter> statuses = null;
+    	List<Parameter> priorities = null;
+    	List<Parameter> types = null;
     	List<User> users = null;
     	List<Project> projects = null;
     	try {

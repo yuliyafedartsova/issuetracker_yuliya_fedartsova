@@ -2,7 +2,7 @@ package org.training.issuetracker.utils.handlers;
 
 import java.util.List;
 import org.training.issuetracker.exceptions.DaoException;
-import org.training.issuetracker.model.beans.PropertyParameter;
+import org.training.issuetracker.model.beans.Parameter;
 import org.training.issuetracker.model.beans.User;
 import org.training.issuetracker.model.factories.PropertyFactory;
 import org.xml.sax.Attributes;
@@ -26,7 +26,7 @@ public class UsersHandler extends DefaultHandler {
 	private String currentFirstName;
 	private String currentLastName;
 	private String currentEmail;
-	private PropertyParameter currentRole;
+	private Parameter currentRole;
 	private String currentPassword;
 	PropertyDAO propertyDAO = PropertyFactory.getClassFromFactory();
 	
@@ -86,7 +86,7 @@ public class UsersHandler extends DefaultHandler {
 			currentEnum = UsersXMLEnum.valueOf(qName.toUpperCase()); 
 			if(currentEnum == UsersXMLEnum.USER) {
 				users.add(new User(currentId, currentFirstName, currentLastName,currentEmail,
-						currentRole.getName(), currentPassword));
+						currentRole, currentPassword));
 			}
 	} 
 }

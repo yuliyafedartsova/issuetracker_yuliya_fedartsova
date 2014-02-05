@@ -110,4 +110,12 @@ public class XMLIssueImpl implements IssueDAO {
     	}
    
     }
+	
+	public void addIssue(Issue issue) throws DaoException {
+		
+	}
+	
+	public void updateIssue(Issue issue) throws DaoException {
+		
+	}
 }

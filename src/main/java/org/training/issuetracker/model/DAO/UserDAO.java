@@ -10,4 +10,6 @@ public interface UserDAO {
 	User getUserById(int id) throws DaoException;
 	User getUser(String email, String password) throws ValidationException, DaoException;
 	List<User> getUsers() throws DaoException;
+	void addUser(User user) throws DaoException;
+
 }

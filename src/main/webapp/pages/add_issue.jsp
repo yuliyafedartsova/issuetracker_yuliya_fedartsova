@@ -7,8 +7,8 @@
 <body bgcolor= "FA F0 E6">
 	<%@ include file="header.jsp" %> &nbsp;
 	<BR><BR>
-	Add issue: <br>
-	<form action=''>
+	 Add issue: <br>
+	<form action='add-issue'>
 	<table>
 	<tr><td> Summary:  </td><td><input type='text' name='summary' value=''></td></tr>
 	<tr><td>Description: </td>
@@ -49,11 +49,14 @@
 	</select></td></tr>
 	<tr><td>Assignee:</td>
 	<td><select name='assignee' size='1'>
+		<option value=''> Not assigned </option>
 		<c:forEach var="user" items="${users}"> 
 	         <option value='${user.id}'> ${user.firstName} &nbsp; ${user.lastName}</option>
 		</c:forEach>
 	</select></td></tr>
 	</table>
+	<input type='hidden' name='author' value='${user.id}'>
+	<input type="submit" value="Add">
 	</form>
  </body>
 </html>

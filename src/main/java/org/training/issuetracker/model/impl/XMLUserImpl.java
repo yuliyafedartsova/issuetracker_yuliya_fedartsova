@@ -51,5 +51,9 @@ public class XMLUserImpl implements UserDAO {
 		return user;
 	}
 	
+	public void addUser(User user) throws DaoException {
+		
+	}
+	
 	
 }

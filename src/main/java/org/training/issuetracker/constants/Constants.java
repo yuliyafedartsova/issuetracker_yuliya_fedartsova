@@ -77,4 +77,11 @@ public class Constants {
 //    public static final String MESSAGE = "collection is empty";
     public static final String LOGIN_EMPTY = "Email or password is empty";
     public static final String PARAMETER = "parameter";
+    public static final String NAME = "name";
+    public static final String DESCRIPTION = "description";
+    public static final String BUILD = "build";
+    public static final String MANAGER = "manager";
+    public static final String SUMMARY = "summary";
+    public static final String AUTHOR = "author";
+
 }

@@ -1,18 +1,13 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <versions xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="versions.xsd">
   <version> 
-	    <id> 0 </id>
+	    <id> 1 </id>
 	    <name> 1.0.0.0 beta </name>
-	    <project> 0 </project>
-	</version>
-	<version> 
-		<id> 1 </id>
-	    <name> 1.0.0.0 beta  </name>
 	    <project> 1 </project>
 	</version>
 	<version> 
 		<id> 2 </id>
-	    <name> 1.0.0.0 beta </name>
+	    <name> 1.0.0.0 beta  </name>
 	    <project> 2 </project>
 	</version>
 	<version> 
@@ -22,17 +17,17 @@
 	</version>
 	<version> 
 		<id> 4 </id>
-	    <name> 1.0.0.1 beta </name>
-	    <project> 0 </project>
+	    <name> 1.0.0.0 beta </name>
+	    <project> 4 </project>
 	</version>
 	<version> 
 		<id> 5 </id>
-	    <name> 1.0.0.1 beta  </name>
+	    <name> 1.0.0.1 beta </name>
 	    <project> 1 </project>
 	</version>
 	<version> 
 		<id> 6 </id>
-	    <name> 1.0.0.1 beta </name>
+	    <name> 1.0.0.1 beta  </name>
 	    <project> 2 </project>
 	</version>
 	<version> 
@@ -42,22 +37,27 @@
 	</version>
 	<version> 
 		<id> 8 </id>
-	    <name> 1.0.0.2 </name>
-	    <project> 0 </project>
+	    <name> 1.0.0.1 beta </name>
+	    <project> 4 </project>
 	</version>
 	<version> 
 		<id> 9 </id>
-	    <name> 1.0.0.2   </name>
+	    <name> 1.0.0.2 </name>
 	    <project> 1 </project>
 	</version>
 	<version> 
 		<id> 10 </id>
-	    <name> 1.0.0.2  </name>
+	    <name> 1.0.0.2   </name>
 	    <project> 2 </project>
 	</version>
 	<version> 
 		<id> 11 </id>
 	    <name> 1.0.0.2  </name>
 	    <project> 3 </project>
+	</version>
+	<version> 
+		<id> 12 </id>
+	    <name> 1.0.0.2  </name>
+	    <project> 4 </project>
 	</version>
 </versions>

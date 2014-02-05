@@ -7,14 +7,14 @@ public class User {
 	private String firstName; 
 	private String lastName;
 	private String email;
-	private String role;
+	private Parameter role; //Property Parameter!!!!!
 	private String password;
 	
 	public User() {
 		super();
 	}
 	
-	public User(int id, String firstName, String lastName, String email, String role,
+	public User(int id, String firstName, String lastName, String email, Parameter role,
 			String password) {
 		super();
 		this.id = id;
@@ -57,11 +57,11 @@ public class User {
 		this.email = email;
 	}
 
-	public String getRole() {
+	public Parameter getRole() {
 		return role;
 	}
 
-	public void setRole(String role) {
+	public void setRole(Parameter role) {
 		this.role = role;
 	}
 

@@ -6,26 +6,27 @@ public class Project {
 	String name;
 	int id;
 	User manager;
-	List<PropertyParameter> buildVersions;
-	PropertyParameter currentVersion;
+	List<Parameter> buildVersions;
 	String description;
 	
-	public Project(int id, String name, User manager,
-			List<PropertyParameter> buildVersions, PropertyParameter currentVersion, String description) {
+	public Project(String name, User manager,
+			List<Parameter> buildVersions, String description) {
 		super();
 		this.name = name;
-		this.id = id;
 		this.manager = manager;
 		this.buildVersions = buildVersions;
-		this.currentVersion = currentVersion;
 		this.description = description;
 	}
-
+	
+	public Project(int id, String name, User manager,
+			List<Parameter> buildVersions, String description) {
+		this(name, manager, buildVersions, description);
+		this.id = id;
+	}
 
 	public String getName() {
 		return name;
 	}
-
 
 	public void setName(String name) {
 		this.name = name;
@@ -42,12 +43,12 @@ public class Project {
 	}
 
 
-	public List<PropertyParameter> getBuildVersions() {
+	public List<Parameter> getBuildVersions() {
 		return buildVersions;
 	}
 
 
-	public void setBuildVersions(List<PropertyParameter> buildVersions) {
+	public void setBuildVersions(List<Parameter> buildVersions) {
 		this.buildVersions = buildVersions;
 	}
 
@@ -70,18 +71,5 @@ public class Project {
 	public void setDescription(String description) {
 		this.description = description;
 	}
-
-
-	public PropertyParameter getCurrentVersion() {
-		return currentVersion;
-	}
-
-
-	public void setCurrentVersion(PropertyParameter currentVersion) {
-		this.currentVersion = currentVersion;
-	}
-	
-	
-	
 
 }

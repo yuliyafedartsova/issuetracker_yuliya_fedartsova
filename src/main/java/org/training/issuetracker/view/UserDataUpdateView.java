@@ -38,7 +38,7 @@ public class UserDataUpdateView extends AbstractController {
 		out.println("<td>" + "<input type='text' name='lastName' value=''>" + "</td>" + "</tr>");
 		out.println("<tr>" + "<td>" + "Email Address:" + "</td>");
 		out.println("<td>" + "<input type='text' name='email' value=''>" + "</td>" + "</tr>");
-		if(user.getRole() == Constants.ADMINISTRATOR) {
+		if(user.getRole().getName() == Constants.ADMINISTRATOR) {
 			out.println("<tr>" + "<td>" + "Role:" + "</td>");
 			out.println("<td>" + "<select name='role' size='1'>");
 			for(PropertyParameter role : roles) {

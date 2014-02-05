@@ -8,7 +8,7 @@
 <body>
 <%@ include file="header.jsp" %> 
 	Add project:<br>
-	<form action=''>
+	<form action='add-project'>
     <table>
     <tr><td> Name: &nbsp;</td>
 	<td><input type='text' name='name' value=''></td></tr>
@@ -23,6 +23,9 @@
 		</c:forEach>
 	</select></td></tr>
 	</table>
+	<input type="submit" value="Add">
+	
+	
 	</form>
 </body>
 </html>

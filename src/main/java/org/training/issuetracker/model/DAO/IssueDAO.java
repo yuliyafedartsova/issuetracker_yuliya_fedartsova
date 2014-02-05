@@ -11,4 +11,10 @@ public interface IssueDAO {
 	Issue getIssueById(int id) throws DaoException; 
 	List<Issue> getNLastAddedIssues(int n, String sortingType) throws DaoException;
 	List<Issue> getNAssignedIssues(int n, User user, String sortingType) throws DaoException;
+    void addIssue(Issue issue) throws DaoException;
+    void updateIssue(Issue issue) throws DaoException;
+
+
+
+
 }

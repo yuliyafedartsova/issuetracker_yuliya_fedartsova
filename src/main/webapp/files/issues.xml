@@ -4,16 +4,16 @@
 		<id> 1 </id>
 		<priority> 3 </priority>
 		<assignee> 1 </assignee>
-		<type> 0 </type>
+		<type> 1 </type>
 		<summary> Poor error handling when attaching multiple files and at least one upload fails </summary>
 		<description> When one of the files fails to upload, an error message is displayed, requiring the user to hit the back button. In fact, the other files are uploaded successfully. This behavior is confusing to users, and furthermore if you do the same thing when reporting a new issue and then resubmit, you get duplicate issues </description>
 	    <status> 2 </status>
-		<project> 0 </project>
-		<found> 0 </found>
+		<project> 1 </project>
+		<found> 1 </found>
 		<createDate> 2013-10-02 </createDate>
 		<author> 2 </author>
 		<modifyDate> 2013-10-04 </modifyDate>
-		<modifier> 0 </modifier>
+		<modifier> 5 </modifier>
 	</issue>
 	<issue>
 		<id> 2 </id>
@@ -23,8 +23,8 @@
 		<summary> The state changed automaticly after assign to somebody </summary>
 		<description> The issue state change to anther one after I assign to someone, but I want it keep the 'New' </description>
 	    <status> 2 </status>
-		<project> 1 </project>
-		<found> 5 </found>
+		<project> 2 </project>
+		<found> 6 </found>
 		<createDate> 2013-10-03 </createDate>
 		<author> 3 </author>
 		<modifyDate> 2013-10-07 </modifyDate>
@@ -39,17 +39,17 @@
 		<description> I added a custom field to view_all_bug_page.php using custom_function_inc.php. The field is a "number" field (long integer) but is stored internally as string in mantis/mysql. If I click on the column header of this custom field the view gets sorted alphabetically (not numerically). </description>
 	    <status> 1 </status>
 		<project> 2 </project>
-		<found> 6 </found>
+		<found> 10 </found>
 		<createDate> 2013-10-05 </createDate>
 		<author> 7 </author>
 	</issue>
 	<issue>
 		<id> 4 </id>
-		<priority> 0 </priority>
+		<priority> 3 </priority>
 		<type> 1 </type>
 		<summary> Page goes blank </summary>
 		<description> Page goes blank for the action like- Edit, Update, Change Status, etc. Works fine on local machine, but not working on Server </description>
-	    <status> 0 </status>
+	    <status> 2 </status>
 		<project> 3 </project>
 		<found> 11 </found>
 		<createDate> 2013-10-07 </createDate>
@@ -61,7 +61,7 @@
 		<type> 1 </type>
 		<summary> Numeric Custom fields on View All don't sort correctly </summary>
 		<description> When the custom field is selected to sort on, it sorts by a character order, not numeric values, so 2 will sort before 10. </description>
-	    <status> 0 </status>
+	    <status> 1 </status>
 		<project> 3 </project>
 		<found> 7  </found>
 		<createDate> 2013-10-08 </createDate>
@@ -78,7 +78,7 @@
 		<project> 2 </project>
 		<found> 10  </found>
 		<createDate> 2013-10-09 </createDate>
-		<author> 0 </author>
+		<author> 1 </author>
 	</issue>
 	<issue>
 		<id> 7 </id>
@@ -86,7 +86,7 @@
 		<type> 1 </type>
 		<summary> Cookie problem on logout </summary>
 		<description> If I log out of mantis I receive a system warning (header already modified) and I cannot login again. I always only get "Access Denied". This behavior stops if I delete all mantis cookies. This is reproducible on my installation as well as on this mantis installation. </description>
-	    <status> 0 </status>
+	    <status> 3 </status>
 		<project> 1 </project>
 		<found> 5  </found>
 		<createDate> 2013-10-11 </createDate>
@@ -102,8 +102,8 @@
 		<summary> Email notification is set to all developers even if bug is assigned at the moment of addition </summary>
 		<description> When adding a bug and selecting developer in "assign to" dropdown, notification is sent to all developers again. I think it's more correct to use "assign" rules, but not "new". </description>
 	    <status> 2 </status>
-		<project> 0 </project>
-		<found> 4  </found>
+		<project> 1 </project>
+		<found> 5  </found>
 		<createDate> 2013-10-14 </createDate>
 		<author> 4 </author>
 	</issue>

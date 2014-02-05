@@ -9,7 +9,7 @@ import java.sql.Statement;
 
 import org.training.issuetracker.constants.Constants;
 
-
+//
 public class ConnectionManager {
 	 
 	 static{
@@ -21,9 +21,9 @@ public class ConnectionManager {
 	 
 	 public Connection getConnection() {
 	 try {
-	   return DriverManager.getConnection("jdbc:h2:" + Constants.PATH + "WEB-INF\\classes\\db\\test); // + ");
+	   return DriverManager.getConnection("jdbc:h2:tcp://localhost/" + Constants.PATH + "WEB-INF\\classes\\db\\test", "sa", "");
 	  } catch (SQLException e) {   
-		  throw new RuntimeException("getConnection()");
+		  throw new RuntimeException(e.getMessage());
 	  }
 	 }
 	 

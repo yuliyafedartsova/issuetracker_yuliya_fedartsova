@@ -1,10 +1,10 @@
 package org.training.issuetracker.model.beans;
 
-public class PropertyParameter {
+public class Parameter {
 	int id;
     String name;
 	
-    public PropertyParameter(int id, String name) {
+    public Parameter(int id, String name) {
 		super();
 		this.id = id;
 		this.name = name;

@@ -1,6 +1,11 @@
 package org.training.issuetracker.controllers;
 
 import java.io.IOException;
+import java.sql.Connection;
+import java.sql.PreparedStatement;
+import java.sql.ResultSet;
+import java.sql.SQLException;
+import java.sql.Statement;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.Comparator;
@@ -10,9 +15,12 @@ import javax.servlet.ServletException;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import org.training.issuetracker.constants.Constants;
+import org.training.issuetracker.constants.ConstantsSQL;
 import org.training.issuetracker.constants.Pages;
 import org.training.issuetracker.exceptions.DaoException;
 import org.training.issuetracker.model.beans.Issue;
+import org.training.issuetracker.model.beans.Parameter;
+
 import org.training.issuetracker.model.beans.User;
 import org.training.issuetracker.model.beans.comparators.IssueComparatorByAssignee;
 import org.training.issuetracker.model.beans.comparators.IssueComparatorById;
@@ -20,7 +28,12 @@ import org.training.issuetracker.model.beans.comparators.IssueComparatorByPriori
 import org.training.issuetracker.model.beans.comparators.IssueComparatorByStatus;
 import org.training.issuetracker.model.beans.comparators.IssueComparatorByType;
 import org.training.issuetracker.model.factories.IssueFactory;
+import org.training.issuetracker.model.factories.UserFactory;
+import org.training.issuetracker.model.impl.DBIssueImpl;
 import org.training.issuetracker.model.DAO.IssueDAO;
+import org.training.issuetracker.model.DAO.UserDAO;
+import org.training.issuetracker.utils.ConnectionManager;
+import org.training.issuetracker.utils.LoaderFromXml;
 
 
 public class MainController extends AbstractController {
@@ -36,13 +49,13 @@ public class MainController extends AbstractController {
 	    Constants.PATH = realPath;
 		
 		System.out.println(Constants.PATH);
-        //////
+        
 		ServletContext context = getServletContext();
 		User guest = new User();
-		guest.setRole("Guest");
+		
+		Parameter role = new Parameter(3, "Guest");
+		guest.setRole(role);
 		context.setAttribute(Constants.USER, guest);
-    
-    
     }
 
     protected void performTask(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
@@ -52,7 +65,7 @@ public class MainController extends AbstractController {
     	String sortingType = request.getParameter(Constants.SORTING);
     	sortingType = (sortingType == null) ? "default" : sortingType;
     	try {
-    	if(user != null) { //
+    	if(user != null) { // почему не getRole???
     		issues = issuesDao.getNAssignedIssues(10, user, sortingType);
     		
     		if(issues.size() == Constants.NULL) {
@@ -65,9 +78,15 @@ public class MainController extends AbstractController {
     		}
     	}
     	}catch (DaoException e) {
+    		
+    		
+    		
     		jumpPage(Constants.ERROR, request, response);
 			return;
 		}catch (Exception e) {
+		
+		e.printStackTrace();	
+			
 		jumpPage(Pages.ERROR_PAGE, request, response);
 		return;
 	}

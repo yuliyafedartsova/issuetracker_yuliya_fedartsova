@@ -2,13 +2,14 @@ package org.training.issuetracker.utils.handlers;
 
 import java.util.List;
 import org.training.issuetracker.constants.Constants;
-import org.training.issuetracker.model.beans.PropertyParameter;
+import org.training.issuetracker.model.beans.Parameter;
+
 import org.xml.sax.Attributes;
 import org.xml.sax.helpers.DefaultHandler;
 
 public class VersionsHandler extends DefaultHandler {
 	
-	public VersionsHandler(int id, List<PropertyParameter> versions, String idOf) {
+	public VersionsHandler(int id, List<Parameter> versions, String idOf) {
 		this.versions = versions;
 		this.id = id;
 		this.idOf = idOf;
@@ -18,7 +19,7 @@ public class VersionsHandler extends DefaultHandler {
 		VERSIONS, VERSION, ID, NAME, PROJECT;
 	}
 	
-	private List<PropertyParameter> versions;
+	private List<Parameter> versions;
 	private int id;
 	String idOf;
 	private VersionsXMLEnum currentEnum = null;
@@ -60,11 +61,11 @@ public class VersionsHandler extends DefaultHandler {
 			   switch(idOf) {
 			   case Constants.VERSION:
 				   if(currentId == id) {
-					  versions.add(new PropertyParameter(currentId, currentName));
+					  versions.add(new Parameter(currentId, currentName));
 				   }
 			   case Constants.PROJECT :
 				   if(currentProjectId == id) {
-					   versions.add(new PropertyParameter(currentId, currentName)); 
+					   versions.add(new Parameter(currentId, currentName)); 
 				   }
 			   
 			   }

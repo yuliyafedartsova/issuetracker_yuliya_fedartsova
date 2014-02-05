@@ -1,28 +1,29 @@
 package org.training.issuetracker.model.beans;
 
-import java.util.Date;
+import java.sql.Date;
+
+
 
 public class Issue {
 	private int id;
-	private PropertyParameter priority;
+	private Parameter priority;
 	private User assignee;
-	private PropertyParameter type;
+	private Parameter type;
 	private String summary;
 	private String description;
-	private PropertyParameter status;
+	private Parameter status;
 	private Project project;
-	private PropertyParameter resolution;
-	private PropertyParameter buildFound;
+	private Parameter resolution;
+	private Parameter buildFound;
 	private Date createDate;
 	private Date modifyDate;
 	private User author;
 	private User modifier;
 	
-	public Issue(int id, PropertyParameter priority, PropertyParameter type,
-			String summary, String description, PropertyParameter status, Project project,
-			PropertyParameter buildFound, Date createDate, User author) {
+	public Issue(Parameter priority, Parameter type,
+			String summary, String description, Parameter status, Project project,
+			Parameter buildFound, Date createDate, User author) {
 		super();
-		this.id = id;
 		this.priority = priority;
 		this.type = type;
 		this.summary = summary;
@@ -33,6 +34,14 @@ public class Issue {
 		this.createDate = createDate;
 		this.author = author;
 	}
+	
+	public Issue(int id, Parameter priority, Parameter type,
+			String summary, String description, Parameter status, Project project,
+			Parameter buildFound, Date createDate, User author) {
+		this(priority, type, summary, description, status, project, buildFound, 
+				createDate, author);
+		this.id = id;
+	}
 
 	public int getId() {
 		return id;
@@ -42,11 +51,11 @@ public class Issue {
 		this.id = id;
 	}
 
-	public PropertyParameter getPriority() {
+	public Parameter getPriority() {
 		return priority;
 	}
 
-	public void setPriority(PropertyParameter priority) {
+	public void setPriority(Parameter priority) {
 		this.priority = priority;
 	}
 
@@ -58,11 +67,11 @@ public class Issue {
 		this.assignee = assignee;
 	}
 
-	public PropertyParameter getType() {
+	public Parameter getType() {
 		return type;
 	}
 
-	public void setType(PropertyParameter type) {
+	public void setType(Parameter type) {
 		this.type = type;
 	}
 
@@ -82,11 +91,11 @@ public class Issue {
 		this.description = description;
 	}
 
-	public PropertyParameter getStatus() {
+	public Parameter getStatus() {
 		return status;
 	}
 
-	public void setStatus(PropertyParameter status) {
+	public void setStatus(Parameter status) {
 		this.status = status;
 	}
 
@@ -98,11 +107,11 @@ public class Issue {
 		this.project = project;
 	}
 
-	public PropertyParameter getBuildFound() {
+	public Parameter getBuildFound() {
 		return buildFound;
 	}
 
-	public void setBuildFound(PropertyParameter buildFound) {
+	public void setBuildFound(Parameter buildFound) {
 		this.buildFound = buildFound;
 	}
 
@@ -138,11 +147,11 @@ public class Issue {
 		this.modifier = modifier;
 	}
 
-	public PropertyParameter getResolution() {
+	public Parameter getResolution() {
 		return resolution;
 	}
 
-	public void setResolution(PropertyParameter resolution) {
+	public void setResolution(Parameter resolution) {
 		this.resolution = resolution;
 	}
 	

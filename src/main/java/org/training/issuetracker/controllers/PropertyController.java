@@ -8,7 +8,8 @@ import javax.servlet.http.HttpServletResponse;
 import org.training.issuetracker.constants.Constants;
 import org.training.issuetracker.constants.Pages;
 import org.training.issuetracker.exceptions.DaoException;
-import org.training.issuetracker.model.beans.PropertyParameter;
+
+import org.training.issuetracker.model.beans.Parameter;
 import org.training.issuetracker.model.factories.PropertyFactory;
 import org.training.issuetracker.model.DAO.PropertyDAO;
 
@@ -25,7 +26,7 @@ public class PropertyController extends AbstractController {
     	request.setAttribute(Constants.PROPERTY, property);
     	PropertyDAO propertyDAO = PropertyFactory.getClassFromFactory();
     	if(action.equals("show")) {
-    		List<PropertyParameter> parametres = null;
+    		List<Parameter> parametres = null;
         	try {
         		parametres = propertyDAO.getParametersByPropertyName(property);
         	}catch (DaoException e) {
@@ -39,7 +40,7 @@ public class PropertyController extends AbstractController {
         	jumpPage(Pages.PARAMETERS_PAGE, request, response);
         }else {
         	int id = Integer.parseInt(request.getParameter(Constants.ID));
-        	PropertyParameter parameter = null;
+        	Parameter parameter = null;
         	try {
         		parameter = propertyDAO.getParameter(property, id);
         		request.setAttribute(Constants.PARAMETER, parameter);

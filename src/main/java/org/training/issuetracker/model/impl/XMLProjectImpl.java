@@ -5,8 +5,8 @@ import java.util.ArrayList;
 import java.util.List;
 import org.training.issuetracker.constants.Constants;
 import org.training.issuetracker.exceptions.DaoException;
+import org.training.issuetracker.model.beans.Parameter;
 import org.training.issuetracker.model.beans.Project;
-import org.training.issuetracker.model.beans.PropertyParameter;
 import org.xml.sax.SAXException;
 import org.xml.sax.XMLReader;
 import org.xml.sax.helpers.XMLReaderFactory;
@@ -26,9 +26,9 @@ public class XMLProjectImpl implements ProjectDAO {
 	    return project;
 	}
 	
-	public PropertyParameter getVersionById(int id) throws DaoException {
-		PropertyParameter version = null;
-		List<PropertyParameter> versions = new ArrayList<PropertyParameter>();
+	public Parameter getVersionById(int id) throws DaoException {
+		Parameter version = null;
+		List<Parameter> versions = new ArrayList<Parameter>();
 		try {
 			XMLReader reader = XMLReaderFactory.createXMLReader();
 			VersionsHandler handler = new VersionsHandler(id, versions, Constants.VERSION);
@@ -39,7 +39,6 @@ public class XMLProjectImpl implements ProjectDAO {
 			}catch (IOException e) {
 				throw new DaoException();
 			}
-		
 		version = versions.get(0);
 		return version;
 	}
@@ -59,8 +58,8 @@ public class XMLProjectImpl implements ProjectDAO {
 		return projects;
 	}
 	
-	public List<PropertyParameter> getVersionsOfProject(int projectId) throws DaoException {
-		List<PropertyParameter> versions = new ArrayList<PropertyParameter>();
+	public List<Parameter> getVersionsOfProject(int projectId) throws DaoException {
+		List<Parameter> versions = new ArrayList<Parameter>();
 		try {
 			XMLReader reader = XMLReaderFactory.createXMLReader();
 			VersionsHandler handler = new VersionsHandler(projectId, versions, Constants.PROJECT);
@@ -73,6 +72,10 @@ public class XMLProjectImpl implements ProjectDAO {
 			}
 		return versions;
 	
+	}
+	
+	public void addProject(Project project) throws DaoException {
+		
 	}
 
 }

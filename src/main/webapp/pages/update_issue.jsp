@@ -16,7 +16,7 @@
 		Modify Date:&nbsp; ${issue.modifyDate} <br>
 		Modified By:&nbsp; ${issue.modifier.firstName} &nbsp; ${issue.modifier.lastName} <br>
 	</c:if>
-	<form action=''>
+	<form action='update-issue'>
 		<tr><td>Summary</td>
     	<td><input type='text' name='summary' value="${issue.summary}"></td></tr>
     	<tr><td>Description</td>
