@@ -11,10 +11,14 @@ import org.training.issuetracker.constants.Constants;
 import org.training.issuetracker.constants.Pages;
 import org.training.issuetracker.exceptions.DaoException;
 import org.training.issuetracker.model.beans.Issue;
-import org.training.issuetracker.model.beans.Parameter;
+
 import org.training.issuetracker.model.beans.Project;
 
 import org.training.issuetracker.model.beans.User;
+import org.training.issuetracker.model.beans.properties.Priority;
+import org.training.issuetracker.model.beans.properties.Resolution;
+import org.training.issuetracker.model.beans.properties.Status;
+import org.training.issuetracker.model.beans.properties.Type;
 import org.training.issuetracker.model.factories.IssueFactory;
 import org.training.issuetracker.model.factories.ProjectFactory;
 import org.training.issuetracker.model.factories.PropertyFactory;
@@ -25,7 +29,7 @@ import org.training.issuetracker.model.DAO.PropertyDAO;
 import org.training.issuetracker.model.DAO.UserDAO;
 import org.training.issuetracker.utils.DisplayManager;
 
-
+//
 public class IssueController extends AbstractController {
 	private static final long serialVersionUID = 1L;
        
@@ -41,10 +45,10 @@ public class IssueController extends AbstractController {
   	   	IssueDAO issuesDao = IssueFactory.getClassFromFactory();
   	   	List<User> users = null;
  		List<Project> projects = null;
- 		List<Parameter> statuses = null;
- 		List<Parameter> priorities = null;
- 		List<Parameter> types = null;
- 		List<Parameter> resolutions = null;
+ 		List<Status> statuses = null;
+ 		List<Priority> priorities = null;
+ 		List<Type> types = null;
+ 		List<Resolution> resolutions = null;
   	   	try {
   	   	issue = issuesDao.getIssueById(id);
   	   	}catch (DaoException e) {

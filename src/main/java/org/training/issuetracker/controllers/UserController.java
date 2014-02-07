@@ -8,8 +8,7 @@ import javax.servlet.http.HttpServletResponse;
 import org.training.issuetracker.constants.Constants;
 import org.training.issuetracker.constants.Pages;
 import org.training.issuetracker.exceptions.DaoException;
-import org.training.issuetracker.model.beans.Parameter;
-
+import org.training.issuetracker.model.beans.properties.Role;
 import org.training.issuetracker.model.factories.PropertyFactory;
 import org.training.issuetracker.model.DAO.PropertyDAO;
 
@@ -26,7 +25,7 @@ public class UserController extends AbstractController {
     protected void performTask(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
     	String action = request.getParameter(Constants.ACTION);
     	PropertyDAO propertyDAO = PropertyFactory.getClassFromFactory();
-    	List<Parameter> roles = null;
+    	List<Role> roles = null;
     	try {
     	roles = propertyDAO.getRoles();
     	}catch (DaoException e) {

@@ -1,5 +1,7 @@
 package org.training.issuetracker.model.beans;
 
+import org.training.issuetracker.model.beans.properties.Role;
+
 
 
 public class User {
@@ -7,17 +9,22 @@ public class User {
 	private String firstName; 
 	private String lastName;
 	private String email;
-	private Parameter role; //Property Parameter!!!!!
+	private Role role; 
 	private String password;
 	
 	public User() {
 		super();
 	}
 	
-	public User(int id, String firstName, String lastName, String email, Parameter role,
+	public User(int id, String firstName, String lastName, String email, Role role,
+			String password) {
+		this(firstName, lastName, email, role, password);
+		this.id = id;
+	}
+	
+	public User(String firstName, String lastName, String email, Role role,
 			String password) {
 		super();
-		this.id = id;
 		this.firstName = firstName;
 		this.lastName = lastName;
 		this.email = email;
@@ -57,11 +64,11 @@ public class User {
 		this.email = email;
 	}
 
-	public Parameter getRole() {
+	public Role getRole() {
 		return role;
 	}
 
-	public void setRole(Parameter role) {
+	public void setRole(Role role) {
 		this.role = role;
 	}
 

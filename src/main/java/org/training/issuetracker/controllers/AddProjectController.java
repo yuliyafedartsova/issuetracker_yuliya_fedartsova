@@ -14,7 +14,7 @@ import org.training.issuetracker.constants.Pages;
 import org.training.issuetracker.exceptions.DaoException;
 import org.training.issuetracker.model.DAO.ProjectDAO;
 import org.training.issuetracker.model.DAO.UserDAO;
-import org.training.issuetracker.model.beans.Parameter;
+
 import org.training.issuetracker.model.beans.Project;
 import org.training.issuetracker.model.beans.User;
 import org.training.issuetracker.model.factories.ProjectFactory;
@@ -43,3 +43,4 @@ public class AddProjectController extends AbstractController {
     }
 	
 }
+//

@@ -14,9 +14,9 @@ import org.training.issuetracker.model.DAO.ProjectDAO;
 import org.training.issuetracker.model.DAO.PropertyDAO;
 import org.training.issuetracker.model.DAO.UserDAO;
 import org.training.issuetracker.model.beans.Issue;
-import org.training.issuetracker.model.beans.Parameter;
 import org.training.issuetracker.model.beans.Project;
 import org.training.issuetracker.model.beans.User;
+import org.training.issuetracker.model.beans.properties.Version;
 import org.training.issuetracker.model.factories.ProjectFactory;
 import org.training.issuetracker.model.factories.PropertyFactory;
 import org.training.issuetracker.model.factories.UserFactory;
@@ -37,12 +37,12 @@ public class DBProjectImpl implements ProjectDAO {
 			    String name = rs.getString(ConstantsSQL.NAME_COLUMN);
 			    String description  = rs.getString(ConstantsSQL.DESCRIPTION_COLUMN);
 			    int managerId = rs.getInt(ConstantsSQL.MANAGER_ID_COLUMN);
-			    List<Parameter> versions = getVersionsOfProject(id);
+			    List<Version> versions = getVersionsOfProject(id);
 			    User manager = userDAO.getUserById(managerId);
 			    projects.add(new Project(id, name, manager, versions, description));
 			}
 		}catch (SQLException e) {
-			System.out.println(e.getMessage());
+			e.printStackTrace();
 		} 
 		return projects;
 	}
@@ -63,16 +63,16 @@ public class DBProjectImpl implements ProjectDAO {
 		String description  = rs.getString(ConstantsSQL.DESCRIPTION_COLUMN);
 		int managerId = rs.getInt(ConstantsSQL.MANAGER_ID_COLUMN);
 		User manager = userDAO.getUserById(managerId);
-		List<Parameter> versions = getVersionsOfProject(id);
+		List<Version> versions = getVersionsOfProject(id);
 		project = new Project(id, name, manager, versions, description);
 		}catch (SQLException e) {
-			System.out.println(e.getMessage());
+			e.printStackTrace();
 		} 
 		return project;
 	}
 	
-	public Parameter getVersionById(int id) throws DaoException {
-		 Parameter version = null; 
+	public Version getVersionById(int id) throws DaoException {
+		 Version version = null; 
 		 ConnectionManager connectionMng = new ConnectionManager();
 		 Connection connection = connectionMng.getConnection();
 		 ResultSet rs = null;
@@ -83,15 +83,15 @@ public class DBProjectImpl implements ProjectDAO {
 		 rs = ptmSelectVersion.executeQuery();
 		 rs.next();
 		 String name = rs.getString(ConstantsSQL.NAME_COLUMN);
-		 version = new Parameter(id, name);
+		 version = new Version(id, name);
 		 }catch (SQLException e) {
-		 	 System.out.println(e.getMessage());
+			 e.printStackTrace();
 		 } 
 		 return version;
 	 }
 	 
-	public List<Parameter> getVersionsOfProject(int projectId) throws DaoException {
-		 List<Parameter> versions = new ArrayList<Parameter>();
+	public List<Version> getVersionsOfProject(int projectId) throws DaoException {
+		 List<Version> versions = new ArrayList<Version>();
 		 ConnectionManager connectionMng = new ConnectionManager();
 		 Connection connection = connectionMng.getConnection();
 		 ResultSet rs = null;
@@ -103,11 +103,11 @@ public class DBProjectImpl implements ProjectDAO {
 			 while (rs.next()){
 					int id = rs.getInt(1);
 				    String name = rs.getString(ConstantsSQL.NAME_COLUMN);
-				    versions.add(new Parameter (id, name));
+				    versions.add(new Version(id, name));
 				}
 		 
 		 }catch (SQLException e) {
-		 	 System.out.println(e.getMessage());
+			 e.printStackTrace();
 		 } 
 		 return versions;
 	}
@@ -129,17 +129,17 @@ public class DBProjectImpl implements ProjectDAO {
 			rs = ptmInsertProject.getGeneratedKeys();
 			rs.next();
 			int projectId = rs.getInt(1);
-			for(Parameter version : project.getBuildVersions()) {
-		    	addVersion(version, projectId);
+			for(Version version : project.getBuildVersions()) {
+		    	addVersion(version.getName(), projectId);
 		    }
 		
 		}catch (SQLException e) {
-			System.out.println(e.getMessage());
+			e.printStackTrace();
 		} 
 	
 	}
 	
-	public void addVersion(Parameter version, int projectId) throws DaoException {
+	public void addVersion(String version, int projectId) throws DaoException {
 		if(whetherTheVersionExists(version, projectId)) {
 			return;
 		}
@@ -148,11 +148,11 @@ public class DBProjectImpl implements ProjectDAO {
 		try {
 			PreparedStatement ptmInsertVersion = 
 				connection.prepareStatement(ConstantsSQL.ADD_VERSION);
-			ptmInsertVersion.setString(1, version.getName());
+			ptmInsertVersion.setString(1, version);
 			ptmInsertVersion.setInt(2, projectId);
 			ptmInsertVersion.executeUpdate();
 		}catch (SQLException e) {
-			System.out.println(e.getMessage());
+			e.printStackTrace();
 		} 
 	}
 	
@@ -170,12 +170,12 @@ public class DBProjectImpl implements ProjectDAO {
 		    	exist = true;
 		    }
 		}catch (SQLException e) {
-			System.out.println(e.getMessage());
+			e.printStackTrace();
 		} 
 		return exist;
 	}
 	
-	private boolean whetherTheVersionExists(Parameter version, int projectId) {
+	private boolean whetherTheVersionExists(String version, int projectId) {
 		boolean exist = false;
 		ConnectionManager connectionMng = new ConnectionManager();
 		Connection connection = connectionMng.getConnection();
@@ -183,15 +183,33 @@ public class DBProjectImpl implements ProjectDAO {
 		try {
 			PreparedStatement ptmSelectVersion = 
 					connection.prepareStatement(ConstantsSQL.SELECT_IF_VERSION_EXISTS);
-			ptmSelectVersion.setString(1, version.getName());
+			ptmSelectVersion.setString(1, version);
 			rs = ptmSelectVersion.executeQuery();
 		    if(rs.next()) {
 		    	exist = true;
 		    }
 		}catch (SQLException e) {
-			System.out.println(e.getMessage());
+			e.printStackTrace();
 		} 
 		return exist;
 	}
+	
+	public void updateProject(Project project) throws DaoException {
+		ConnectionManager connectionMng = new ConnectionManager();
+		Connection connection = connectionMng.getConnection();
+		try {
+			PreparedStatement ptmUpdateProject = 
+					connection.prepareStatement("UPDATE projects SET name = ?, description = ?, " +
+							"managerId = ?   WHERE id = ?;");
+			ptmUpdateProject.setString(1, project.getName());
+			ptmUpdateProject.setString(2, project.getDescription());
+			ptmUpdateProject.setInt(3, project.getManager().getId());
+			ptmUpdateProject.setInt(4, project.getId());
+			ptmUpdateProject.executeUpdate();
+			}catch (SQLException e) {
+				e.printStackTrace();
+		} 
+	}
+	
 
 }

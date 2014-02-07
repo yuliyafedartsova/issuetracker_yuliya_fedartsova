@@ -2,15 +2,17 @@ package org.training.issuetracker.model.beans;
 
 import java.util.List;
 
+import org.training.issuetracker.model.beans.properties.Version;
+
 public class Project {
 	String name;
 	int id;
 	User manager;
-	List<Parameter> buildVersions;
+	List<Version> buildVersions;
 	String description;
 	
 	public Project(String name, User manager,
-			List<Parameter> buildVersions, String description) {
+			List<Version> buildVersions, String description) {
 		super();
 		this.name = name;
 		this.manager = manager;
@@ -19,7 +21,7 @@ public class Project {
 	}
 	
 	public Project(int id, String name, User manager,
-			List<Parameter> buildVersions, String description) {
+			List<Version> buildVersions, String description) {
 		this(name, manager, buildVersions, description);
 		this.id = id;
 	}
@@ -43,12 +45,12 @@ public class Project {
 	}
 
 
-	public List<Parameter> getBuildVersions() {
+	public List<Version> getBuildVersions() {
 		return buildVersions;
 	}
 
 
-	public void setBuildVersions(List<Parameter> buildVersions) {
+	public void setBuildVersions(List<Version> buildVersions) {
 		this.buildVersions = buildVersions;
 	}
 

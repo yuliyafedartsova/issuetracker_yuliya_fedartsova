@@ -2,14 +2,15 @@ package org.training.issuetracker.utils.handlers;
 
 import java.util.List;
 
-import org.training.issuetracker.model.beans.Parameter;
+
+import org.training.issuetracker.model.beans.Property;
 
 import org.xml.sax.Attributes;
 import org.xml.sax.helpers.DefaultHandler;
 
 public class ParametrsHandler extends DefaultHandler {
 	
-	public ParametrsHandler(List<Parameter> parametrs) {
+	public ParametrsHandler(List<Property> parametrs) {
 		this.parametrs = parametrs;
 	}
 	
@@ -17,7 +18,7 @@ public class ParametrsHandler extends DefaultHandler {
 		PARAMETERS, PARAMETER, ID, NAME;
 	}
 	
-	List<Parameter> parametrs;
+	List<Property> parametrs;
 	private ParametrsXMLEnum currentEnum = null;
 	private int currentId;
 	private String currentName;
@@ -46,7 +47,7 @@ public class ParametrsHandler extends DefaultHandler {
 			String localName, String qName) { 
 			currentEnum = ParametrsXMLEnum.valueOf(qName.toUpperCase());
 			if(currentEnum == ParametrsXMLEnum.PARAMETER) {
-				parametrs.add(new Parameter(currentId, currentName));
+				parametrs.add(new Property(currentId, currentName));
 			}
 	} 
 }

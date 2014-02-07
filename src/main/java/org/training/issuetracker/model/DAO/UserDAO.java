@@ -11,5 +11,6 @@ public interface UserDAO {
 	User getUser(String email, String password) throws ValidationException, DaoException;
 	List<User> getUsers() throws DaoException;
 	void addUser(User user) throws DaoException;
+    void updateUserData(User user) throws DaoException;
 
 }

@@ -9,7 +9,7 @@ import java.sql.Statement;
 
 import org.training.issuetracker.constants.Constants;
 
-//
+
 public class ConnectionManager {
 	 
 	 static{

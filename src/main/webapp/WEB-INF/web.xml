@@ -127,7 +127,7 @@
   </servlet>
   <servlet-mapping>
     <servlet-name>UpdateProjectController</servlet-name>
-    <url-pattern>/UpdateProjectController</url-pattern>
+    <url-pattern>/update-project</url-pattern>
   </servlet-mapping>
   <servlet>
     <description></description>
@@ -148,5 +148,35 @@
   <servlet-mapping>
     <servlet-name>UpdateIssueController</servlet-name>
     <url-pattern>/update-issue</url-pattern>
+  </servlet-mapping>
+  <servlet>
+    <description></description>
+    <display-name>UpdateUserDataController</display-name>
+    <servlet-name>UpdateUserDataController</servlet-name>
+    <servlet-class>org.training.issuetracker.controllers.UpdateUserDataController</servlet-class>
+  </servlet>
+  <servlet-mapping>
+    <servlet-name>UpdateUserDataController</servlet-name>
+    <url-pattern>/update-user</url-pattern>
+  </servlet-mapping>
+  <servlet>
+    <description></description>
+    <display-name>AddUserController</display-name>
+    <servlet-name>AddUserController</servlet-name>
+    <servlet-class>org.training.issuetracker.controllers.AddUserController</servlet-class>
+  </servlet>
+  <servlet-mapping>
+    <servlet-name>AddUserController</servlet-name>
+    <url-pattern>/add-user</url-pattern>
+  </servlet-mapping>
+  <servlet>
+    <description></description>
+    <display-name>AddParameterController</display-name>
+    <servlet-name>AddParameterController</servlet-name>
+    <servlet-class>org.training.issuetracker.controllers.AddParameterController</servlet-class>
+  </servlet>
+  <servlet-mapping>
+    <servlet-name>AddParameterController</servlet-name>
+    <url-pattern>/AddParameterController</url-pattern>
   </servlet-mapping>
 </web-app>

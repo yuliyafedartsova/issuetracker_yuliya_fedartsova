@@ -6,16 +6,19 @@ import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
 import java.util.List;
-
 import org.training.issuetracker.constants.Pages;
 import org.training.issuetracker.exceptions.DaoException;
 import org.training.issuetracker.model.DAO.ProjectDAO;
 import org.training.issuetracker.model.DAO.PropertyDAO;
 import org.training.issuetracker.model.DAO.UserDAO;
-import org.training.issuetracker.model.beans.Parameter;
 import org.training.issuetracker.model.beans.Project;
-
 import org.training.issuetracker.model.beans.User;
+import org.training.issuetracker.model.beans.properties.Priority;
+import org.training.issuetracker.model.beans.properties.Resolution;
+import org.training.issuetracker.model.beans.properties.Role;
+import org.training.issuetracker.model.beans.properties.Status;
+import org.training.issuetracker.model.beans.properties.Type;
+import org.training.issuetracker.model.beans.properties.Version;
 import org.training.issuetracker.model.factories.ProjectFactory;
 import org.training.issuetracker.model.factories.PropertyFactory;
 import org.training.issuetracker.model.factories.UserFactory;
@@ -36,30 +39,30 @@ public class LoaderFromXml {
 	public void loadPropertise() {
 		PropertyDAO propertyDAO = PropertyFactory.getClassFromFactory();
 		try {
-			List<Parameter> types = propertyDAO.getTypes();
-			List<Parameter> priorities = propertyDAO.getPriorities();
-			List<Parameter> resolutions = propertyDAO.getResolutions();
-			List<Parameter> statuses = propertyDAO.getStatuses();
-			List<Parameter> roles = propertyDAO.getRoles();
+			List<Type> types = propertyDAO.getTypes();
+			List<Priority> priorities = propertyDAO.getPriorities();
+			List<Resolution> resolutions = propertyDAO.getResolutions();
+			List<Status> statuses = propertyDAO.getStatuses();
+			List<Role> roles = propertyDAO.getRoles();
 			
-			for(Parameter parameter : roles) {
+			for(Role parameter : roles) {
 				addRole(parameter);
 			}
 			
-			for(Parameter parameter : statuses) {
+			for(Status parameter : statuses) {
 				addStatus(parameter);
 			}
 			
-			for(Parameter parameter : resolutions) {
+			for(Resolution parameter : resolutions) {
 				addResolution(parameter);
 			}
 			
 			
-			for(Parameter parameter : types) {
+			for(Type parameter : types) {
 				addType(parameter);
 			}
 			
-			for(Parameter parameter : priorities) {
+			for(Priority parameter : priorities) {
 				addPriority(parameter);
 			}
 			
@@ -119,7 +122,7 @@ public class LoaderFromXml {
 		
 	}
 	
-	public void addType(Parameter type) {
+	public void addType(Type type) {
 		ConnectionManager manager = new ConnectionManager();
 		Connection connection = manager.getConnection();
 		ResultSet rs = null;
@@ -140,7 +143,7 @@ public class LoaderFromXml {
 	
 	}
 	
-	public void addPriority(Parameter priority) {
+	public void addPriority(Priority priority) {
 		ConnectionManager manager = new ConnectionManager();
 		Connection connection = manager.getConnection();
 		ResultSet rs = null;
@@ -161,7 +164,7 @@ public class LoaderFromXml {
 	
 	}
 	
-	public void addResolution(Parameter parameter) {
+	public void addResolution(Resolution parameter) {
 		ConnectionManager manager = new ConnectionManager();
 		Connection connection = manager.getConnection();
 		ResultSet rs = null;
@@ -182,7 +185,7 @@ public class LoaderFromXml {
 	}
 	
 	
-	public void addStatus(Parameter parameter) {
+	public void addStatus(Status parameter) {
 		ConnectionManager manager = new ConnectionManager();
 		Connection connection = manager.getConnection();
 		ResultSet rs = null;
@@ -201,7 +204,7 @@ public class LoaderFromXml {
 		} 
 	}
 	
-	private void addRole(Parameter parameter) {
+	private void addRole(Role parameter) {
 		ConnectionManager manager = new ConnectionManager();
 		Connection connection = manager.getConnection();
 		ResultSet rs = null;
@@ -238,7 +241,7 @@ public class LoaderFromXml {
 			ptmInsertProject.setString(3, project.getDescription());
 			ptmInsertProject.executeUpdate();
 		
-		    for(Parameter version : project.getBuildVersions()) {
+		    for(Version version : project.getBuildVersions()) {
 		    	addVersion(project.getId(), version);
 		    }
 		
@@ -250,7 +253,7 @@ public class LoaderFromXml {
 	
 	}
 	
-	public void addVersion(int projectId, Parameter version) {
+	public void addVersion(int projectId, Version version) {
 		ConnectionManager manager = new ConnectionManager();
 		Connection connection = manager.getConnection();
 		ResultSet rs = null;

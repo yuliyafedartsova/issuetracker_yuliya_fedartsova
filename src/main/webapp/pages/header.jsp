@@ -6,17 +6,18 @@
 <title>header</title>
 </head>
 <body>
-	<a href='main'> Main page </a>
-     <c:choose>
+	<c:choose>
 		  <c:when test="${user.role != 'Guest'}">
 		  		Hello, ${user.firstName} <br><br>
+		  		<a href='main'> Main page </a><br>
 		  		<a href='/issuetracker/pages/change_password.jsp'> Change password </a> <br>
 		  		<a href='user?action=update'> Update your data </a> <br>
 		  		<a href='logout'> Logout </a> <br><br>
 		  </c:when>
           <c:otherwise>
+          		<a href='main'> Main page </a><br>
                 <%@ include file="login.jsp" %>
           </c:otherwise>
-		       </c:choose>
+	</c:choose>
 </body>
 </html>

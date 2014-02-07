@@ -13,13 +13,16 @@
 				<a href='submit-issue'> Submit Issue </a> <br>
 			</c:if>
 	        <c:if test="${user.role eq 'Administrator'}">
-				<a href='projects'> Projects </a>
-			    <a href='property?action=show&property=type'> Types </a>
-			    <a href='property?action=show&property=status'> Statuses </a>
-			    <a href='property?action=show&property=resolution'> Resolutions</a>
+				<a href='projects'> Projects </a><br>
+			    <a href='property?action=show&property=type'> Types </a>&nbsp;
+			    <a href='property?action=show&property=status'> Statuses </a>&nbsp;
+			    <a href='property?action=show&property=resolution'> Resolutions</a>&nbsp;
 			    <a href='property?action=show&property=priority'> Priorities </a> <br>
-			    <a href='project?action=add'> Add project </a>
-			    <a href='user?action=add'>Add user</a>
+			    <a href='project?action=add'> Add project </a><br>
+			    <a href='add-parameter?roperty=resolution'> Add resolution </a>&nbsp;
+			    <a href='add-parameter?roperty=priority'> Add priority </a>&nbsp;
+			    <a href='add-parameter?roperty=type'> Add type </a>&nbsp;<br>
+			    <a href='user?action=add'>Add user</a><br>
 			</c:if>
 			<form name="main" method="POST" action='main'>
 		    <select name='sorting' size='1'>
@@ -43,7 +46,7 @@
 		   <td> Status </td> <td> Summary </td> </tr>
 		   <c:forEach var="issue" items="${issues}"> 
 		      <tr>
-		      	<td> ${issue.id} </td>
+		      	<td> <a href='issue?id=${issue.id}'> ${issue.id} </a> </td>
 		        <td> ${issue.priority} </td>
 		        <c:choose>
 					<c:when test="${issue.assignee != null}">

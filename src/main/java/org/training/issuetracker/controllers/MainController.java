@@ -19,7 +19,7 @@ import org.training.issuetracker.constants.ConstantsSQL;
 import org.training.issuetracker.constants.Pages;
 import org.training.issuetracker.exceptions.DaoException;
 import org.training.issuetracker.model.beans.Issue;
-import org.training.issuetracker.model.beans.Parameter;
+
 
 import org.training.issuetracker.model.beans.User;
 import org.training.issuetracker.model.beans.comparators.IssueComparatorByAssignee;
@@ -27,6 +27,7 @@ import org.training.issuetracker.model.beans.comparators.IssueComparatorById;
 import org.training.issuetracker.model.beans.comparators.IssueComparatorByPriority;
 import org.training.issuetracker.model.beans.comparators.IssueComparatorByStatus;
 import org.training.issuetracker.model.beans.comparators.IssueComparatorByType;
+import org.training.issuetracker.model.beans.properties.Role;
 import org.training.issuetracker.model.factories.IssueFactory;
 import org.training.issuetracker.model.factories.UserFactory;
 import org.training.issuetracker.model.impl.DBIssueImpl;
@@ -53,7 +54,7 @@ public class MainController extends AbstractController {
 		ServletContext context = getServletContext();
 		User guest = new User();
 		
-		Parameter role = new Parameter(3, "Guest");
+		Role role = new Role("Guest");
 		guest.setRole(role);
 		context.setAttribute(Constants.USER, guest);
     }

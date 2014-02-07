@@ -25,7 +25,7 @@ public class LoginController extends AbstractController {
     public LoginController() {
         super();
     } 
-    
+   
     protected void performTask(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
     	UserDAO userDAO = UserFactory.getClassFromFactory();
     	String email = request.getParameter(Constants.EMAIL).trim();

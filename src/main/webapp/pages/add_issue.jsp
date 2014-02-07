@@ -4,7 +4,9 @@
 <head>
 <meta http-equiv="Content-Type" content="text/html; charset=UTF8">
 <title>Login</title></head>
-<body bgcolor= "FA F0 E6">
+<script src="pages/scripts.js"></script>
+<link rel="stylesheet" type="text/css" href="pages/tracker.css">
+<body>
 	<%@ include file="header.jsp" %> &nbsp;
 	<BR><BR>
 	 Add issue: <br>
@@ -36,17 +38,25 @@
 	<tr><td> Project </td>
 	<td><select name='project' size='1'>
 		<c:forEach var="project" items="${projects}"> 
-	         <option value='${project.id}'> ${project.name} </option>
+	         <option value='${project.id}' onclick="showVersions('${project.name}');"> ${project.name} </option>
 		</c:forEach>
 	</select></td></tr>
+	
 	<tr><td>Build found: </td>
-	<td><select name='version' size='1'>
-		<c:forEach var="project" items="${projects}"> 
-	    	<c:forEach var="version" items="${project.buildVersions}">   
+	
+	<c:forEach var="project" items="${projects}"> 
+	    	
+	    	<td><select name='version' size='1' id='${project.id}' class="versions">
+	    		<c:forEach var="version" items="${project.buildVersions}">   
 	         	<option value='${version.id}'> ${version} </option>
-			</c:forEach>
-		</c:forEach>
-	</select></td></tr>
+				</c:forEach>
+	    	</select></td>
+	    	
+	    	
+	
+	
+	</c:forEach>
+	</tr>
 	<tr><td>Assignee:</td>
 	<td><select name='assignee' size='1'>
 		<option value=''> Not assigned </option>
@@ -58,5 +68,7 @@
 	<input type='hidden' name='author' value='${user.id}'>
 	<input type="submit" value="Add">
 	</form>
+	
+	<div id="test"> hi </div>
  </body>
 </html>

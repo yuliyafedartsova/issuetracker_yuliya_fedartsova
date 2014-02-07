@@ -10,10 +10,11 @@ import org.training.issuetracker.constants.Constants;
 import org.training.issuetracker.constants.Pages;
 import org.training.issuetracker.exceptions.DaoException;
 import org.training.issuetracker.model.beans.Issue;
-import org.training.issuetracker.model.beans.Parameter;
 import org.training.issuetracker.model.beans.Project;
-
 import org.training.issuetracker.model.beans.User;
+import org.training.issuetracker.model.beans.properties.Priority;
+import org.training.issuetracker.model.beans.properties.Status;
+import org.training.issuetracker.model.beans.properties.Type;
 import org.training.issuetracker.model.factories.ProjectFactory;
 import org.training.issuetracker.model.factories.PropertyFactory;
 import org.training.issuetracker.model.factories.UserFactory;
@@ -36,9 +37,9 @@ public class SubmitIssueController extends AbstractController {
     	PropertyDAO propertyDAO = PropertyFactory.getClassFromFactory();
     	UserDAO userDAO = UserFactory.getClassFromFactory();
     	ProjectDAO projectDAO = ProjectFactory.getClassFromFactory();
-    	List<Parameter> statuses = null;
-    	List<Parameter> priorities = null;
-    	List<Parameter> types = null;
+    	List<Status> statuses = null;
+    	List<Priority> priorities = null;
+    	List<Type> types = null;
     	List<User> users = null;
     	List<Project> projects = null;
     	try {
@@ -60,7 +61,9 @@ public class SubmitIssueController extends AbstractController {
     	request.setAttribute(Constants.PRIORITIES, priorities);
     	request.setAttribute(Constants.USERS, users);
     	request.setAttribute(Constants.PROJECTS, projects);
-    	jumpPage(Pages.ADD_ISSUE_PAGE, request, response);
+    	
+    	jumpPage("/pages/test.jsp", request, response);
+    	//jumpPage(Pages.ADD_ISSUE_PAGE, request, response);
     }
     
     

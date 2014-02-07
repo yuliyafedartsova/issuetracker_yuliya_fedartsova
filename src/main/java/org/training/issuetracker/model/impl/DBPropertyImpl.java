@@ -7,23 +7,22 @@ import java.sql.SQLException;
 import java.sql.Statement;
 import java.util.ArrayList;
 import java.util.List;
-
 import org.training.issuetracker.constants.Constants;
 import org.training.issuetracker.constants.ConstantsSQL;
 import org.training.issuetracker.exceptions.DaoException;
 import org.training.issuetracker.model.DAO.PropertyDAO;
 import org.training.issuetracker.model.beans.Issue;
-import org.training.issuetracker.model.beans.Parameter;
 import org.training.issuetracker.model.beans.User;
+import org.training.issuetracker.model.beans.properties.Status;
 import org.training.issuetracker.model.enums.Properties;
 import org.training.issuetracker.utils.ConnectionManager;
 
 public class DBPropertyImpl implements PropertyDAO {
-	public List<Parameter> getStatuses() throws DaoException {
+	public List<Status> getStatuses() throws DaoException {
 		return getParameters(Constants.STATUSES_SOURCE_NAME);
 	}
 	
-	public Parameter getStatusById(int id) throws DaoException {
+	public Status getStatusById(int id) throws DaoException {
 		return getParameterById(id, Constants.STATUSES_SOURCE_NAME);
 	}
 	

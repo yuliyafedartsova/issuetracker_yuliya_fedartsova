@@ -4,10 +4,15 @@ import java.sql.Date;
 import java.util.List;
 import org.training.issuetracker.exceptions.DaoException;
 import org.training.issuetracker.model.beans.Issue;
-import org.training.issuetracker.model.beans.Parameter;
+
 import org.training.issuetracker.model.beans.Project;
 
 import org.training.issuetracker.model.beans.User;
+import org.training.issuetracker.model.beans.properties.Priority;
+import org.training.issuetracker.model.beans.properties.Resolution;
+import org.training.issuetracker.model.beans.properties.Status;
+import org.training.issuetracker.model.beans.properties.Type;
+import org.training.issuetracker.model.beans.properties.Version;
 import org.training.issuetracker.model.factories.ProjectFactory;
 import org.training.issuetracker.model.factories.PropertyFactory;
 import org.training.issuetracker.model.factories.UserFactory;
@@ -31,11 +36,11 @@ public class IssuesHandler extends DefaultHandler {
 	private List <Issue> issues;
 	private IssuesXMLEnum currentEnum = null;
 	private int currentId;
-	private Parameter currentPriority;
-	private Parameter currentType;
-	private Parameter currentResolution;
-	private Parameter currentStatus;
-	private Parameter currentVersion;
+	private Priority currentPriority;
+	private Type currentType;
+	private Resolution currentResolution;
+	private Status currentStatus;
+	private Version currentVersion;
 	private String currentSummary;
 	private String currentDescription;
 	private Project currentProject;

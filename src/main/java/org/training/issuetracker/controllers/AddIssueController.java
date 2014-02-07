@@ -14,7 +14,7 @@ import org.training.issuetracker.model.beans.Issue;
 import org.training.issuetracker.model.factories.IssueFactory;
 import org.training.issuetracker.model.factories.IssueInstanceFactory;
 
-
+//
 public class AddIssueController extends AbstractController {
 	private static final long serialVersionUID = 1L;
        

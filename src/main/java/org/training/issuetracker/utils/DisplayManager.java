@@ -4,8 +4,9 @@ import java.util.ArrayList;
 import java.util.List;
 import org.training.issuetracker.constants.Constants;
 import org.training.issuetracker.model.beans.Issue;
-import org.training.issuetracker.model.beans.Parameter;
 import org.training.issuetracker.model.beans.Project;
+import org.training.issuetracker.model.beans.properties.Status;
+
 
 
 public class DisplayManager {
@@ -22,46 +23,53 @@ public class DisplayManager {
     	}
     }
 	
-	public static List<Parameter> getAvailableStatuses(List<Parameter> statuses, Issue issue) {
-    	List<Parameter> availableStatuses = new ArrayList<Parameter>();
+	public static List<Status> getAvailableStatuses(List<Status> statuses, Issue issue) {
+    	List<Status> availableStatuses = new ArrayList<Status>();
     	switch(issue.getStatus().getName()) {
     		case Constants.NEW:
-    			for(Parameter par : statuses) {
+    			for(Status par : statuses) {
         			if(par.getName().equals(Constants.NEW) || par.getName().equals(Constants.ASSIGNED)) {
         				availableStatuses.add(par);
         			}
         		}
     			break;
     		case Constants.ASSIGNED:
-    			for(Parameter par : statuses) {
+    			for(Status par : statuses) {
         			if(par.getName().equals(Constants.IN_PROGRESS) || par.getName().equals(Constants.ASSIGNED)) {
         				availableStatuses.add(par);
         			}
         		}
     			break;	
     		case Constants.CLOSED:
-    			for(Parameter par : statuses) {
+    			for(Status par : statuses) {
         			if(par.getName().equals(Constants.CLOSED) || par.getName().equals(Constants.REOPENED)) {
         				availableStatuses.add(par);
         			}
         		}
     			break;
     		case Constants.IN_PROGRESS:
-    			for(Parameter par : statuses) {
+    			for(Status par : statuses) {
         			if(par.getName().equals(Constants.CLOSED) || par.getName().equals(Constants.IN_PROGRESS) ||
         					par.getName().equals(Constants.RESOLVED)) {
         				availableStatuses.add(par);
         			}
         		}
     			break;
+    		case Constants.RESOLVED:
+    			for(Status par : statuses) {
+        			if(par.getName().equals(Constants.CLOSED) || par.getName().equals(Constants.REOPENED) || 
+        					par.getName().equals(Constants.RESOLVED)) {
+        				availableStatuses.add(par);
+        			}
+        		}
+    			break;
     	}
-    	
     	return availableStatuses;
-    }
+    }//
 	
-	public static List<Parameter> getAvailableStatusesForSubmitIssue(List<Parameter> statuses) {
-    	List<Parameter> availableStatuses = new ArrayList<Parameter>();
-    	for(Parameter par : statuses) {
+	public static List<Status> getAvailableStatusesForSubmitIssue(List<Status> statuses) {
+    	List<Status> availableStatuses = new ArrayList<Status>();
+    	for(Status par : statuses) {
     		if(par.getName().equals(Constants.NEW) || par.getName().equals(Constants.ASSIGNED) ) {
     			availableStatuses.add(par);
     		}

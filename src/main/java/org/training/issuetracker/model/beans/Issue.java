@@ -1,28 +1,35 @@
 package org.training.issuetracker.model.beans;
 
+
 import java.sql.Date;
+
+import org.training.issuetracker.model.beans.properties.Priority;
+import org.training.issuetracker.model.beans.properties.Resolution;
+import org.training.issuetracker.model.beans.properties.Status;
+import org.training.issuetracker.model.beans.properties.Type;
+import org.training.issuetracker.model.beans.properties.Version;
 
 
 
 public class Issue {
 	private int id;
-	private Parameter priority;
+	private Priority priority;
 	private User assignee;
-	private Parameter type;
+	private Type type;
 	private String summary;
 	private String description;
-	private Parameter status;
+	private Status status;
 	private Project project;
-	private Parameter resolution;
-	private Parameter buildFound;
+	private Resolution resolution;
+	private Version buildFound;
 	private Date createDate;
 	private Date modifyDate;
 	private User author;
 	private User modifier;
 	
-	public Issue(Parameter priority, Parameter type,
-			String summary, String description, Parameter status, Project project,
-			Parameter buildFound, Date createDate, User author) {
+	public Issue(Priority priority, Type type,
+			String summary, String description, Status status, Project project,
+			Version buildFound, Date createDate, User author) {
 		super();
 		this.priority = priority;
 		this.type = type;
@@ -35,9 +42,9 @@ public class Issue {
 		this.author = author;
 	}
 	
-	public Issue(int id, Parameter priority, Parameter type,
-			String summary, String description, Parameter status, Project project,
-			Parameter buildFound, Date createDate, User author) {
+	public Issue(int id, Priority priority, Type type,
+			String summary, String description, Status status, Project project,
+			Version buildFound, Date createDate, User author) {
 		this(priority, type, summary, description, status, project, buildFound, 
 				createDate, author);
 		this.id = id;
@@ -51,11 +58,11 @@ public class Issue {
 		this.id = id;
 	}
 
-	public Parameter getPriority() {
+	public Priority getPriority() {
 		return priority;
 	}
 
-	public void setPriority(Parameter priority) {
+	public void setPriority(Priority priority) {
 		this.priority = priority;
 	}
 
@@ -67,11 +74,11 @@ public class Issue {
 		this.assignee = assignee;
 	}
 
-	public Parameter getType() {
+	public Type getType() {
 		return type;
 	}
 
-	public void setType(Parameter type) {
+	public void setType(Type type) {
 		this.type = type;
 	}
 
@@ -91,11 +98,11 @@ public class Issue {
 		this.description = description;
 	}
 
-	public Parameter getStatus() {
+	public Status getStatus() {
 		return status;
 	}
 
-	public void setStatus(Parameter status) {
+	public void setStatus(Status status) {
 		this.status = status;
 	}
 
@@ -107,11 +114,11 @@ public class Issue {
 		this.project = project;
 	}
 
-	public Parameter getBuildFound() {
+	public Version getBuildFound() {
 		return buildFound;
 	}
 
-	public void setBuildFound(Parameter buildFound) {
+	public void setBuildFound(Version buildFound) {
 		this.buildFound = buildFound;
 	}
 
@@ -147,11 +154,11 @@ public class Issue {
 		this.modifier = modifier;
 	}
 
-	public Parameter getResolution() {
+	public Resolution getResolution() {
 		return resolution;
 	}
 
-	public void setResolution(Parameter resolution) {
+	public void setResolution(Resolution resolution) {
 		this.resolution = resolution;
 	}
 	

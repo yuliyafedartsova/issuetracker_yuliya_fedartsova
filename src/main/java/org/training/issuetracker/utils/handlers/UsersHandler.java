@@ -2,8 +2,8 @@ package org.training.issuetracker.utils.handlers;
 
 import java.util.List;
 import org.training.issuetracker.exceptions.DaoException;
-import org.training.issuetracker.model.beans.Parameter;
 import org.training.issuetracker.model.beans.User;
+import org.training.issuetracker.model.beans.properties.Role;
 import org.training.issuetracker.model.factories.PropertyFactory;
 import org.xml.sax.Attributes;
 import org.xml.sax.helpers.DefaultHandler;
@@ -26,7 +26,7 @@ public class UsersHandler extends DefaultHandler {
 	private String currentFirstName;
 	private String currentLastName;
 	private String currentEmail;
-	private Parameter currentRole;
+	private Role currentRole;
 	private String currentPassword;
 	PropertyDAO propertyDAO = PropertyFactory.getClassFromFactory();
 	

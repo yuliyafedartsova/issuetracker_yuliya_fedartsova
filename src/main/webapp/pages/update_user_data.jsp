@@ -8,7 +8,7 @@
 <body>
 <%@ include file="header.jsp" %> 
 	Update your data:<br>
-	<form name='update' method='POST' action=''>
+	<form name='update' method='POST' action='update-user'>
 	<table>
 	<tr><td>First Name:</td>
 	<td><input type='text' name='firstName' value='${user.firstName}'> </td></tr>
@@ -25,6 +25,8 @@
 		</select></td></tr>
 	</c:if>
 	</table>
+	<input type="hidden" name='id' value='${user.id}'>
+	<input type="submit" value="Update data">
 	</form>
 	</body>
 </html>

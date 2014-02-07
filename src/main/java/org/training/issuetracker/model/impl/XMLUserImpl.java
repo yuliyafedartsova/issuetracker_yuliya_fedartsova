@@ -55,5 +55,9 @@ public class XMLUserImpl implements UserDAO {
 		
 	}
 	
+	public void updateUserData(User user) throws DaoException {
+		
+	}
+	
 	
 }

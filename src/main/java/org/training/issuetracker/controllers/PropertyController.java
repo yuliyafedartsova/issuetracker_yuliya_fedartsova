@@ -12,7 +12,7 @@ import org.training.issuetracker.exceptions.DaoException;
 import org.training.issuetracker.model.beans.Parameter;
 import org.training.issuetracker.model.factories.PropertyFactory;
 import org.training.issuetracker.model.DAO.PropertyDAO;
-
+//
 public class PropertyController extends AbstractController {
 	private static final long serialVersionUID = 1L;
        

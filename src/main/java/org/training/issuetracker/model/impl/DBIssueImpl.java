@@ -8,7 +8,6 @@ import java.sql.SQLException;
 import java.sql.Statement;
 import java.util.ArrayList;
 import java.util.List;
-
 import org.training.issuetracker.constants.ConstantsSQL;
 import org.training.issuetracker.exceptions.DaoException;
 import org.training.issuetracker.model.DAO.IssueDAO;
@@ -16,9 +15,13 @@ import org.training.issuetracker.model.DAO.ProjectDAO;
 import org.training.issuetracker.model.DAO.PropertyDAO;
 import org.training.issuetracker.model.DAO.UserDAO;
 import org.training.issuetracker.model.beans.Issue;
-import org.training.issuetracker.model.beans.Parameter;
 import org.training.issuetracker.model.beans.Project;
 import org.training.issuetracker.model.beans.User;
+import org.training.issuetracker.model.beans.properties.Priority;
+import org.training.issuetracker.model.beans.properties.Resolution;
+import org.training.issuetracker.model.beans.properties.Status;
+import org.training.issuetracker.model.beans.properties.Type;
+import org.training.issuetracker.model.beans.properties.Version;
 import org.training.issuetracker.model.factories.ProjectFactory;
 import org.training.issuetracker.model.factories.PropertyFactory;
 import org.training.issuetracker.model.factories.UserFactory;
@@ -45,11 +48,11 @@ public class DBIssueImpl implements IssueDAO {
 				String description = rs.getString(6);
 				Date createDate = rs.getDate(11);
 				Date modifyDate = rs.getDate(13);
-				Parameter priority = propertyDAO.getPriorityById(rs.getInt(2));
-				Parameter type = propertyDAO.getTypeById(rs.getInt(4));
-				Parameter status = propertyDAO.getStatusById(rs.getInt(7));
+				Priority priority = propertyDAO.getPriorityById(rs.getInt(2));
+				Type type = propertyDAO.getTypeById(rs.getInt(4));
+				Status status = propertyDAO.getStatusById(rs.getInt(7));
 				Project project = projectDAO.getProjectById(rs.getInt(8));
-				Parameter version = projectDAO.getVersionById(rs.getInt(10)); 
+				Version version = projectDAO.getVersionById(rs.getInt(10)); 
 				User author = userDAO.getUserById(rs.getInt(12));
 				Issue issue = new Issue(rs.getInt(1), priority, type, summary, description, status,
 						project, version, createDate, author);
@@ -63,7 +66,7 @@ public class DBIssueImpl implements IssueDAO {
 					issue.setModifyDate(modifyDate);
 				}
 				if(rs.getInt(9) != 0) {
-					Parameter resolution = propertyDAO.getResolutionById(rs.getInt(9));
+					Resolution resolution = propertyDAO.getResolutionById(rs.getInt(9));
 				    issue.setResolution(resolution);
 				}
 				issues.add(issue);
@@ -91,17 +94,17 @@ public class DBIssueImpl implements IssueDAO {
 			ptmSelectIssue.setInt(1, id);
 			rs = ptmSelectIssue.executeQuery();
 			rs.next();
-			Parameter priority = 
+			Priority priority = 
 					propertyDAO.getPriorityById(rs.getInt(ConstantsSQL.PRIORITY_ID_COLUMN));
-			Parameter type = 
+			Type type = 
 					propertyDAO.getTypeById(rs.getInt(ConstantsSQL.TYPE_ID_COLUMN));
 			String summary = rs.getString(ConstantsSQL.SUMMARY_COLUMN);
 			String description = rs.getString(ConstantsSQL.DESCRIPTION_COLUMN);
-			Parameter status = 
+			Status status = 
 					propertyDAO.getStatusById(rs.getInt(ConstantsSQL.STATUS_ID_COLUMN));
 			Project project = 
 					projectDAO.getProjectById(rs.getInt(ConstantsSQL.PRIORITY_ID_COLUMN));
-			Parameter version = 
+			Version version = 
 					projectDAO.getVersionById(rs.getInt(ConstantsSQL.VERSION_ID_COLUMN));
 			Date createDate = rs.getDate(ConstantsSQL.CREATE_DATE_COLUMN);
 			User author = userDAO.getUserById(rs.getInt(ConstantsSQL.AUTHOR_ID_COLUMN));
@@ -118,7 +121,7 @@ public class DBIssueImpl implements IssueDAO {
 				issue.setModifyDate(rs.getDate(ConstantsSQL.MODIFY_DATE_COLUMN));
 			}
 			if(rs.getInt(ConstantsSQL.RESOLUTION_ID_COLUMN) != 0) {
-				Parameter resolution = 
+				Resolution resolution = 
 						propertyDAO.getResolutionById(rs.getInt(ConstantsSQL.RESOLUTION_ID_COLUMN));
 			    issue.setResolution(resolution);
 			}
@@ -127,7 +130,6 @@ public class DBIssueImpl implements IssueDAO {
 			System.out.println(e.getMessage());
 		} 
 		return issue;
-		
 	}
 	
 	public List<Issue> getNLastAddedIssues(int n, String sortingType) throws DaoException {
@@ -145,17 +147,17 @@ public class DBIssueImpl implements IssueDAO {
 			rs = ptmSelectIssues.executeQuery();
 			while (rs.next()){
 				int id = rs.getInt(ConstantsSQL.ID_COLUMN);
-				Parameter priority = 
+				Priority priority = 
 						propertyDAO.getPriorityById(rs.getInt(ConstantsSQL.PRIORITY_ID_COLUMN));
-				Parameter type = 
+				Type type = 
 						propertyDAO.getTypeById(rs.getInt(ConstantsSQL.TYPE_ID_COLUMN));
 				String summary = rs.getString(ConstantsSQL.SUMMARY_COLUMN);
 				String description = rs.getString(ConstantsSQL.DESCRIPTION_COLUMN);
-				Parameter status = 
+				Status status = 
 						propertyDAO.getStatusById(rs.getInt(ConstantsSQL.STATUS_ID_COLUMN));
 				Project project = 
 						projectDAO.getProjectById(rs.getInt(ConstantsSQL.PROJECT_ID_COLUMN));
-				Parameter version = 
+				Version version = 
 						projectDAO.getVersionById(rs.getInt(ConstantsSQL.VERSION_ID_COLUMN));
 				Date createDate = rs.getDate(ConstantsSQL.CREATE_DATE_COLUMN);
 				User author = 
@@ -173,7 +175,7 @@ public class DBIssueImpl implements IssueDAO {
 					issue.setModifyDate(rs.getDate(ConstantsSQL.MODIFY_DATE_COLUMN));
 				}
 				if(rs.getInt(ConstantsSQL.RESOLUTION_ID_COLUMN) != 0) {
-					Parameter resolution = 
+					Resolution resolution = 
 							propertyDAO.getResolutionById(rs.getInt(ConstantsSQL.RESOLUTION_ID_COLUMN));
 				    issue.setResolution(resolution);
 				}
@@ -202,33 +204,32 @@ public class DBIssueImpl implements IssueDAO {
 			rs = ptmSelectIssues.executeQuery();
 			while (rs.next()) {
 				int id = rs.getInt(ConstantsSQL.ID_COLUMN);
-				Parameter priority = 
+				Priority priority = 
 						propertyDAO.getPriorityById(rs.getInt(ConstantsSQL.PRIORITY_ID_COLUMN));
-				Parameter type = 
+				Type type = 
 						propertyDAO.getTypeById(rs.getInt(ConstantsSQL.TYPE_ID_COLUMN));
 				String summary = rs.getString(ConstantsSQL.SUMMARY_COLUMN);
 				String description = rs.getString(ConstantsSQL.DESCRIPTION_COLUMN);
-				Parameter status = 
+				Status status = 
 						propertyDAO.getStatusById(rs.getInt(ConstantsSQL.STATUS_ID_COLUMN));
 				Project project = 
 						projectDAO.getProjectById(rs.getInt(ConstantsSQL.PROJECT_ID_COLUMN));
-				Parameter version = 
+				Version version = 
 						projectDAO.getVersionById(rs.getInt(ConstantsSQL.VERSION_ID_COLUMN));
 				Date createDate = rs.getDate(ConstantsSQL.CREATE_DATE_COLUMN);
 				User author = 
 						userDAO.getUserById(rs.getInt(ConstantsSQL.AUTHOR_ID_COLUMN));
 				Issue issue = new Issue(id, priority, type, summary, description, status,
 						project, version, createDate, author);
-				
-			    issue.setAssignee(user);
+				issue.setAssignee(user);
 				if(rs.getDate(ConstantsSQL.MODIFY_DATE_COLUMN) != null) {
 					User modifier = 
-							userDAO.getUserById(rs.getInt(ConstantsSQL.MODIFY_DATE_COLUMN));
+							userDAO.getUserById(rs.getInt(ConstantsSQL.MODIFIER_ID_COLUMN));
 					issue.setModifier(modifier);
 					issue.setModifyDate(rs.getDate(ConstantsSQL.MODIFY_DATE_COLUMN));
 				}
 				if(rs.getInt(ConstantsSQL.RESOLUTION_ID_COLUMN) != 0) {
-					Parameter resolution = 
+					Resolution resolution = 
 							propertyDAO.getResolutionById(rs.getInt(ConstantsSQL.RESOLUTION_ID_COLUMN));
 				    issue.setResolution(resolution);
 				}
@@ -311,7 +312,6 @@ public class DBIssueImpl implements IssueDAO {
     public void updateIssue(Issue issue) throws DaoException {
     	ConnectionManager connectionMng = new ConnectionManager();
 		Connection connection = connectionMng.getConnection();
-		ResultSet rs = null;
 		try {
 			PreparedStatement ptmUpdateIssue = 
 					connection.prepareStatement("UPDATE issues SET priorityId = ?, assigneeId = ?, " +
@@ -329,14 +329,18 @@ public class DBIssueImpl implements IssueDAO {
 			ptmUpdateIssue.setString(5, issue.getDescription());
 			ptmUpdateIssue.setInt(6, issue.getStatus().getId());
 			ptmUpdateIssue.setInt(7, issue.getProject().getId());
-			ptmUpdateIssue.setInt(8, issue.getResolution().getId());
+			if(issue.getResolution() != null) {
+				ptmUpdateIssue.setInt(8, issue.getResolution().getId());
+			} else {
+				ptmUpdateIssue.setInt(8, 0);
+			}
 			ptmUpdateIssue.setInt(9, issue.getBuildFound().getId());
 			ptmUpdateIssue.setDate(10, issue.getCreateDate());
 			ptmUpdateIssue.setInt(11, issue.getAuthor().getId());
 			ptmUpdateIssue.setDate(12, issue.getModifyDate());
 			ptmUpdateIssue.setInt(13, issue.getModifier().getId());
 			ptmUpdateIssue.setInt(14, issue.getId());
-		
+			ptmUpdateIssue.executeUpdate();
 		}catch (SQLException e) {
 			System.out.println(e.getMessage());
 		} 

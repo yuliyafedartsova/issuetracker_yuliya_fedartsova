@@ -3,10 +3,9 @@ package org.training.issuetracker.utils.handlers;
 import java.util.List;
 
 import org.training.issuetracker.exceptions.DaoException;
-import org.training.issuetracker.model.beans.Parameter;
 import org.training.issuetracker.model.beans.Project;
-
 import org.training.issuetracker.model.beans.User;
+import org.training.issuetracker.model.beans.properties.Version;
 import org.training.issuetracker.model.factories.ProjectFactory;
 import org.training.issuetracker.model.factories.UserFactory;
 import org.xml.sax.Attributes;
@@ -77,7 +76,7 @@ public class ProjectHandler extends DefaultHandler {
 			String localName, String qName) { 
 			currentEnum = ProjectXMLEnum.valueOf(qName.toUpperCase()); 
 			if(currentEnum == ProjectXMLEnum.PROJECT) {
-				List<Parameter> buildVersions = null;
+				List<Version> buildVersions = null;
 				try {
 				buildVersions = projectDAO.getVersionsOfProject(currentId);
 				}catch (DaoException e) {

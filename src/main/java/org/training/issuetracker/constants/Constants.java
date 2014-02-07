@@ -1,5 +1,5 @@
 package org.training.issuetracker.constants;
-
+//
 public class Constants {  
 	public static String PATH;
 	public static final String FILES_PACKAGE = "files/";
@@ -83,5 +83,9 @@ public class Constants {
     public static final String MANAGER = "manager";
     public static final String SUMMARY = "summary";
     public static final String AUTHOR = "author";
+    public static final String REOPEN = "reopen"; 
+    public static final String FIRST_NAME = "firstName"; 
+    public static final String LAST_NAME = "lastName";
+    public static final String PASSWORD_CONFIRMATION = "password2";
 
 }
