@@ -4,16 +4,19 @@
 <head>
 <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
 <title>Insert title here</title>
+<link rel="stylesheet" type="text/css" href="pages/tracker.css">
 </head>
 <body>
 <%@ include file="header.jsp" %> 
 	Change password: 
-	<br>
-<form name="change_password" method="POST" action="LoginController">
+	<br><br>
+<form name="change_password" method="POST" action="update-user">
 	New Password:<br>
-	<input type="password" name="NewPassword" value=""><br>
+	<input type="password" name="password" value=""><br>
 	Password Confirmation:<br>
-	<input type="password" name="Confirmation" value=""><br>
+	<input type="password" name="password2" value=""><br>
+	<input type="hidden" name='id' value='${user.id}'>
+	<input type="hidden" name='action' value='change'>
 	<input type="submit" value="Enter">
 	<br>
 </form>

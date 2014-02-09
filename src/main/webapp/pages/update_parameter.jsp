@@ -9,23 +9,26 @@
 <%@ include file="header.jsp" %> 
 	<c:choose>
 		<c:when test="${property eq 'status'}">
-			Update status: <br>
+			Update status: 
 		</c:when>
 		<c:when test="${property eq 'type'}">
-			Update type: <br>
+			Update type: 
 		</c:when>
 		<c:when test="${property eq 'priority'}">
-			Update priority: <br>
+			Update priority: 
 		</c:when>
 		<c:when test="${property eq 'resolution'}">
-			Update resolution: <br>
+			Update resolution: 
 		</c:when>
 	</c:choose>
-	${parameter}
-	<form action=''>
-	<input type='text' name='value' value='${parameter}'><br>
-	<input type='hidden' name='property'  value='${parameter}'>
+	<br>
+	<form action='property'>
+	<input type='text' name='parameter' value='${parameter}'><br>
+	<input type='hidden' name='property'  value='${property}'>
 	<input type='hidden' name='id'  value='${parameter.id}'>
+	<input type='hidden' name='action'  value='update'>
+	<br>
+	<input type="submit" value="Update">
 	</form>
 	</body>
 </html>

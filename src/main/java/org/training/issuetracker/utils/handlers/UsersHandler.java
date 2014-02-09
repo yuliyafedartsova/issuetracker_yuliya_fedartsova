@@ -4,10 +4,10 @@ import java.util.List;
 import org.training.issuetracker.exceptions.DaoException;
 import org.training.issuetracker.model.beans.User;
 import org.training.issuetracker.model.beans.properties.Role;
-import org.training.issuetracker.model.factories.PropertyFactory;
+import org.training.issuetracker.model.factories.RoleFactory;
 import org.xml.sax.Attributes;
 import org.xml.sax.helpers.DefaultHandler;
-import org.training.issuetracker.model.DAO.PropertyDAO;
+import org.training.issuetracker.model.DAO.RolesDAO;
 
 public class UsersHandler extends DefaultHandler {
 	
@@ -28,7 +28,7 @@ public class UsersHandler extends DefaultHandler {
 	private String currentEmail;
 	private Role currentRole;
 	private String currentPassword;
-	PropertyDAO propertyDAO = PropertyFactory.getClassFromFactory();
+	RolesDAO rolesDAO = RoleFactory.getClassFromFactory();
 	
 	
 	public void startElement(String uri, String localName, String qName, Attributes attrs) {
@@ -67,7 +67,7 @@ public class UsersHandler extends DefaultHandler {
 			if(!s.isEmpty()){
 				int id = Integer.parseInt(s);
 				try {
-				currentRole = propertyDAO.getRoleById(id);
+				currentRole = rolesDAO.getById(id);
 				} catch (DaoException e) {
 					throw new RuntimeException(e);
 				}

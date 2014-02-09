@@ -21,10 +21,16 @@ public class DisplayManager {
     			project.setDescription(description);
     		}
     	}
-    }
+    }//
 	
 	public static List<Status> getAvailableStatuses(List<Status> statuses, Issue issue) {
     	List<Status> availableStatuses = new ArrayList<Status>();
+    	
+    	for(Status p : statuses) {
+    		System.out.println(p.getName());
+    	}
+    	
+    	
     	switch(issue.getStatus().getName()) {
     		case Constants.NEW:
     			for(Status par : statuses) {

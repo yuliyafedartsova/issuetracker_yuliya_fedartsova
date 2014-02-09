@@ -7,11 +7,15 @@
 </head>
 <body>
 <%@ include file="header.jsp" %> 
+	<c:if test="${not empty message}">
+		<c:out value="${message}"/>
+		<hr>
+	</c:if>
 	Projects: <br>
 	<table>
 		<tr><td> Name </td><td> Manager </td><td> Description </td><tr>
 		<c:forEach var="project" items="${projects}"> 
-			<tr><td><a href='project?action=update&id=${project.id}'> ${project.name}</a></td>
+			<tr><td><a href='project-form?action=update&id=${project.id}'> ${project.name}</a></td>
 	    	<td> ${project.manager.firstName} &nbsp; ${project.manager.lastName}</td>
 	 		<td> ${project.description} </td></tr>
 	 	</c:forEach>

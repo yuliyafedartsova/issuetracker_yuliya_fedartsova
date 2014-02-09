@@ -9,20 +9,15 @@
 	</head>
 	<body  bgcolor= "FA F0 E6">
 			<%@ include file="header.jsp" %> 
+			<c:if test="${not empty message}">
+				<c:out value="${message}"/>
+				<hr>
+			</c:if>
 			<c:if test="${user.role != 'Guest'}">
-				<a href='submit-issue'> Submit Issue </a> <br>
+				<a href='issue-form?action=add'> Submit Issue </a> <br>
 			</c:if>
 	        <c:if test="${user.role eq 'Administrator'}">
-				<a href='projects'> Projects </a><br>
-			    <a href='property?action=show&property=type'> Types </a>&nbsp;
-			    <a href='property?action=show&property=status'> Statuses </a>&nbsp;
-			    <a href='property?action=show&property=resolution'> Resolutions</a>&nbsp;
-			    <a href='property?action=show&property=priority'> Priorities </a> <br>
-			    <a href='project?action=add'> Add project </a><br>
-			    <a href='add-parameter?roperty=resolution'> Add resolution </a>&nbsp;
-			    <a href='add-parameter?roperty=priority'> Add priority </a>&nbsp;
-			    <a href='add-parameter?roperty=type'> Add type </a>&nbsp;<br>
-			    <a href='user?action=add'>Add user</a><br>
+				<%@ include file="admin_submenu.jsp" %> 
 			</c:if>
 			<form name="main" method="POST" action='main'>
 		    <select name='sorting' size='1'>
@@ -34,10 +29,9 @@
 		   </select>
 		   <input type='submit' value='Sort'> 
 		   </form> <br>
-		   
-		  <c:choose>
-		  <c:when test="${not empty errorMessage}">
-		  		<c:out value="${errorMessage}"/>
+		   <c:choose>
+		  <c:when test="${not empty emptyMessage}">
+		  		<c:out value="${emptyMessage}"/>
 				<hr>
 		  </c:when>
 		  <c:otherwise>
@@ -46,7 +40,16 @@
 		   <td> Status </td> <td> Summary </td> </tr>
 		   <c:forEach var="issue" items="${issues}"> 
 		      <tr>
-		      	<td> <a href='issue?id=${issue.id}'> ${issue.id} </a> </td>
+		      	<td> 
+		      	<c:choose>
+		      		<c:when test="${user.role eq 'Guest'}">
+		      			<a href='issue-review?id=${issue.id}'> ${issue.id} </a>
+		      		</c:when>
+				    <c:otherwise>
+						<a href='issue-form?action=update&id=${issue.id}'> ${issue.id} </a>		
+					</c:otherwise>
+		      	</c:choose>
+		      	</td>
 		        <td> ${issue.priority} </td>
 		        <c:choose>
 					<c:when test="${issue.assignee != null}">

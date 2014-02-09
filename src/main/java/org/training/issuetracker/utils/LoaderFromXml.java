@@ -8,10 +8,9 @@ import java.sql.Statement;
 import java.util.List;
 import org.training.issuetracker.constants.Pages;
 import org.training.issuetracker.exceptions.DaoException;
-import org.training.issuetracker.model.DAO.ProjectDAO;
-import org.training.issuetracker.model.DAO.PropertyDAO;
-import org.training.issuetracker.model.DAO.UserDAO;
+import org.training.issuetracker.model.beans.Issue;
 import org.training.issuetracker.model.beans.Project;
+import org.training.issuetracker.model.beans.Property;
 import org.training.issuetracker.model.beans.User;
 import org.training.issuetracker.model.beans.properties.Priority;
 import org.training.issuetracker.model.beans.properties.Resolution;
@@ -20,14 +19,35 @@ import org.training.issuetracker.model.beans.properties.Status;
 import org.training.issuetracker.model.beans.properties.Type;
 import org.training.issuetracker.model.beans.properties.Version;
 import org.training.issuetracker.model.factories.ProjectFactory;
-import org.training.issuetracker.model.factories.PropertyFactory;
 import org.training.issuetracker.model.factories.UserFactory;
+import org.training.issuetracker.model.impl.db.DBIssueImpl;
+import org.training.issuetracker.model.impl.db.DBProjectImpl;
+import org.training.issuetracker.model.impl.xml.XMLIssueImpl;
+import org.training.issuetracker.model.impl.xml.XMLPropertyImpl;
+import org.training.issuetracker.model.impl.xml.XMLUserImpl;
+
 
 public class LoaderFromXml {
-	public  void loadUsers() {
-		UserDAO userDAO = UserFactory.getClassFromFactory();
+	
+	public void loadIssues() {
+		XMLIssueImpl is = new XMLIssueImpl();
+		DBIssueImpl impl = new DBIssueImpl();
 		try {
-		List<User> users = userDAO.getUsers();
+			List<Issue> issues = is.getIssues();
+			for(Issue issue : issues) {
+				impl.addIssue(issue);
+			}
+			}catch (DaoException e) {
+				System.out.println(e.getMessage());
+			}
+     }
+	
+	
+	
+	public  void loadUsers() {
+		XMLUserImpl us = new XMLUserImpl();
+		try {
+		List<User> users = us.getUsers();
 		for(User user : users) {
 			addUser(user);
 		}
@@ -37,32 +57,32 @@ public class LoaderFromXml {
 	}
 	
 	public void loadPropertise() {
-		PropertyDAO propertyDAO = PropertyFactory.getClassFromFactory();
+		XMLPropertyImpl prop = new XMLPropertyImpl();
 		try {
-			List<Type> types = propertyDAO.getTypes();
-			List<Priority> priorities = propertyDAO.getPriorities();
-			List<Resolution> resolutions = propertyDAO.getResolutions();
-			List<Status> statuses = propertyDAO.getStatuses();
-			List<Role> roles = propertyDAO.getRoles();
+			List<Property> types = prop.getTypes();
+			List<Property> priorities = prop.getPriorities();
+			List<Property> resolutions = prop.getResolutions();
+			List<Property> statuses = prop.getStatuses();
+			List<Property> roles = prop.getRoles();
 			
-			for(Role parameter : roles) {
+			for(Property parameter : roles) {
 				addRole(parameter);
 			}
 			
-			for(Status parameter : statuses) {
+			for(Property parameter : statuses) {
 				addStatus(parameter);
 			}
 			
-			for(Resolution parameter : resolutions) {
+			for(Property parameter : resolutions) {
 				addResolution(parameter);
 			}
 			
 			
-			for(Type parameter : types) {
+			for(Property parameter : types) {
 				addType(parameter);
 			}
 			
-			for(Priority parameter : priorities) {
+			for(Property parameter : priorities) {
 				addPriority(parameter);
 			}
 			
@@ -73,20 +93,17 @@ public class LoaderFromXml {
 	}
 	
 	public void loadProjects() {
-		ProjectDAO propertyDAO = ProjectFactory.getClassFromFactory();
+		DBProjectImpl pr = new DBProjectImpl();
 	    try {
-	    	List<Project> projects = propertyDAO.getProjects();
+	    	List<Project> projects = pr.getProjects();
 	    	for(Project project : projects) {
-	    		addProject(project);
+	    		pr.addProject(project);
 	    	}
 	    
 	    }catch (DaoException e) {
 			System.out.println(e.getMessage());
 		} 
-	
-	
 	}
-	
 	
 	
 	public void addUser(User user) {
@@ -122,7 +139,7 @@ public class LoaderFromXml {
 		
 	}
 	
-	public void addType(Type type) {
+	public void addType(Property type) {
 		ConnectionManager manager = new ConnectionManager();
 		Connection connection = manager.getConnection();
 		ResultSet rs = null;
@@ -143,7 +160,7 @@ public class LoaderFromXml {
 	
 	}
 	
-	public void addPriority(Priority priority) {
+	public void addPriority(Property priority) {
 		ConnectionManager manager = new ConnectionManager();
 		Connection connection = manager.getConnection();
 		ResultSet rs = null;
@@ -164,7 +181,7 @@ public class LoaderFromXml {
 	
 	}
 	
-	public void addResolution(Resolution parameter) {
+	public void addResolution(Property parameter) {
 		ConnectionManager manager = new ConnectionManager();
 		Connection connection = manager.getConnection();
 		ResultSet rs = null;
@@ -185,7 +202,7 @@ public class LoaderFromXml {
 	}
 	
 	
-	public void addStatus(Status parameter) {
+	public void addStatus(Property parameter) {
 		ConnectionManager manager = new ConnectionManager();
 		Connection connection = manager.getConnection();
 		ResultSet rs = null;
@@ -204,7 +221,7 @@ public class LoaderFromXml {
 		} 
 	}
 	
-	private void addRole(Role parameter) {
+	private void addRole(Property parameter) {
 		ConnectionManager manager = new ConnectionManager();
 		Connection connection = manager.getConnection();
 		ResultSet rs = null;
@@ -276,7 +293,6 @@ public class LoaderFromXml {
 	
 	}
 	
-	
 	private int getId(String name, PreparedStatement Select,
 			PreparedStatement Insert) throws SQLException {
 		int id;
@@ -298,8 +314,4 @@ public class LoaderFromXml {
 			}
 		}
 	}
-	
-	
-	
-
 }

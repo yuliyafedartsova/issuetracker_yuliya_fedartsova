@@ -4,18 +4,19 @@
 <head>
 <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
 <title>Insert title here</title>
+<link rel="stylesheet" type="text/css" href="pages/tracker.css">
 </head>
 <body>
 <%@ include file="header.jsp" %> 
 	Add project:<br>
-	<form action='add-project'>
+	<form action='project'>
     <table>
     <tr><td> Name: &nbsp;</td>
 	<td><input type='text' name='name' value=''></td></tr>
 	<tr><td>Description: &nbsp;</td>
 	<td><input type='text' name='description' value=''></td></tr>
 	<tr><td>Build: &nbsp;</td>
-	<td><input type='text' name='build' value=''></td></tr>
+	<td><input type='text' name='version' value=''></td></tr>
 	<tr><td>Manager: &nbsp;</td>
 	<td><select name='manager' size='1'>
 		<c:forEach var="user" items="${users}"> 
@@ -23,9 +24,8 @@
 		</c:forEach>
 	</select></td></tr>
 	</table>
+	<input type="hidden" name='action' value='add'>
 	<input type="submit" value="Add">
-	
-	
 	</form>
 </body>
 </html>

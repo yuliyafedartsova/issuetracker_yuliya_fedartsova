@@ -10,9 +10,7 @@ import org.training.issuetracker.model.beans.properties.Type;
 import org.training.issuetracker.model.beans.properties.Version;
 
 
-
-public class Issue {
-	private int id;
+public class Issue extends Persistent {
 	private Priority priority;
 	private User assignee;
 	private Type type;
@@ -27,10 +25,10 @@ public class Issue {
 	private User author;
 	private User modifier;
 	
-	public Issue(Priority priority, Type type,
+	public Issue(int id, Priority priority, Type type,
 			String summary, String description, Status status, Project project,
 			Version buildFound, Date createDate, User author) {
-		super();
+		super(id);
 		this.priority = priority;
 		this.type = type;
 		this.summary = summary;
@@ -42,23 +40,15 @@ public class Issue {
 		this.author = author;
 	}
 	
-	public Issue(int id, Priority priority, Type type,
+	public Issue(Priority priority, Type type,
 			String summary, String description, Status status, Project project,
 			Version buildFound, Date createDate, User author) {
-		this(priority, type, summary, description, status, project, buildFound, 
+		this(0, priority, type, summary, description, status, project, buildFound, 
 				createDate, author);
-		this.id = id;
 	}
 
-	public int getId() {
-		return id;
-	}
-
-	public void setId(int id) {
-		this.id = id;
-	}
-
-	public Priority getPriority() {
+	
+    public Priority getPriority() {
 		return priority;
 	}
 

@@ -4,6 +4,7 @@
 <head>
 <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
 <title>header</title>
+<link rel="stylesheet" type="text/css" href="pages/tracker.css">
 </head>
 <body>
 	<c:choose>
@@ -11,7 +12,7 @@
 		  		Hello, ${user.firstName} <br><br>
 		  		<a href='main'> Main page </a><br>
 		  		<a href='/issuetracker/pages/change_password.jsp'> Change password </a> <br>
-		  		<a href='user?action=update'> Update your data </a> <br>
+		  		<a href='user-form?action=update'> Update your data </a> <br>
 		  		<a href='logout'> Logout </a> <br><br>
 		  </c:when>
           <c:otherwise>

@@ -4,8 +4,7 @@ import org.training.issuetracker.model.beans.properties.Role;
 
 
 
-public class User {
-	private int id;
+public class User extends Persistent {
 	private String firstName; 
 	private String lastName;
 	private String email;
@@ -16,28 +15,19 @@ public class User {
 		super();
 	}
 	
-	public User(int id, String firstName, String lastName, String email, Role role,
-			String password) {
-		this(firstName, lastName, email, role, password);
-		this.id = id;
-	}
-	
 	public User(String firstName, String lastName, String email, Role role,
 			String password) {
-		super();
+		this(0, firstName, lastName, email, role, password);
+	}
+	
+	public User(int id, String firstName, String lastName, String email, Role role,
+			String password) {
+		super(id);
 		this.firstName = firstName;
 		this.lastName = lastName;
 		this.email = email;
 		this.role = role;
 		this.password = password;
-	}
-
-	public int getId() {
-		return id;
-	}
-
-	public void setId(int id) {
-		this.id = id;
 	}
 
 	public String getFirstName() {

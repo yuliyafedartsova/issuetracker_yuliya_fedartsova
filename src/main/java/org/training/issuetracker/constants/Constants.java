@@ -1,5 +1,5 @@
 package org.training.issuetracker.constants;
-//
+
 public class Constants {  
 	public static String PATH;
 	public static final String FILES_PACKAGE = "files/";
@@ -87,5 +87,17 @@ public class Constants {
     public static final String FIRST_NAME = "firstName"; 
     public static final String LAST_NAME = "lastName";
     public static final String PASSWORD_CONFIRMATION = "password2";
-
+    public static final String EMPTY_MESSAGE = "emptyMessage";
+    public static final String SUCCESSFULLY_ADD_ISSUE = "The issue has been added successfully";
+    public static final String SUCCESSFULLY_ADD_PROJECT = "The project has been added successfully";
+    public static final String SUCCESSFULLY_ADD_USER = "The user has been added successfully";
+    public static final String SUCCESSFULLY_UPDATE_ISSUE = "The issue has been updated successfully";
+    public static final String SUCCESSFULLY_REOPEN_ISSUE = "The issue has been reopened successfully";
+    public static final String SUCCESSFULLY_UPDATE_PROJECT = "The project has been updated successfully";
+    public static final String SUCCESSFULLY_UPDATE_USER = "The user data have been updated successfully";
+    public static final String SUCCESSFULLY_CHANGE_PASSWORD = "Your password has been changed successfully";
+    public static final String SUCCESSFULLY_ADD_PARAMETER = "Parameter has been added successfully";
+    public static final String SUCCESSFULLY_UPDATE_PARAMETER = "Parameter has been updated successfully";
+    public static final String CHANGE = "change";
+    public static final String MESSAGE = "message";
 }

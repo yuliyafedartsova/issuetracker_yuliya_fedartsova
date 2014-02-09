@@ -4,11 +4,12 @@
 <head>
 <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
 <title>Insert title here</title>
+<link rel="stylesheet" type="text/css" href="pages/tracker.css">
 </head>
 <body>
 <%@ include file="header.jsp" %> 
 	Add user:<br>
-	<form action='add-user'>
+	<form action='user'>
     <table>
     <tr><td> First name: &nbsp;</td>
 	<td><input type='text' name='firstName' value=''></td></tr>
@@ -29,6 +30,7 @@
 	<tr><td>Confirm password: &nbsp;</td>
 	<td><input type='text' name='password2' value=''></td></tr>
 	</table>
+	<input type="hidden" name='action' value='add'>
 	<input type="submit" value="Add user">
 	</form>
 </body>

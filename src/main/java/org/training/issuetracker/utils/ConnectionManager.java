@@ -8,6 +8,7 @@ import java.sql.SQLException;
 import java.sql.Statement;
 
 import org.training.issuetracker.constants.Constants;
+import org.training.issuetracker.exceptions.DaoException;
 
 
 public class ConnectionManager {
@@ -19,61 +20,71 @@ public class ConnectionManager {
 		 System.out.println("Driver ClassNotFoundException");
 	 }}
 	 
+	 private Connection connection;
+	 
+	 public ConnectionManager() {
+		 try {	
+		 connection = DriverManager
+					.getConnection("jdbc:h2:" + Constants.PATH + "WEB-INF\\classes\\db\\test", "sa", "");
+		 }catch (SQLException e) {   
+			  throw new RuntimeException(e.getMessage());
+		 }
+	 
+	 }
+	 
+	 
 	 public Connection getConnection() {
-	 try {
-	   return DriverManager.getConnection("jdbc:h2:tcp://localhost/" + Constants.PATH + "WEB-INF\\classes\\db\\test", "sa", "");
-	  } catch (SQLException e) {   
-		  throw new RuntimeException(e.getMessage());
-	  }
+		 return connection;
 	 }
 	 
-	 public void closeConnections(Connection connection) {
-	  try {
-	   if (connection != null ) {
-	    if (!connection.getAutoCommit()){
-	     connection.setAutoCommit(true);
-	    }
-	    connection.close();
-	   }
-	  } catch (SQLException e) {
-	    }
+	 public void closeConnection() throws DaoException {
+		 if (connection != null) {
+				try{
+					connection.close();
+				}catch (SQLException e) {
+					throw new DaoException(e);
+				}
+			}
 	 }
 	 
-	 public void closePreparedStatements(PreparedStatement... preparedStatements) {
-	  try {
-	   for (Statement preparedStatement : preparedStatements){
-	    if (preparedStatement != null) {
-	     preparedStatement.close();
-	    }
-	   }
-	  } catch (SQLException e) {
-	  
-	  }
+	 public void closePreparedStatements(PreparedStatement... preparedStatements) throws DaoException {
+		 for (Statement preparedStatement : preparedStatements){
+			 	if (preparedStatement != null) {
+			 		try {
+			 			preparedStatement.close();
+			 		}catch (SQLException e) {
+			 			throw new DaoException(e);
+			 		}
+			 	}
+		 }
 	 }
 	 
-	 public void closeStatements(Statement... statements) {
-	  try {
-	   for (Statement statement : statements){
-	    if (statement != null) {
-	     statement.close();
-	    }
-	   }
-	  } catch (SQLException e) {
-	   
-	  }
-	 }
 	 
-	 public void closeResultSet(ResultSet... resultSets) {
-	  try {
-	   for (ResultSet resultSet : resultSets){
-	    if (resultSet != null) {
-	     resultSet.close();
-	    }
-	   }
-	  } catch (SQLException e) {
-	   
-	  }
-	 }
+	 
+	 public void closeResultSets(ResultSet... resultSet) throws DaoException {
+			for (ResultSet rs : resultSet) {
+				if (rs != null) {
+					try {
+						rs.close();
+					} catch (SQLException e) {
+						throw new DaoException(e);
+					}
+				}
+			}
+		}
+	 
+	 
+	 public void closeStatements(Statement... statement) throws DaoException {
+			for (Statement st : statement) {
+				if (st != null) {
+					try {
+						st.close();
+					} catch (SQLException e) {
+						throw new DaoException(e);
+					}
+				}
+			}
+		}
 	 
 
 }

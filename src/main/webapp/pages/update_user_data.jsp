@@ -26,6 +26,7 @@
 	</c:if>
 	</table>
 	<input type="hidden" name='id' value='${user.id}'>
+	<input type="hidden" name='action' value='update'>
 	<input type="submit" value="Update data">
 	</form>
 	</body>

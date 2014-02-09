@@ -8,14 +8,14 @@
 <body>
 <%@ include file="header.jsp" %>
 	Update project: <br>	
-	<form action='update-project'>
+	<form action='project'>
 	<table>
 		<tr><td> Name:&nbsp; </td>
 		<td><input type='text' name='name' value='${project.name}'></td></tr>
 		<tr><td> Description:&nbsp;</td>
 		<td><input type='text' name='description' value='${project.description}'></td></tr>
 		<tr><td>Builds:&nbsp;</td>
-		<td><select name='build' size='1'>
+		<td><select size='1'>
 			<c:forEach var="version" items="${project.buildVersions}"> 
 	         	<option value='${version.id}'> ${version} </option>
 		    </c:forEach>
@@ -30,6 +30,7 @@
 		</select></td></tr>
 	</table>
 	<input type="hidden" name='id' value='${project.id}'>
+	<input type="hidden" name='action' value='update'>
 	<input type="submit" value="Update project">
     </form>
 </body>

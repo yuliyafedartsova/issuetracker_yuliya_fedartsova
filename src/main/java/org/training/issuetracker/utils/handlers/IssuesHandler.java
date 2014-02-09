@@ -4,22 +4,26 @@ import java.sql.Date;
 import java.util.List;
 import org.training.issuetracker.exceptions.DaoException;
 import org.training.issuetracker.model.beans.Issue;
-
 import org.training.issuetracker.model.beans.Project;
-
 import org.training.issuetracker.model.beans.User;
 import org.training.issuetracker.model.beans.properties.Priority;
 import org.training.issuetracker.model.beans.properties.Resolution;
 import org.training.issuetracker.model.beans.properties.Status;
 import org.training.issuetracker.model.beans.properties.Type;
 import org.training.issuetracker.model.beans.properties.Version;
+import org.training.issuetracker.model.factories.PriorityFactory;
 import org.training.issuetracker.model.factories.ProjectFactory;
-import org.training.issuetracker.model.factories.PropertyFactory;
+import org.training.issuetracker.model.factories.ResolutionFactory;
+import org.training.issuetracker.model.factories.StatusFactory;
+import org.training.issuetracker.model.factories.TypeFactory;
 import org.training.issuetracker.model.factories.UserFactory;
 import org.xml.sax.Attributes;
 import org.xml.sax.helpers.DefaultHandler;
+import org.training.issuetracker.model.DAO.PrioritiesDAO;
 import org.training.issuetracker.model.DAO.ProjectDAO;
-import org.training.issuetracker.model.DAO.PropertyDAO;
+import org.training.issuetracker.model.DAO.ResolutionDAO;
+import org.training.issuetracker.model.DAO.StatusesDAO;
+import org.training.issuetracker.model.DAO.TypesDAO;
 import org.training.issuetracker.model.DAO.UserDAO;
 
 public class IssuesHandler extends DefaultHandler {
@@ -50,7 +54,10 @@ public class IssuesHandler extends DefaultHandler {
 	private Date currentModifyDate;
 	private User currentModifier;
 	UserDAO usersDAO = UserFactory.getClassFromFactory();
-	PropertyDAO propertyDAO = PropertyFactory.getClassFromFactory();
+	StatusesDAO statusDAO = StatusFactory.getClassFromFactory();
+	TypesDAO typesDAO = TypeFactory.getClassFromFactory();
+	PrioritiesDAO priorityDAO = PriorityFactory.getClassFromFactory();
+	ResolutionDAO resolutionDAO = ResolutionFactory.getClassFromFactory();
 	ProjectDAO projectDAO = ProjectFactory.getClassFromFactory();
 	
 	
@@ -70,7 +77,8 @@ public class IssuesHandler extends DefaultHandler {
 			String s = new String(ch, start, length).trim();
 			if(!s.isEmpty()){
 				int id = Integer.parseInt(s);
-				currentPriority = propertyDAO.getPriorityById(id);
+				currentPriority = priorityDAO.getById(id);
+					
 			}
 		}
 		if(currentEnum == IssuesXMLEnum.ASSIGNEE) {
@@ -85,7 +93,8 @@ public class IssuesHandler extends DefaultHandler {
 			String s = new String(ch, start, length).trim();
 			if(!s.isEmpty()){
 				int id = Integer.parseInt(s);
-				currentType = propertyDAO.getTypeById(id);
+				currentType = typesDAO.getById(id);
+						
 			}
 		}
 		if(currentEnum == IssuesXMLEnum.SUMMARY) {
@@ -105,7 +114,8 @@ public class IssuesHandler extends DefaultHandler {
 			String s = new String(ch, start, length).trim();
 			if(!s.isEmpty()){
 				int id = Integer.parseInt(s);
-				currentStatus = propertyDAO.getStatusById(id);
+				currentStatus = statusDAO.getById(id);
+						
 			}
 		}
 		if(currentEnum == IssuesXMLEnum.PROJECT) {
@@ -120,7 +130,7 @@ public class IssuesHandler extends DefaultHandler {
 			String s = new String(ch, start, length).trim();
 			if(!s.isEmpty()){
 				int id = Integer.parseInt(s);
-				currentResolution = propertyDAO.getResolutionById(id);
+				currentResolution = resolutionDAO.getById(id);
 			} 
 		}
 		
@@ -130,7 +140,7 @@ public class IssuesHandler extends DefaultHandler {
 			if(!s.isEmpty()){
 				int id = Integer.parseInt(s);
 				currentVersion = projectDAO.getVersionById(id);
-			}
+		    }
 		}
 		
 		
