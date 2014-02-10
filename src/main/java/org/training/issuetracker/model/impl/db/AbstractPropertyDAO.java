@@ -64,6 +64,7 @@ public abstract class AbstractPropertyDAO {
 			name = rs.getString(ConstantsSQL.NAME_COLUMN);
 			return name;
 		}catch (SQLException e) {
+			e.printStackTrace();
 			throw new DaoException(e);
 		}finally {
 			if(manager != null) {

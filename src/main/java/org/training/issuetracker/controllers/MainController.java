@@ -35,7 +35,17 @@ public class MainController extends AbstractController {
 		User guest = new User();
 		guest.setRole(new Role(Constants.GUEST));
 		context.setAttribute(Constants.USER, guest);
-	}
+	
+        RolesDAO rolesDao = RoleFactory.getClassFromFactory();
+        try {
+        Role role = rolesDao.getById(2);
+        System.out.println(role.getName());
+        }catch (DaoException e) {
+    		System.out.println("Dao exception");
+    		
+		}
+    
+    }
 
     protected void performTask(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
     	IssueDAO issuesDao = IssueFactory.getClassFromFactory();
@@ -50,21 +60,23 @@ public class MainController extends AbstractController {
     			request.setAttribute(Constants.EMPTY_MESSAGE, Constants.EMPTY_MESSAGE_FOR_USER);
     		}
     	} else {
+    		
     		issues = issuesDao.getNLastAddedIssues(10, sortingType);
+    		
+    		
     		if(issues.size() == Constants.NULL) {
     			request.setAttribute(Constants.EMPTY_MESSAGE, Constants.EMPTY_MESSAGE_FOR_GUEST);
     		}
     	}
     	}catch (DaoException e) {
-    		jumpPage(Constants.ERROR, request, response);
+    		System.out.println("Dao exception");
+    		jumpPage(Pages.ERROR_PAGE, request, response);
 			return;
 		}catch (Exception e) {
-		
-		e.printStackTrace();	
-			
-		jumpPage(Pages.ERROR_PAGE, request, response);
-		return;
-	}
+			System.out.println("exception");
+			jumpPage(Pages.ERROR_PAGE, request, response);
+			return;
+	    }
     	
     	if(issues.size() != Constants.NULL) {
     		request.setAttribute(Constants.ISSUES, issues);

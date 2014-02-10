@@ -23,11 +23,12 @@ public class ConnectionManager {
 	 private Connection connection;
 	 
 	 public ConnectionManager() {
+		 
 		 try {	
 		 connection = DriverManager
 					.getConnection("jdbc:h2:" + Constants.PATH + "WEB-INF\\classes\\db\\test", "sa", "");
 		 }catch (SQLException e) {   
-			  throw new RuntimeException(e.getMessage());
+			throw new RuntimeException(e.getMessage());
 		 }
 	 
 	 }

@@ -170,8 +170,7 @@ public class DBIssueImpl implements IssueDAO {
 		try{
 			connectionMng = new ConnectionManager();
 			connection = connectionMng.getConnection();
-			ptmSelectIssues = 
-					connection.prepareStatement(ConstantsSQL.SELECT_LAST_ADDED_ISSUES);
+			ptmSelectIssues = connection.prepareStatement(ConstantsSQL.SELECT_LAST_ADDED_ISSUES);
 			ptmSelectIssues.setInt(1, n);
 			rs = ptmSelectIssues.executeQuery();
 			while (rs.next()){
@@ -210,6 +209,7 @@ public class DBIssueImpl implements IssueDAO {
 			}
 			return issues;
 		}catch (SQLException e) {
+			e.printStackTrace();
 			throw new DaoException(e);
 		}finally {
 			if(connectionMng != null) {
