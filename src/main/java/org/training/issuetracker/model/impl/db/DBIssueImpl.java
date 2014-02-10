@@ -8,6 +8,8 @@ import java.sql.SQLException;
 import java.sql.Statement;
 import java.util.ArrayList;
 import java.util.List;
+
+import org.training.issuetracker.constants.Constants;
 import org.training.issuetracker.constants.ConstantsSQL;
 import org.training.issuetracker.exceptions.DaoException;
 import org.training.issuetracker.exceptions.ValidationException;
@@ -158,7 +160,10 @@ public class DBIssueImpl implements IssueDAO {
 		} 
 	}
 	
+	
+	
 	public List<Issue> getNLastAddedIssues(int n, String sortingType) throws DaoException {
+		String SELECT_ISSUES = ConstantsSQL.SELECT_LAST_ADDED_ISSUES + getSortingPartOfSelectQuery(sortingType);
 		List<Issue> issues = new ArrayList<Issue>();
 		UserDAO userDAO = UserFactory.getClassFromFactory();
 		StatusesDAO statusDAO = StatusFactory.getClassFromFactory();
@@ -172,7 +177,7 @@ public class DBIssueImpl implements IssueDAO {
 		try{
 			connectionMng = new ConnectionManager();
 			connection = connectionMng.getConnection();
-			ptmSelectIssues = connection.prepareStatement(ConstantsSQL.SELECT_LAST_ADDED_ISSUES);
+			ptmSelectIssues = connection.prepareStatement(SELECT_ISSUES);
 			ptmSelectIssues.setInt(1, n);
 			rs = ptmSelectIssues.executeQuery();
 			while (rs.next()){
@@ -182,7 +187,6 @@ public class DBIssueImpl implements IssueDAO {
 				String summary = rs.getString(ConstantsSQL.SUMMARY_COLUMN);
 				String description = rs.getString(ConstantsSQL.DESCRIPTION_COLUMN);
 				Status status = statusDAO.getById(rs.getInt(ConstantsSQL.STATUS_ID_COLUMN));
-						
 				Project project = 
 						projectDAO.getProjectById(rs.getInt(ConstantsSQL.PROJECT_ID_COLUMN));
 				Version version = 
@@ -223,6 +227,7 @@ public class DBIssueImpl implements IssueDAO {
 	}
 	
 	public List<Issue> getNAssignedIssues(int n, User user, String sortingType) throws DaoException {
+		String SELECT_ISSUES = ConstantsSQL.SELECT_ASSIGNED_ISSUES + getSortingPartOfSelectQuery(sortingType);
 		List<Issue> issues = new ArrayList<Issue>();
 		UserDAO userDAO = UserFactory.getClassFromFactory();
 		StatusesDAO statusDAO = StatusFactory.getClassFromFactory();
@@ -237,7 +242,7 @@ public class DBIssueImpl implements IssueDAO {
 			connectionMng = new ConnectionManager();
 			connection = connectionMng.getConnection();
 			ptmSelectIssues = 
-					connection.prepareStatement(ConstantsSQL.SELECT_ASSIGNED_ISSUES);
+					connection.prepareStatement(SELECT_ISSUES);
 			ptmSelectIssues.setInt(1, n);
 			ptmSelectIssues.setInt(2, user.getId());
 			rs = ptmSelectIssues.executeQuery();
@@ -417,5 +422,30 @@ public class DBIssueImpl implements IssueDAO {
 			    connectionMng.closeConnection();
 			}
 		} 
+	}
+    
+    private String getSortingPartOfSelectQuery(String sortingType) {
+		String sorting = null;
+		switch(sortingType) {
+		case Constants.DEFAULT :
+			sorting = "order by id desc";
+			break;
+		case Constants.ID:
+			sorting = "order by id";
+			break;
+		case Constants.TYPE:
+			sorting = "order by typeId";
+			break;
+		case Constants.PRIORITY:
+			sorting = "order by priorityId";
+			break;
+		case Constants.ASSIGNEE:
+			sorting = "order by assigneeId";
+			break;
+		case Constants.STATUS:
+			sorting = "order by statusId";
+			break;
+		}
+		return sorting;
 	}
 }

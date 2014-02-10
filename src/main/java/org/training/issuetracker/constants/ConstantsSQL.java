@@ -39,9 +39,9 @@ public class ConstantsSQL {
 			"SELECT id, firstName, lastName, roleId FROM users WHERE email = ? AND password = ?;";
 	public static final String SELECT_USERS = "SELECT * FROM users;";
     public static final String SELECT_ASSIGNED_ISSUES = "SELECT TOP ? * FROM issues " +
-			"WHERE assigneeId = ? order by id desc;";
+			"WHERE assigneeId = ? ";
     public static final String SELECT_LAST_ADDED_ISSUES = 
-			"SELECT TOP ? * FROM issues order by id desc;";
+			"SELECT TOP ? * FROM issues ";
     public static final String ADD_USER = "INSERT INTO users(firstName, lastName, " +
 				"email, roleId, password) VALUES (?,?,?,?,?);";
     public static final String SELECT_IF_USER_EXISTS = "SELECT id " +

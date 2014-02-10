@@ -1,5 +1,5 @@
 package org.training.issuetracker.constants;
-
+//
 public class Constants {  
 	public static String PATH;
 	public static final String FILES_PACKAGE = "files/";
@@ -101,4 +101,5 @@ public class Constants {
     public static final String CHANGE = "change";
     public static final String MESSAGE = "message";
    // public static final String ERROR_MESSAGE = "";
+    public static final String DEFAULT = "default";
 }

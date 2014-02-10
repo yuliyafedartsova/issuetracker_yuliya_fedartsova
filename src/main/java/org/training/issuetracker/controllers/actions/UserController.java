@@ -67,12 +67,7 @@ public class UserController extends AbstractController {
          		}
      		   request.setAttribute(Constants.MESSAGE, Constants.SUCCESSFULLY_UPDATE_USER);
     		   break;
-    		case Constants.CHANGE:
-    			user = new User(firstName, lastName, email, role, password);
-    	     	userDAO.addUser(user);
-    	     	request.setAttribute(Constants.MESSAGE, Constants.SUCCESSFULLY_CHANGE_PASSWORD);
-    	   	    break;
-    	    }
+        	}
         	request.getRequestDispatcher("/main").forward(request, response);
         
         }catch (DaoException e) {

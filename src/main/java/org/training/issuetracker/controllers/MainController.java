@@ -27,32 +27,15 @@ public class MainController extends AbstractController {
         super();
     }
 
-    public void init() {
-		String realPath = getServletContext().getRealPath(Constants.DELIMITER);
-	    Constants.PATH = realPath;
-		System.out.println(Constants.PATH);
-        ServletContext context = getServletContext();
-		User guest = new User();
-		guest.setRole(new Role(Constants.GUEST));
-		context.setAttribute(Constants.USER, guest);
-	
-    //    RolesDAO rolesDao = RoleFactory.getClassFromFactory();
-    //    try {
-    //    Role role = rolesDao.getById(2);
-    //    System.out.println(role.getName());
-    //    }catch (DaoException e) {
-    //		System.out.println("Dao exception");
-    		
-	//	}
-    
-    }
-
     protected void performTask(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+    	//init params!!!!
+    	//
+    	
     	IssueDAO issuesDao = IssueFactory.getClassFromFactory();
     	List<Issue> issues = null;
     	User user = (User)request.getSession().getAttribute(Constants.USER);
     	String sortingType = request.getParameter(Constants.SORTING);
-    	sortingType = (sortingType == null) ? "default" : sortingType;
+    	sortingType = (sortingType == null) ? Constants.DEFAULT : sortingType;
     	try {
     	if(user != null) { 
     		issues = issuesDao.getNAssignedIssues(10, user, sortingType);
@@ -60,10 +43,7 @@ public class MainController extends AbstractController {
     			request.setAttribute(Constants.EMPTY_MESSAGE, Constants.EMPTY_MESSAGE_FOR_USER);
     		}
     	} else {
-    		
     		issues = issuesDao.getNLastAddedIssues(10, sortingType);
-    		
-    		
     		if(issues.size() == Constants.NULL) {
     			request.setAttribute(Constants.EMPTY_MESSAGE, Constants.EMPTY_MESSAGE_FOR_GUEST);
     		}
@@ -73,6 +53,7 @@ public class MainController extends AbstractController {
     		jumpPage(Pages.ERROR_PAGE, request, response);
 			return;
 		}catch (Exception e) {
+			e.printStackTrace();
 			System.out.println("exception");
 			jumpPage(Pages.ERROR_PAGE, request, response);
 			return;

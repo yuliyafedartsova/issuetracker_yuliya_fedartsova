@@ -8,9 +8,13 @@
 </head>
 <body bgcolor= "FA F0 E6">
 <%@ include file="header.jsp" %> 
+	<c:if test="${not empty errorMessage}">
+		<c:out value="${errorMessage}"/>
+		<hr>
+	</c:if>
 	Change password: 
 	<br><br>
-<form name="change_password" method="POST" action="user">
+<form name="change_password" method="POST" action="change-password">
 	New Password:<br>
 	<input type="password" name="password" value=""><br>
 	Password Confirmation:<br>
