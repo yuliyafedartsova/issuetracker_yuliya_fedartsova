@@ -11,6 +11,7 @@ import java.util.Map;
 import org.training.issuetracker.constants.Constants;
 import org.training.issuetracker.constants.ConstantsSQL;
 import org.training.issuetracker.exceptions.DaoException;
+import org.training.issuetracker.exceptions.ValidationException;
 import org.training.issuetracker.model.DAO.StatusesDAO;
 import org.training.issuetracker.model.beans.properties.Role;
 import org.training.issuetracker.model.beans.properties.Status;
@@ -62,7 +63,7 @@ public class DBStatusImpl extends AbstractPropertyDAO implements StatusesDAO {
 		
 	}
 	
-	public void update(int id, String name) throws DaoException {
+	public void update(int id, String name) throws DaoException, ValidationException {
 		update(id, name, Constants.STATUSES_SOURCE_NAME);
 	}
 	

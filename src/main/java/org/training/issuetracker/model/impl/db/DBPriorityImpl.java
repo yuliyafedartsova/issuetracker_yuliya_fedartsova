@@ -8,6 +8,7 @@ import java.util.Set;
 
 import org.training.issuetracker.constants.Constants;
 import org.training.issuetracker.exceptions.DaoException;
+import org.training.issuetracker.exceptions.ValidationException;
 import org.training.issuetracker.model.DAO.PrioritiesDAO;
 import org.training.issuetracker.model.beans.properties.Priority;
 
@@ -28,12 +29,12 @@ public class DBPriorityImpl extends AbstractPropertyDAO implements PrioritiesDAO
 	    return priority;
 	}
 	
-	public void add(Priority priority) throws DaoException {
+	public void add(Priority priority) throws DaoException, ValidationException {
 		add(priority, Constants.PRIORITIES_SOURCE_NAME);
 	}
 	
 	
-	public void update(int id, String name) throws DaoException {
+	public void update(int id, String name) throws DaoException, ValidationException {
 		update(id, name, Constants.PRIORITIES_SOURCE_NAME);
     }
 	

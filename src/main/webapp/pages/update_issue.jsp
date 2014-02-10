@@ -7,8 +7,12 @@
 <script src="pages/scripts.js"></script>
 <link rel="stylesheet" type="text/css" href="pages/tracker.css">
 </head>
-<body>
+<body bgcolor= "FA F0 E6">
 <%@ include file="header.jsp" %> 
+	<c:if test="${not empty errorMessage}">
+		<c:out value="${errorMessage}"/>
+		<hr>
+	</c:if>
 	Update issue :<br><br>
 	<table>
 	<tr><td> Id:&nbsp; </td> <td>${issue.id}</td></tr>
@@ -66,6 +70,7 @@
     	<tr><td> Resolution </td>  
     	<td><select id="res" name='resolution' size='1'>
     		<c:forEach var="resolution" items="${resolutions}"> 
+	        	<option></option>
 	        	<option value='${resolution.id}'> ${resolution} </option>
 			</c:forEach>
 	    </select></td></tr>

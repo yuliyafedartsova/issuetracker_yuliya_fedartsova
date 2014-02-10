@@ -7,6 +7,7 @@ import java.util.Set;
 
 import org.training.issuetracker.constants.Constants;
 import org.training.issuetracker.exceptions.DaoException;
+import org.training.issuetracker.exceptions.ValidationException;
 import org.training.issuetracker.model.DAO.ResolutionDAO;
 import org.training.issuetracker.model.beans.properties.Resolution;
 import org.training.issuetracker.model.beans.properties.Type;
@@ -28,12 +29,12 @@ public class DBResolutionImpl extends AbstractPropertyDAO implements ResolutionD
 	    return resolution;
 	}
 	
-	public void add(Resolution resolution) throws DaoException {
+	public void add(Resolution resolution) throws DaoException, ValidationException {
 		add(resolution, Constants.RESOLUTIONS_SOURCE_NAME);
 	}
 	
 	
-	public void update(int id, String name) throws DaoException {
+	public void update(int id, String name) throws DaoException, ValidationException {
 		update(id, name, Constants.RESOLUTIONS_SOURCE_NAME);
     }
 

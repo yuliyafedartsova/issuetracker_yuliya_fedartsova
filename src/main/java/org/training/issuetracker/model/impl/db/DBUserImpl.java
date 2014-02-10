@@ -19,6 +19,7 @@ import org.training.issuetracker.model.beans.properties.Role;
 import org.training.issuetracker.model.factories.RoleFactory;
 import org.training.issuetracker.model.factories.TypeFactory;
 import org.training.issuetracker.utils.ConnectionManager;
+import org.training.issuetracker.utils.ValidationManagers.UserValidator;
 
 public class DBUserImpl implements UserDAO {
 	public User getUserById(int id) throws DaoException {
@@ -125,10 +126,20 @@ public class DBUserImpl implements UserDAO {
 		}
 	}
 	
-	public void addUser(User user) throws DaoException {
+	public void addUser(User user) throws DaoException, ValidationException {
 		ConnectionManager connectionMng = new ConnectionManager();
 		Connection connection = connectionMng.getConnection();
 		PreparedStatement ptmInsertUser = null;
+		UserValidator validator = new UserValidator();
+		String errorMessage = null;
+		errorMessage = validator.validateUserFields(user);
+		if(!errorMessage.isEmpty()) {
+			throw new ValidationException(errorMessage);
+		}
+		errorMessage = validator.validateUserValues(user);
+		if(!errorMessage.isEmpty()) {
+			throw new ValidationException(errorMessage);
+		}
 		try {
 			connectionMng = new ConnectionManager();
 			connection = connectionMng.getConnection();
@@ -178,10 +189,20 @@ public class DBUserImpl implements UserDAO {
 		} 
 	}
 	
-	public void updateUserData(User user) throws DaoException {
+	public void updateUserData(User user) throws DaoException, ValidationException {
 		ConnectionManager connectionMng = null;
 		Connection connection = null;
 		PreparedStatement ptmUpdateUser = null;
+		UserValidator validator = new UserValidator();
+		String errorMessage = null;
+		errorMessage = validator.validateUserFields(user);
+		if(!errorMessage.isEmpty()) {
+			throw new ValidationException(errorMessage);
+		}
+		errorMessage = validator.validateUserValues(user);
+		if(!errorMessage.isEmpty()) {
+			throw new ValidationException(errorMessage);
+		}
 		try {
 			connectionMng = new ConnectionManager();
 			connection = connectionMng.getConnection();

@@ -10,6 +10,7 @@ import org.training.issuetracker.constants.Constants;
 import org.training.issuetracker.constants.Pages;
 import org.training.issuetracker.controllers.AbstractController;
 import org.training.issuetracker.exceptions.DaoException;
+import org.training.issuetracker.exceptions.ValidationException;
 import org.training.issuetracker.model.beans.Issue;
 import org.training.issuetracker.model.beans.Project;
 import org.training.issuetracker.model.beans.User;
@@ -24,6 +25,7 @@ import org.training.issuetracker.model.DAO.ProjectDAO;
 import org.training.issuetracker.model.DAO.ResolutionDAO;
 import org.training.issuetracker.model.DAO.UserDAO;
 import org.training.issuetracker.utils.DisplayManager;
+import org.training.issuetracker.utils.ValidationManagers.ProjectValidator;
 
 
 public class ProjectController extends AbstractController {
@@ -39,11 +41,13 @@ public class ProjectController extends AbstractController {
     	UserDAO userDAO = UserFactory.getClassFromFactory();
     	String name = request.getParameter(Constants.NAME);
         String description = request.getParameter(Constants.DESCRIPTION);
-        int managerId = Integer.parseInt(request.getParameter(Constants.MANAGER));   
         List<Version> versions = new ArrayList<Version>();
         Project project = null;
+        ProjectValidator validator = new ProjectValidator();
+        String managerIdPar = request.getParameter(Constants.MANAGER);   
         try {
-        	User manager = userDAO.getUserById(managerId);
+        	validator.validateIdParameters(managerIdPar);
+        	User manager = userDAO.getUserById(Integer.parseInt(managerIdPar));
         	String versionName = request.getParameter(Constants.VERSION).trim();
             switch(action) {
     		case Constants.ADD:
@@ -67,10 +71,12 @@ public class ProjectController extends AbstractController {
     			break;
     	    }
         
-        
-        
-        }catch (DaoException e) {
+       }catch (DaoException e) {
 			jumpPage(Pages.ERROR_PAGE, request, response);
+			return;
+		}catch (ValidationException e) {
+			request.setAttribute(Constants.ERROR_MESSAGE, e.getMessage());
+			jumpPage("/project-form", request, response);
 			return;
 		}
     

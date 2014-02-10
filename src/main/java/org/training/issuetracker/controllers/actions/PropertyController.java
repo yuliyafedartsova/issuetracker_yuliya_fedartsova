@@ -9,6 +9,7 @@ import org.training.issuetracker.constants.Constants;
 import org.training.issuetracker.constants.Pages;
 import org.training.issuetracker.controllers.AbstractController;
 import org.training.issuetracker.exceptions.DaoException;
+import org.training.issuetracker.exceptions.ValidationException;
 import org.training.issuetracker.model.DAO.PrioritiesDAO;
 import org.training.issuetracker.model.DAO.ResolutionDAO;
 import org.training.issuetracker.model.DAO.StatusesDAO;
@@ -24,6 +25,7 @@ import org.training.issuetracker.model.factories.PriorityFactory;
 import org.training.issuetracker.model.factories.ResolutionFactory;
 import org.training.issuetracker.model.factories.StatusFactory;
 import org.training.issuetracker.model.factories.TypeFactory;
+import org.training.issuetracker.utils.ValidationManagers.ParameterValidator;
 
 public class PropertyController extends AbstractController {
 	private static final long serialVersionUID = 1L;
@@ -35,6 +37,8 @@ public class PropertyController extends AbstractController {
     protected void performTask(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
     	String action = request.getParameter(Constants.ACTION);
     	String property = request.getParameter(Constants.PROPERTY);
+    	ParameterValidator validator = new ParameterValidator();
+    	try {
     	switch(action) {
 		case Constants.ADD:
 			String parameter = request.getParameter(Constants.PARAMETER).trim();
@@ -42,18 +46,25 @@ public class PropertyController extends AbstractController {
 			request.setAttribute(Constants.MESSAGE, Constants.SUCCESSFULLY_ADD_PARAMETER);
 			break;
 		case Constants.UPDATE:
-			int id = Integer.parseInt(request.getParameter(Constants.ID)); 
+			String idPar = request.getParameter(Constants.ID); 
+			validator.validateIdParameters(idPar);
 			String name = request.getParameter(Constants.PARAMETER);
-			updateParameter(property, id, name);
+			updateParameter(property, Integer.parseInt(idPar), name);
 			request.setAttribute(Constants.MESSAGE, Constants.SUCCESSFULLY_UPDATE_PARAMETER);
 			break;
 	    }
-    	request.getRequestDispatcher("/main").forward(request, response);
+    	}catch (DaoException e) {
+  		  System.out.println("DaoException");
+  	    }catch (ValidationException e) {
+  	    	request.setAttribute(Constants.ERROR_MESSAGE, e.getMessage());
+			jumpPage("/property-form", request, response);
+  	        return;
+  	    }  
+    	request.getRequestDispatcher("/main").forward(request, response); //сделать через jump
     
     }
     
-    private void addParameter(String property, String parameter) {
-    	try{
+    private void addParameter(String property, String parameter) throws DaoException, ValidationException {
     	switch(property) {
 		case Constants.TYPE:
 			TypesDAO typesDAO = TypeFactory.getClassFromFactory();
@@ -71,14 +82,11 @@ public class PropertyController extends AbstractController {
 			resolutionDAO.add(resolution);
 			break;
     	}
-    	}catch (DaoException e) {
-    		  System.out.println("DaoException");
-    		} 
+    	
     }
     
-    private void updateParameter(String property, int id, String name) {
-    	try {
-        	switch(property) {
+    private void updateParameter(String property, int id, String name) throws DaoException, ValidationException {
+    		switch(property) {
         		case Constants.STATUS:
         			StatusesDAO statusDAO = StatusFactory.getClassFromFactory();
         			statusDAO.update(id, name);
@@ -95,14 +103,6 @@ public class PropertyController extends AbstractController {
         			ResolutionDAO resolutionDAO = ResolutionFactory.getClassFromFactory();
         			resolutionDAO.update(id, name);
         			break;
-            	}
-        	
-        	}catch (DaoException e) {
-    		
-    			
-    		}
-    
-    
-    
+            }
     }
 }

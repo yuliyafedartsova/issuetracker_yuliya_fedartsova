@@ -6,8 +6,12 @@
 <title>Insert title here</title>
 <link rel="stylesheet" type="text/css" href="pages/tracker.css">
 </head>
-<body>
+<body bgcolor= "FA F0 E6">
 <%@ include file="header.jsp" %> 
+	<c:if test="${not empty errorMessage}">
+		<c:out value="${errorMessage}"/>
+		<hr>
+	</c:if>	
 	Add project:<br>
 	<form action='project'>
     <table>

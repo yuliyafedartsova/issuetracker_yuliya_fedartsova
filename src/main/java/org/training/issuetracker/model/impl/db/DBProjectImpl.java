@@ -9,6 +9,7 @@ import java.util.ArrayList;
 import java.util.List;
 import org.training.issuetracker.constants.ConstantsSQL;
 import org.training.issuetracker.exceptions.DaoException;
+import org.training.issuetracker.exceptions.ValidationException;
 import org.training.issuetracker.model.DAO.ProjectDAO;
 import org.training.issuetracker.model.DAO.UserDAO;
 import org.training.issuetracker.model.beans.Issue;
@@ -18,6 +19,7 @@ import org.training.issuetracker.model.beans.properties.Version;
 import org.training.issuetracker.model.factories.ProjectFactory;
 import org.training.issuetracker.model.factories.UserFactory;
 import org.training.issuetracker.utils.ConnectionManager;
+import org.training.issuetracker.utils.ValidationManagers.ProjectValidator;
 
 public class DBProjectImpl implements ProjectDAO {
 	public List<Project> getProjects() throws DaoException {
@@ -145,11 +147,16 @@ public class DBProjectImpl implements ProjectDAO {
 		 
 	}
 	
-	public void addProject(Project project) throws DaoException {
+	public void addProject(Project project) throws DaoException, ValidationException {
 		ConnectionManager connectionMng = null;
 		Connection connection = null;
 		ResultSet rs = null;
 		PreparedStatement ptmInsertProject = null;
+		ProjectValidator validator = new ProjectValidator();
+		String errorMessage = validator.validateProject(project);
+		if(!errorMessage.isEmpty()) {
+			throw new ValidationException(errorMessage);
+		}
 		try {
 			connectionMng = new ConnectionManager();
 			connection = connectionMng.getConnection();
@@ -183,10 +190,15 @@ public class DBProjectImpl implements ProjectDAO {
 	
 	}
 	
-	public void addVersion(String version, int projectId) throws DaoException {
+	public void addVersion(String version, int projectId) throws DaoException, ValidationException {
 		ConnectionManager connectionMng = null;
 		Connection connection = null;
 		PreparedStatement ptmInsertVersion = null;
+		ProjectValidator validator = new ProjectValidator();
+		String errorMessage = validator.validateVersion(version);
+		if(!errorMessage.isEmpty()) {
+			throw new ValidationException(errorMessage);
+		}
 		try {
 			connectionMng = new ConnectionManager();
 			connection = connectionMng.getConnection();
@@ -253,10 +265,15 @@ public class DBProjectImpl implements ProjectDAO {
 		}
 	}
 	
-	public void updateProject(Project project) throws DaoException {
+	public void updateProject(Project project) throws DaoException, ValidationException  {
 		ConnectionManager connectionMng = null;
 		Connection connection = null;
 		PreparedStatement ptmUpdateProject = null;
+		ProjectValidator validator = new ProjectValidator();
+		String errorMessage = validator.validateProject(project);
+		if(!errorMessage.isEmpty()) {
+			throw new ValidationException(errorMessage);
+		}
 		try {
 			connectionMng = new ConnectionManager();
 			connection = connectionMng.getConnection();

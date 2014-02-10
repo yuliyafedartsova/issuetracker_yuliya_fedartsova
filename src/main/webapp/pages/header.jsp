@@ -6,7 +6,7 @@
 <title>header</title>
 <link rel="stylesheet" type="text/css" href="pages/tracker.css">
 </head>
-<body>
+<body bgcolor= "FA F0 E6">
 	<c:choose>
 		  <c:when test="${user.role != 'Guest'}">
 		  		Hello, ${user.firstName} <br><br>

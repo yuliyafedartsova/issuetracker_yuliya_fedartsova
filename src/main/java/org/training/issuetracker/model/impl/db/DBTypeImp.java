@@ -8,6 +8,7 @@ import java.util.Set;
 
 import org.training.issuetracker.constants.Constants;
 import org.training.issuetracker.exceptions.DaoException;
+import org.training.issuetracker.exceptions.ValidationException;
 import org.training.issuetracker.model.DAO.TypesDAO;
 import org.training.issuetracker.model.beans.properties.Priority;
 import org.training.issuetracker.model.beans.properties.Type;
@@ -28,12 +29,12 @@ public class DBTypeImp extends AbstractPropertyDAO implements TypesDAO {
 	    return type;
 	}
 	
-	public void add(Type type) throws DaoException {
+	public void add(Type type) throws DaoException, ValidationException {
 		add(type, Constants.TYPES_SOURCE_NAME);
 	}
 	
 	
-	public void update(int id, String name) throws DaoException {
+	public void update(int id, String name) throws DaoException, ValidationException {
 		update(id, name, Constants.TYPES_SOURCE_NAME);
     }
 

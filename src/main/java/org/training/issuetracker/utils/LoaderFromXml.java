@@ -8,6 +8,7 @@ import java.sql.Statement;
 import java.util.List;
 import org.training.issuetracker.constants.Pages;
 import org.training.issuetracker.exceptions.DaoException;
+import org.training.issuetracker.exceptions.ValidationException;
 import org.training.issuetracker.model.beans.Issue;
 import org.training.issuetracker.model.beans.Project;
 import org.training.issuetracker.model.beans.Property;
@@ -29,7 +30,7 @@ import org.training.issuetracker.model.impl.xml.XMLUserImpl;
 
 public class LoaderFromXml {
 	
-	public void loadIssues() {
+	public void loadIssues() throws ValidationException {
 		XMLIssueImpl is = new XMLIssueImpl();
 		DBIssueImpl impl = new DBIssueImpl();
 		try {
@@ -92,7 +93,7 @@ public class LoaderFromXml {
 		
 	}
 	
-	public void loadProjects() {
+	public void loadProjects() throws ValidationException {
 		DBProjectImpl pr = new DBProjectImpl();
 	    try {
 	    	List<Project> projects = pr.getProjects();

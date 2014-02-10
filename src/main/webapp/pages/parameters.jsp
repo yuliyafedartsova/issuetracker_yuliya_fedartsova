@@ -5,7 +5,7 @@
 <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
 <title>Insert title here</title>
 </head>
-<body>
+<body bgcolor= "FA F0 E6">
 <%@ include file="header.jsp" %> 
 	<c:choose>
 		<c:when test="${property eq 'status'}">

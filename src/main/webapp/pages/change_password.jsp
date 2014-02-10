@@ -6,11 +6,11 @@
 <title>Insert title here</title>
 <link rel="stylesheet" type="text/css" href="pages/tracker.css">
 </head>
-<body>
+<body bgcolor= "FA F0 E6">
 <%@ include file="header.jsp" %> 
 	Change password: 
 	<br><br>
-<form name="change_password" method="POST" action="update-user">
+<form name="change_password" method="POST" action="user">
 	New Password:<br>
 	<input type="password" name="password" value=""><br>
 	Password Confirmation:<br>

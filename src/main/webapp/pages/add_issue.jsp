@@ -7,9 +7,13 @@
 <script src="pages/scripts.js"></script>
 <link rel="stylesheet" type="text/css" href="pages/tracker.css">
 </head>
-<body>
+<body bgcolor= "FA F0 E6">
 <%@ include file="header.jsp" %> &nbsp;
 	<BR><BR>
+	<c:if test="${not empty errorMessage}">
+		<c:out value="${errorMessage}"/>
+		<hr>
+	</c:if>
 	<c:if test="${not empty message}">
 		<c:out value="${message}"/>
 		<hr>

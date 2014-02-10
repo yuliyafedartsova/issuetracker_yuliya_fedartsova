@@ -3,6 +3,7 @@ package org.training.issuetracker.model.DAO;
 import java.util.List;
 
 import org.training.issuetracker.exceptions.DaoException;
+import org.training.issuetracker.exceptions.ValidationException;
 import org.training.issuetracker.model.beans.Issue;
 import org.training.issuetracker.model.beans.User;
 
@@ -11,8 +12,8 @@ public interface IssueDAO {
 	Issue getIssueById(int id) throws DaoException; 
 	List<Issue> getNLastAddedIssues(int n, String sortingType) throws DaoException;
 	List<Issue> getNAssignedIssues(int n, User user, String sortingType) throws DaoException;
-    void addIssue(Issue issue) throws DaoException;
-    void updateIssue(Issue issue) throws DaoException;
+    void addIssue(Issue issue) throws DaoException, ValidationException;
+    void updateIssue(Issue issue) throws DaoException, ValidationException;
 
 
 

@@ -10,6 +10,7 @@ import java.util.ArrayList;
 import java.util.List;
 import org.training.issuetracker.constants.ConstantsSQL;
 import org.training.issuetracker.exceptions.DaoException;
+import org.training.issuetracker.exceptions.ValidationException;
 import org.training.issuetracker.model.DAO.IssueDAO;
 import org.training.issuetracker.model.DAO.PrioritiesDAO;
 import org.training.issuetracker.model.DAO.ProjectDAO;
@@ -32,6 +33,7 @@ import org.training.issuetracker.model.factories.StatusFactory;
 import org.training.issuetracker.model.factories.TypeFactory;
 import org.training.issuetracker.model.factories.UserFactory;
 import org.training.issuetracker.utils.ConnectionManager;
+import org.training.issuetracker.utils.ValidationManagers.IssueValidator;
 
 public class DBIssueImpl implements IssueDAO {
 
@@ -281,8 +283,13 @@ public class DBIssueImpl implements IssueDAO {
 		} 
 	}
 	
-	public void addIssue(Issue issue) throws DaoException {
+	public void addIssue(Issue issue) throws DaoException, ValidationException {
 		ConnectionManager connectionMng = null;
+		IssueValidator validator = new IssueValidator();
+		String errorMessage = validator.validateIssue(issue);
+		if(!errorMessage.isEmpty()) {
+			throw new ValidationException(errorMessage);
+		}
 		Connection connection = null;
 		PreparedStatement ptmInsertIssue = null;
 		try {
@@ -357,10 +364,15 @@ public class DBIssueImpl implements IssueDAO {
 		
 	}
 	
-    public void updateIssue(Issue issue) throws DaoException {
+    public void updateIssue(Issue issue) throws DaoException, ValidationException {
     	ConnectionManager connectionMng = null;
 		Connection connection = null;
 		PreparedStatement ptmUpdateIssue = null;
+		IssueValidator validator = new IssueValidator();
+		String errorMessage = validator.validateIssue(issue);
+		if(!errorMessage.isEmpty()) {
+			throw new ValidationException(errorMessage);
+		}
 		try {
 			connectionMng = new ConnectionManager();
 			connection = connectionMng.getConnection();

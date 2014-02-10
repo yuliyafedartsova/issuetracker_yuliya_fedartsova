@@ -12,8 +12,11 @@ import java.util.Map;
 
 import org.training.issuetracker.constants.ConstantsSQL;
 import org.training.issuetracker.exceptions.DaoException;
+import org.training.issuetracker.exceptions.ValidationException;
 import org.training.issuetracker.model.beans.Property;
 import org.training.issuetracker.utils.ConnectionManager;
+import org.training.issuetracker.utils.ValidationManagers.ParameterValidator;
+import org.training.issuetracker.utils.ValidationManagers.ProjectValidator;
 
 public abstract class AbstractPropertyDAO {
 	public Map<Integer, String> getMap(String tableName) throws DaoException {
@@ -76,11 +79,16 @@ public abstract class AbstractPropertyDAO {
 	
 	}
 	
-	public void add(Property parameter, String tableName) throws DaoException {
+	public void add(Property parameter, String tableName) throws DaoException, ValidationException {
 		String INSERT_PARAMETER = "INSERT INTO " + tableName + "(name) VALUES (?);";
 		ConnectionManager manager = null;
 		Connection connection = null;
 		PreparedStatement ptmInsertParameter = null;
+		ParameterValidator validator = new ParameterValidator();
+		String errorMessage = validator.validateParameter(parameter);
+		if(!errorMessage.isEmpty()) {
+			throw new ValidationException(errorMessage);
+		}
 		try {
 			manager = new ConnectionManager();
 			connection = manager.getConnection();
@@ -126,11 +134,16 @@ public abstract class AbstractPropertyDAO {
 		} 
 	}
 	
-	public void update(int id, String name, String tableName) throws DaoException {
+	public void update(int id, String name, String tableName) throws DaoException, ValidationException {
 		String UPDATE_PARAMETER = "UPDATE " + tableName + " SET name = ? WHERE id = ?;";
 		ConnectionManager manager = null;
 		Connection connection = null;
 		PreparedStatement ptmUpdateParameter = null;
+		ParameterValidator validator = new ParameterValidator();
+		String errorMessage = validator.validateParameter(name);
+		if(!errorMessage.isEmpty()) {
+			throw new ValidationException(errorMessage);
+		}
 		try {
 			manager = new ConnectionManager();
 			connection = manager.getConnection();
