@@ -36,14 +36,14 @@ public class MainController extends AbstractController {
 		guest.setRole(new Role(Constants.GUEST));
 		context.setAttribute(Constants.USER, guest);
 	
-        RolesDAO rolesDao = RoleFactory.getClassFromFactory();
-        try {
-        Role role = rolesDao.getById(2);
-        System.out.println(role.getName());
-        }catch (DaoException e) {
-    		System.out.println("Dao exception");
+    //    RolesDAO rolesDao = RoleFactory.getClassFromFactory();
+    //    try {
+    //    Role role = rolesDao.getById(2);
+    //    System.out.println(role.getName());
+    //    }catch (DaoException e) {
+    //		System.out.println("Dao exception");
     		
-		}
+	//	}
     
     }
 
