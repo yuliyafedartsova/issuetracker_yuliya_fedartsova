@@ -48,19 +48,6 @@ public class ConnectionManager {
 			}
 	 }
 	 
-	 public void closePreparedStatements(PreparedStatement... preparedStatements) throws DaoException {
-		 for (Statement preparedStatement : preparedStatements){
-			 	if (preparedStatement != null) {
-			 		try {
-			 			preparedStatement.close();
-			 		}catch (SQLException e) {
-			 			throw new DaoException(e);
-			 		}
-			 	}
-		 }
-	 }
-	 
-	 
 	 
 	 public void closeResultSets(ResultSet... resultSet) throws DaoException {
 			for (ResultSet rs : resultSet) {

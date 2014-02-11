@@ -49,9 +49,11 @@ public class MainController extends AbstractController {
     		}
     	}
     	}catch (DaoException e) {
+    		e.printStackTrace();
     		jumpPage(Pages.ERROR_PAGE, request, response);
 			return;
 		}catch (ValidationException e) {
+			e.printStackTrace();
 			jumpPage(Pages.ERROR_PAGE, request, response);
 			return;
 	    }

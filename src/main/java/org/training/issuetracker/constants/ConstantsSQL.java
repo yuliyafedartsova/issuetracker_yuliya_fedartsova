@@ -22,24 +22,47 @@ public class ConstantsSQL {
 	public static final String EMAIL_COLUMN = "email";
 	public static final String ROLE_ID_COLUMN = "roleId";
 	public static final String PASSWORD = "password";
-	public static final String SELECT_PROJECTS = "SELECT * FROM projects;";
-	public static final String SELECT_PROJECT_BY_ID = "SELECT name, " +
-				"description, managerId FROM projects WHERE id = ?;";
+	public static final String SELECT_PROJECTS = "SELECT projects.id, projects.name, projects.description, users.id, " +
+			"users.firstName, users.lastName, users.email, roles.id, roles.name, users.password " +
+			"FROM projects LEFT JOIN users ON projects.managerId = users.id LEFT JOIN " +
+			"roles ON users.roleId = roles.id";
+	public static final String SELECT_PROJECT_BY_ID = "SELECT projects.name, projects.description, users.id, " +
+			"users.firstName, users.lastName, users.email, roles.id, roles.name, users.password " +
+			"FROM projects LEFT JOIN users ON projects.managerId = users.id LEFT JOIN " +
+			"roles ON users.roleId = roles.id WHERE projects.id = ?";
 	public static final String SELECT_VERSION_BY_ID = "SELECT name " +
 					"FROM versions WHERE id = ?;";
 	public static final String SELECT_VERSIONS_OF_PROJECT = "SELECT id, name " +
 						"FROM versions WHERE projectId = ?;";
-	public static final String SELECT_ISSUE_BY_ID = "SELECT " +
-					"* FROM issues WHERE id = ?;";
-	public static final String SELECT_USER_BY_ID = "SELECT firstName, " +
-				"lastName, email, roleId, password FROM users WHERE id = ?;";
+	public static final String SELECT_ISSUE_BY_ID = "SELECT priorities.id, priorities.name, " +
+    		"issues.assigneeId, types.id, types.name, issues.summary, issues.description, statuses.id, statuses.name, " +
+    		"issues.projectId, resolutions.id, resolutions.name, versions.id, versions.name, issues.createdate, issues.authorId, " +
+    		"issues.modifydate, issues.modifierId FROM issues  LEFT JOIN priorities ON issues.priorityId = priorities.id " +
+    		"LEFT JOIN types ON issues.typeId = types.id LEFT JOIN statuses ON issues.statusId = statuses.id " +
+    		"LEFT JOIN resolutions ON issues.resolutionId = resolutions.id  LEFT JOIN versions ON " +
+    		"issues.versionId = versions.Id WHERE issues.id = ?";
+	public static final String SELECT_USER_BY_ID = "SELECT users.firstName, users.lastName, users.email, " +
+			"roles.id, roles.name, users.password FROM users LEFT JOIN roles ON users.roleId = roles.id " +
+			"WHERE users.id = ?";
 	public static final String SELECT_USER_BY_EMAIL_AND_PASSWORD = 
-			"SELECT id, firstName, lastName, roleId FROM users WHERE email = ? AND password = ?;";
-	public static final String SELECT_USERS = "SELECT * FROM users;";
-    public static final String SELECT_ASSIGNED_ISSUES = "SELECT TOP ? * FROM issues " +
-			"WHERE assigneeId = ? ";
-    public static final String SELECT_LAST_ADDED_ISSUES = 
-			"SELECT TOP ? * FROM issues ";
+			"SELECT users.id, users.firstName, users.lastName, roles.id, roles.name FROM users " +
+			"LEFT JOIN roles ON users.roleId = roles.id WHERE users.email = ? AND users.password = ?;";
+	public static final String SELECT_USERS = "SELECT users.id, users.firstName, users.lastName, users.email, " +
+			"roles.id, roles.name, users.password FROM users LEFT JOIN roles ON users.roleId = roles.id";
+    public static final String SELECT_ASSIGNED_ISSUES = "SELECT TOP ? issues.id, priorities.id, priorities.name, " +
+    		"types.id, types.name, issues.summary, issues.description, statuses.id, statuses.name, " +
+    		"issues.projectId, resolutions.id, resolutions.name, versions.id, versions.name, issues.createdate, issues.authorId, " +
+    		"issues.modifydate, issues.modifierId FROM issues  LEFT JOIN priorities ON issues.priorityId = priorities.id " +
+    		"LEFT JOIN types ON issues.typeId = types.id LEFT JOIN statuses ON issues.statusId = statuses.id " +
+    		"LEFT JOIN resolutions ON issues.resolutionId = resolutions.id  LEFT JOIN versions ON " +
+    		"issues.versionId = versions.Id WHERE issues.assigneeId = ? ";
+  public static final String SELECT_LAST_ADDED_ISSUES = "SELECT TOP ? issues.id, priorities.id, priorities.name, " +
+    		"issues.assigneeId, types.id, types.name, issues.summary, issues.description, statuses.id, statuses.name, " +
+    		"issues.projectId, resolutions.id, resolutions.name, versions.id, versions.name, issues.createdate, issues.authorId, " +
+    		"issues.modifydate, issues.modifierId FROM issues  LEFT JOIN priorities ON issues.priorityId = priorities.id " +
+    		"LEFT JOIN types ON issues.typeId = types.id LEFT JOIN statuses ON issues.statusId = statuses.id " +
+    		"LEFT JOIN resolutions ON issues.resolutionId = resolutions.id  LEFT JOIN versions ON " +
+    		"issues.versionId = versions.Id ";
     public static final String ADD_USER = "INSERT INTO users(firstName, lastName, " +
 				"email, roleId, password) VALUES (?,?,?,?,?);";
     public static final String SELECT_IF_USER_EXISTS = "SELECT id " +
@@ -48,15 +71,10 @@ public class ConstantsSQL {
 				"typeId, summary, description, statusId, projectId, resolutionId, " +
 					"versionId, createDate, authorId, modifyDate, modifierId) " +
 						"VALUES (?,?,?,?,?,?,?,?,?,?,?,?,?);";
-    public static final String SELECT_IF_ISSUE_EXISTS = "SELECT id " +
-					"FROM issues where summary = ? AND description = ? AND projectId = ? " +
-					"AND versionId = ?;";
     public static final String ADD_PROJECT = "INSERT INTO projects(name, description, " +
 				"managerId) VALUES (?,?,?);";
     public static final String ADD_VERSION = "INSERT INTO versions(name, projectId) " +
 						"VALUES (?,?);";
-    public static final String SELECT_IF_PROJECT_EXISTS = "SELECT id " +
-					"FROM projects where name = ?;";
     public static final String SELECT_IF_VERSION_EXISTS = "SELECT id " +
 					"FROM versions where name = ? AND projectId = ?;";
     public static final String UPDATE_ISSUE = "UPDATE issues SET priorityId = ?, assigneeId = ?, " +

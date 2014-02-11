@@ -61,7 +61,6 @@ public class IssueFormController extends AbstractController {
 		case Constants.ADD:
 			url = Pages.ADD_ISSUE_PAGE;
 			statuses = DisplayManager.getAvailableStatusesForSubmitIssue(statuses);
-			request.setAttribute(Constants.PROJECTS, projects);
 			break;
 		case Constants.UPDATE:
 			int id = Integer.parseInt(request.getParameter(Constants.ID));
@@ -79,6 +78,7 @@ public class IssueFormController extends AbstractController {
     	request.setAttribute(Constants.PRIORITIES, priorities);
     	request.setAttribute(Constants.STATUSES, statuses);
     	request.setAttribute(Constants.TYPES, types);
+    	request.setAttribute(Constants.PROJECTS, projects);
     	jumpPage(url, request, response);
     	}catch (DaoException e) {
     		request.setAttribute(Constants.ERROR_MESSAGE, e.getMessage());

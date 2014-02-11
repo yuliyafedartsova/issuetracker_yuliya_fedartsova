@@ -7,26 +7,21 @@ import java.sql.SQLException;
 import java.sql.Statement;
 import java.util.ArrayList;
 import java.util.List;
-
 import org.training.issuetracker.constants.Constants;
 import org.training.issuetracker.constants.ConstantsSQL;
 import org.training.issuetracker.exceptions.DaoException;
 import org.training.issuetracker.exceptions.ValidationException;
 import org.training.issuetracker.model.DAO.RolesDAO;
-import org.training.issuetracker.model.DAO.TypesDAO;
 import org.training.issuetracker.model.DAO.UserDAO;
-import org.training.issuetracker.model.beans.Project;
 import org.training.issuetracker.model.beans.User;
 import org.training.issuetracker.model.beans.properties.Role;
 import org.training.issuetracker.model.factories.RoleFactory;
-import org.training.issuetracker.model.factories.TypeFactory;
 import org.training.issuetracker.utils.ConnectionManager;
 import org.training.issuetracker.utils.ValidationManagers.UserValidator;
 
 public class DBUserImpl implements UserDAO {
 	public User getUserById(int id) throws DaoException, ValidationException {
 		User user = null;
-		RolesDAO rolesDAO = RoleFactory.getClassFromFactory();
 		ConnectionManager manager = new ConnectionManager();
 		Connection connection = manager.getConnection();
 		PreparedStatement ptmSelectUser = null;
@@ -41,16 +36,15 @@ public class DBUserImpl implements UserDAO {
 			if(!rs.next()){
 				throw new ValidationException(Constants.SOME_PROBLEMS);
 			}
-			String firstName = rs.getString(ConstantsSQL.FIRST_NAME_COLUMN);
-			String lastName = rs.getString(ConstantsSQL.LAST_NAME_COLUMN);
-			String email = rs.getString(ConstantsSQL.EMAIL_COLUMN);
-			int roleId = rs.getInt(ConstantsSQL.ROLE_ID_COLUMN);
-			String password = rs.getString(5);
-			Role role = rolesDAO.getById(roleId);
+			String firstName = rs.getString(1);
+			String lastName = rs.getString(2);
+			String email = rs.getString(3);
+			Role role = new Role(rs.getInt(4), rs.getString(5));
+			String password = rs.getString(6);
 			user = new User(id, firstName, lastName, email, role, password);
 			return user;
 		}catch (SQLException e) {
-			throw new DaoException(e);
+			throw new DaoException(Constants.DB_PROBLEM);
 		}finally {
 			if(manager != null) {
 				manager.closeStatements(ptmSelectUser);
@@ -62,7 +56,6 @@ public class DBUserImpl implements UserDAO {
 	
 	public User getUser(String email, String password) throws ValidationException, DaoException {
 		final String ERROR_MESSAGE = "Wrong email or password";
-		RolesDAO rolesDAO = RoleFactory.getClassFromFactory();
 		User user = null;
 		ConnectionManager manager = null;
 		Connection connection = null;
@@ -79,15 +72,14 @@ public class DBUserImpl implements UserDAO {
 			if (!rs.next()) {
 				throw new ValidationException(ERROR_MESSAGE);
 			}
-			int id = rs.getInt(ConstantsSQL.ID_COLUMN);
-			String firstName = rs.getString(ConstantsSQL.FIRST_NAME_COLUMN);
-			String lastName = rs.getString(ConstantsSQL.LAST_NAME_COLUMN);
-			int roleId = rs.getInt(ConstantsSQL.ROLE_ID_COLUMN);
-			Role role = rolesDAO.getById(roleId);
+			int id = rs.getInt(1);
+			String firstName = rs.getString(2);
+			String lastName = rs.getString(3);
+			Role role = new Role(rs.getInt(4), rs.getString(5));
 			user = new User(id, firstName, lastName, email, role, password);
 			return user;
 		}catch (SQLException e) {
-			throw new DaoException(e);
+			throw new DaoException(Constants.DB_PROBLEM);
 		}finally {
 			if(manager != null) {
 				manager.closeStatements(ptmSelectUser);
@@ -98,7 +90,6 @@ public class DBUserImpl implements UserDAO {
 	}
 	
 	public List<User> getUsers() throws DaoException, ValidationException {
-		RolesDAO rolesDAO = RoleFactory.getClassFromFactory();
 		List<User> users = new ArrayList<User>();
 		ConnectionManager manager = null;
 		Connection connection = null;
@@ -110,18 +101,17 @@ public class DBUserImpl implements UserDAO {
 			ptmSelectUsers = connection.createStatement();
 			rs = ptmSelectUsers.executeQuery(ConstantsSQL.SELECT_USERS);		
 			while (rs.next()){
-				int id = rs.getInt(ConstantsSQL.ID_COLUMN);
-			    String firstName = rs.getString(ConstantsSQL.FIRST_NAME_COLUMN);
-			    String lastName = rs.getString(ConstantsSQL.LAST_NAME_COLUMN);
-			    String email = rs.getString(ConstantsSQL.EMAIL_COLUMN);
-			    int roleId = rs.getInt(ConstantsSQL.ROLE_ID_COLUMN);
-			    Role role = rolesDAO.getById(roleId);
+				int id = rs.getInt(1);
+			    String firstName = rs.getString(2);
+			    String lastName = rs.getString(3);
+			    String email = rs.getString(4);
+			    Role role = new Role(rs.getInt(5), rs.getString(6));
 			    String password = rs.getString(ConstantsSQL.PASSWORD);
 			    users.add(new User(id, firstName, lastName, email, role, password));
 			}
 			return users;
 		}catch (SQLException e) {
-			throw new DaoException(e);
+			throw new DaoException(Constants.DB_PROBLEM);
 		}finally {
 			if(manager != null) {
 				manager.closeStatements(ptmSelectUsers);
@@ -169,7 +159,7 @@ public class DBUserImpl implements UserDAO {
 				ptmInsertUser.executeUpdate();
 			}
 		}catch (SQLException e) {
-			throw new DaoException(e);
+			throw new DaoException(Constants.DB_PROBLEM);
 		}finally {
 			if(connectionMng != null) {
 				connectionMng.closeStatements(ptmInsertUser, ptmSelectUser);
@@ -218,7 +208,7 @@ public class DBUserImpl implements UserDAO {
 			ptmUpdateUser.executeUpdate();
 			}
 		}catch (SQLException e) {
-			throw new DaoException(e);
+			throw new DaoException(Constants.DB_PROBLEM);
 		}finally {
 			if(connectionMng != null) {
 				connectionMng.closeStatements(ptmUpdateUser, ptmSelectUser);

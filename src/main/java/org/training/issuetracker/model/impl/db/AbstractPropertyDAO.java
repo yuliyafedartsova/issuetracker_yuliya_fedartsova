@@ -36,7 +36,7 @@ public abstract class AbstractPropertyDAO {
 			}
 			return propertyMap;
 		}catch (SQLException e) {
-			throw new DaoException(e);
+			throw new DaoException(Constants.DB_PROBLEM);
 		}finally {
 			if(manager != null) {
 				manager.closeStatements(ptmSelectTypes);
@@ -108,7 +108,7 @@ public abstract class AbstractPropertyDAO {
 				 ptmInsertParameter.executeUpdate();
 			}
 		}catch (SQLException e) {
-			throw new DaoException(e);
+			throw new DaoException(Constants.DB_PROBLEM);
 		}finally {
 			if(manager != null) {
 				manager.closeStatements(ptmInsertParameter, ptmSelectParameter);
@@ -149,7 +149,7 @@ public abstract class AbstractPropertyDAO {
 			     ptmUpdateParameter.executeUpdate();
 			}
 		}catch (SQLException e) {
-			throw new DaoException(e);
+			throw new DaoException(Constants.DB_PROBLEM);
 		}finally {
 			if(manager != null) {
 				manager.closeStatements(ptmUpdateParameter, ptmSelectParameter);

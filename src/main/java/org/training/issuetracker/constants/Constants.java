@@ -109,4 +109,7 @@ public class Constants {
     public static final String PARAMETER_EXIST = "Such parameter is already exist";
     public static final String VERSION_EXIST = "Version of project is already exist";
     public static final String USER_EXIST = "User with such email and password is already exist";
+    public static final String DB_PROBLEM = "Problem with data base occured";
+    
+
 }

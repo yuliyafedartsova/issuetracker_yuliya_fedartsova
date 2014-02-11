@@ -4,54 +4,56 @@ import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
-import java.sql.Statement;
 import java.util.ArrayList;
 import java.util.List;
-
 import org.training.issuetracker.constants.Constants;
 import org.training.issuetracker.constants.ConstantsSQL;
 import org.training.issuetracker.exceptions.DaoException;
 import org.training.issuetracker.exceptions.ValidationException;
 import org.training.issuetracker.model.DAO.ProjectDAO;
-import org.training.issuetracker.model.DAO.UserDAO;
-import org.training.issuetracker.model.beans.Issue;
 import org.training.issuetracker.model.beans.Project;
 import org.training.issuetracker.model.beans.User;
+import org.training.issuetracker.model.beans.properties.Role;
 import org.training.issuetracker.model.beans.properties.Version;
-import org.training.issuetracker.model.factories.ProjectFactory;
-import org.training.issuetracker.model.factories.UserFactory;
 import org.training.issuetracker.utils.ConnectionManager;
 import org.training.issuetracker.utils.ValidationManagers.ProjectValidator;
 
 public class DBProjectImpl implements ProjectDAO {
 	public List<Project> getProjects() throws DaoException, ValidationException {
 		List<Project> projects = new ArrayList<Project>();
-		UserDAO userDAO = UserFactory.getClassFromFactory();
 		ConnectionManager connectionMng = null;
 		Connection connection = null;
 		ResultSet rs = null;
-		Statement ptmSelectProjects = null;
+		ResultSet resultSet = null;
+		PreparedStatement ptmSelectProjects = null;
+		PreparedStatement ptmSelectVersions = null;
 		try{
 			connectionMng = new ConnectionManager();
 			connection = connectionMng.getConnection();
-			ptmSelectProjects = connection.createStatement();
-			rs = ptmSelectProjects.executeQuery(ConstantsSQL.SELECT_PROJECTS);	
+			ptmSelectProjects = connection.prepareStatement(ConstantsSQL.SELECT_PROJECTS);
+			ptmSelectVersions = connection.prepareStatement(ConstantsSQL.SELECT_VERSIONS_OF_PROJECT);
+			rs = ptmSelectProjects.executeQuery();	
 			while (rs.next()){
-				int id = rs.getInt(ConstantsSQL.ID_COLUMN);
-			    String name = rs.getString(ConstantsSQL.NAME_COLUMN);
-			    String description  = rs.getString(ConstantsSQL.DESCRIPTION_COLUMN);
-			    int managerId = rs.getInt(ConstantsSQL.MANAGER_ID_COLUMN);
-			    List<Version> versions = getVersionsOfProject(id);
-			    User manager = userDAO.getUserById(managerId);
+				int id = rs.getInt(1);
+			    String name = rs.getString(2);
+			    String description  = rs.getString(3);
+			    User manager = new User(rs.getInt(4), rs.getString(5), rs.getString(6), 
+			    		rs.getString(7), new Role(rs.getInt(8), rs.getString(9)), rs.getString(10));
+			    ptmSelectVersions.setInt(1, id);
+			    resultSet = ptmSelectVersions.executeQuery();
+			    List<Version> versions = new ArrayList<Version>();
+			    while(resultSet.next()) {
+					versions.add(new Version(resultSet.getInt(1), resultSet.getString(2)));
+				}
 			    projects.add(new Project(id, name, manager, versions, description));
 			}
 			return projects;
 		}catch (SQLException e) {
-			throw new DaoException(e);
+			throw new DaoException(Constants.DB_PROBLEM);
 		}finally {
 			if(connectionMng != null) {
-				connectionMng.closeStatements(ptmSelectProjects);
-				connectionMng.closeResultSets(rs);
+				connectionMng.closeStatements(ptmSelectProjects, ptmSelectVersions);
+				connectionMng.closeResultSets(rs, resultSet);
 				connectionMng.closeConnection();
 			}
 		}
@@ -59,34 +61,41 @@ public class DBProjectImpl implements ProjectDAO {
 	
 	public Project getProjectById(int id) throws DaoException, ValidationException {
 		Project project = null;
-		UserDAO userDAO = UserFactory.getClassFromFactory();
 		ConnectionManager connectionMng = null;
 		Connection connection = null;
 		ResultSet rs = null;
+		ResultSet resultSet = null;
 		PreparedStatement ptmSelectProject = null;
+		PreparedStatement ptmSelectVersions = null;
 		try{
 			connectionMng = new ConnectionManager();
 			connection = connectionMng.getConnection();
 			ptmSelectProject = 
 				connection.prepareStatement(ConstantsSQL.SELECT_PROJECT_BY_ID);
+			ptmSelectVersions = connection.prepareStatement(ConstantsSQL.SELECT_VERSIONS_OF_PROJECT);
 			ptmSelectProject.setInt(1, id);
 			rs = ptmSelectProject.executeQuery();
 			if(!rs.next()){
 				throw new ValidationException(Constants.SOME_PROBLEMS);
 			}
-			String name = rs.getString(ConstantsSQL.NAME_COLUMN);
-			String description  = rs.getString(ConstantsSQL.DESCRIPTION_COLUMN);
-			int managerId = rs.getInt(ConstantsSQL.MANAGER_ID_COLUMN);
-			User manager = userDAO.getUserById(managerId);
-			List<Version> versions = getVersionsOfProject(id);
+			String name = rs.getString(1);
+			String description  = rs.getString(2);
+			User manager = new User(rs.getInt(3), rs.getString(4), rs.getString(5), rs.getString(6),
+					new Role(rs.getInt(7), rs.getString(8)), rs.getString(9));
+			ptmSelectVersions.setInt(1, id);
+		    resultSet = ptmSelectVersions.executeQuery();
+		    List<Version> versions = new ArrayList<Version>();
+		    while(resultSet.next()) {
+				versions.add(new Version(resultSet.getInt(1), resultSet.getString(2)));
+			}
 			project = new Project(id, name, manager, versions, description);
 			return project;
 		}catch (SQLException e) {
-			throw new DaoException(e);
+			throw new DaoException(Constants.DB_PROBLEM);
 		}finally {
 			if(connectionMng != null) {
-				connectionMng.closeStatements(ptmSelectProject);
-				connectionMng.closeResultSets(rs);
+				connectionMng.closeStatements(ptmSelectProject, ptmSelectVersions);
+				connectionMng.closeResultSets(rs, resultSet);
 				connectionMng.closeConnection();
 			}
 		}
@@ -112,7 +121,7 @@ public class DBProjectImpl implements ProjectDAO {
 			 version = new Version(id, name);
 			 return version;
 		 }catch (SQLException e) {
-				throw new DaoException(e);
+				throw new DaoException(Constants.DB_PROBLEM);
 		 }finally {
 			 if(connectionMng != null) {
 				connectionMng.closeStatements(ptmSelectVersion);
@@ -142,7 +151,7 @@ public class DBProjectImpl implements ProjectDAO {
 			 }
 			 return versions;
 		 }catch (SQLException e) {
-				throw new DaoException(e);
+				throw new DaoException(Constants.DB_PROBLEM);
 		 }finally {
 			 if(connectionMng != null) {
 				connectionMng.closeStatements(ptmSelectVersions);
@@ -182,7 +191,7 @@ public class DBProjectImpl implements ProjectDAO {
 		    }
 		
 		}catch (SQLException e) {
-			throw new DaoException(e);
+			throw new DaoException(Constants.DB_PROBLEM);
 		}finally {
 			if(connectionMng != null) {
 				connectionMng.closeStatements(ptmInsertProject);
@@ -221,7 +230,7 @@ public class DBProjectImpl implements ProjectDAO {
 				ptmInsertVersion.executeUpdate();
 			}
 		}catch (SQLException e) {
-			throw new DaoException(e);
+			throw new DaoException(Constants.DB_PROBLEM);
 		}finally {
 			if(connectionMng != null) {
 				connectionMng.closeStatements(ptmInsertVersion, ptmSelectVersion);
@@ -251,7 +260,7 @@ public class DBProjectImpl implements ProjectDAO {
 			ptmUpdateProject.setInt(4, project.getId());
 			ptmUpdateProject.executeUpdate();
 		}catch (SQLException e) {
-			throw new DaoException(e);
+			throw new DaoException(Constants.DB_PROBLEM);
 		}finally {
 			if(connectionMng != null) {
 				connectionMng.closeStatements(ptmUpdateProject);

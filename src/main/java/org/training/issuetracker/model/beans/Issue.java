@@ -40,6 +40,19 @@ public class Issue extends Persistent {
 		this.author = author;
 	}
 	
+	public Issue(int id, Priority priority, User assignee, Type type,
+			String summary, String description, Status status, Project project,
+			Resolution resolution, Version buildFound, Date createDate, Date modifyDate,
+			User author, User modifier) {
+		this(id, priority, type, summary, description, status, project, buildFound, 
+				createDate, author);
+		this.assignee = assignee;
+		this.resolution = resolution;
+		this.modifyDate = modifyDate;
+		this.modifier = modifier;
+	}
+	
+	
 	public Issue(Priority priority, Type type,
 			String summary, String description, Status status, Project project,
 			Version buildFound, Date createDate, User author) {

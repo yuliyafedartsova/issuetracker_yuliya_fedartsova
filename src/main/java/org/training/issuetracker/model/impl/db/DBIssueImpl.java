@@ -23,6 +23,7 @@ import org.training.issuetracker.model.beans.Project;
 import org.training.issuetracker.model.beans.User;
 import org.training.issuetracker.model.beans.properties.Priority;
 import org.training.issuetracker.model.beans.properties.Resolution;
+import org.training.issuetracker.model.beans.properties.Role;
 import org.training.issuetracker.model.beans.properties.Status;
 import org.training.issuetracker.model.beans.properties.Type;
 import org.training.issuetracker.model.beans.properties.Version;
@@ -38,61 +39,55 @@ import org.training.issuetracker.utils.ValidationManagers.IssueValidator;
 public class DBIssueImpl implements IssueDAO {
 
    public Issue getIssueById(int id) throws DaoException, ValidationException {
-	    Issue issue = null;
-		UserDAO userDAO = UserFactory.getClassFromFactory();
-		StatusesDAO statusDAO = StatusFactory.getClassFromFactory();
-		TypesDAO typesDAO = TypeFactory.getClassFromFactory();
-		PrioritiesDAO priorityDAO = PriorityFactory.getClassFromFactory();
-		ProjectDAO projectDAO = ProjectFactory.getClassFromFactory();
-		ConnectionManager connectionMng = null;
+	   	Issue issue = null;
+	    ConnectionManager connectionMng = null;
 		Connection connection = null;
 		ResultSet rs = null;
+		ResultSet resultSet = null;
 		PreparedStatement ptmSelectIssue = null;
+		PreparedStatement ptmSelectUsers = null;
+		PreparedStatement ptmSelectProject = null;
+		PreparedStatement ptmSelectVersions = null;
 		try {
 			connectionMng = new ConnectionManager();
 			connection = connectionMng.getConnection();
 			ptmSelectIssue = 
 					connection.prepareStatement(ConstantsSQL.SELECT_ISSUE_BY_ID);
+			ptmSelectUsers = connection.prepareStatement(ConstantsSQL.SELECT_USER_BY_ID);
+			ptmSelectProject = connection.prepareStatement(ConstantsSQL.SELECT_PROJECT_BY_ID);
+			ptmSelectVersions = connection.prepareStatement(ConstantsSQL.SELECT_VERSIONS_OF_PROJECT);
 			ptmSelectIssue.setInt(1, id);
 			rs = ptmSelectIssue.executeQuery();
 			if(!rs.next()) {
 				throw new ValidationException(Constants.SOME_PROBLEMS);
 			}
-			Priority priority = priorityDAO.getById(rs.getInt(ConstantsSQL.PRIORITY_ID_COLUMN));
-			Type type = typesDAO.getById(rs.getInt(ConstantsSQL.TYPE_ID_COLUMN));
-			String summary = rs.getString(ConstantsSQL.SUMMARY_COLUMN);
-			String description = rs.getString(ConstantsSQL.DESCRIPTION_COLUMN);
-			Status status = statusDAO.getById(rs.getInt(ConstantsSQL.STATUS_ID_COLUMN));
-			Project project = 
-					projectDAO.getProjectById(rs.getInt(ConstantsSQL.PRIORITY_ID_COLUMN));
-			Version version = 
-					projectDAO.getVersionById(rs.getInt(ConstantsSQL.VERSION_ID_COLUMN));
-			Date createDate = rs.getDate(ConstantsSQL.CREATE_DATE_COLUMN);
-			User author = userDAO.getUserById(rs.getInt(ConstantsSQL.AUTHOR_ID_COLUMN));
-			issue = new Issue(id, priority, type, summary, description, status,
-					project, version, createDate, author);
-			if(rs.getInt(ConstantsSQL.ASSIGNEE_ID_COLUMN) != 0) {
-				User assignee = userDAO.getUserById(rs.getInt(ConstantsSQL.ASSIGNEE_ID_COLUMN));
-				issue.setAssignee(assignee);
-			}
-			if(rs.getDate(ConstantsSQL.MODIFY_DATE_COLUMN) != null) {
-				User modifier = 
-						userDAO.getUserById(rs.getInt(ConstantsSQL.MODIFIER_ID_COLUMN));
-				issue.setModifier(modifier);
-				issue.setModifyDate(rs.getDate(ConstantsSQL.MODIFY_DATE_COLUMN));
-			}
-			if(rs.getInt(ConstantsSQL.RESOLUTION_ID_COLUMN) != 0) {
-				ResolutionDAO resolutionDAO = ResolutionFactory.getClassFromFactory();
-				Resolution resolution = resolutionDAO.getById(rs.getInt(ConstantsSQL.RESOLUTION_ID_COLUMN));
-				issue.setResolution(resolution);
-			}
+			Priority priority = new Priority(rs.getInt(1), rs.getString(2));
+			User assignee = (rs.getInt(3) != Constants.NULL) ? getUserById(rs.getInt(3), connection, 
+					ptmSelectUsers, resultSet) : null;
+			Type type = new Type(rs.getInt(4), rs.getString(5));    
+			String summary = rs.getString(6);
+			String description = rs.getString(7);
+			Status status = new Status(rs.getInt(8), rs.getString(9));   
+			Project project = getProjectById(rs.getInt(10), connection, ptmSelectProject, 
+					ptmSelectVersions, resultSet);
+			Resolution resolution = (rs.getInt(11) != Constants.NULL) ? 
+					new Resolution(rs.getInt(11), rs.getString(12)) : null;
+			Version version = new Version(rs.getInt(13), rs.getString(14));
+			Date createDate = rs.getDate(15);
+			User author = getUserById(rs.getInt(16), connection, ptmSelectUsers, resultSet);
+			Date modifyDate = rs.getDate(17);
+			User modifier = (rs.getInt(18) != Constants.NULL) ? getUserById(rs.getInt(18), connection, 
+					ptmSelectUsers, resultSet) : null;
+			issue = new Issue(id, priority, assignee,  type, summary, description, status,
+					project, resolution, version, createDate, modifyDate, author, modifier);
 			return issue;
 		}catch (SQLException e) {
-			throw new DaoException(e);
+			throw new DaoException(Constants.DB_PROBLEM);
 		}finally {
 			if(connectionMng != null) {
-				connectionMng.closeStatements(ptmSelectIssue);
-				connectionMng.closeResultSets(rs);
+				connectionMng.closeStatements(ptmSelectIssue, ptmSelectUsers, 
+						ptmSelectProject, ptmSelectVersions);
+				connectionMng.closeResultSets(rs, resultSet);
 				connectionMng.closeConnection();
 			}
 		} 
@@ -101,124 +96,159 @@ public class DBIssueImpl implements IssueDAO {
 	public List<Issue> getNLastAddedIssues(int n, String sortingType) throws DaoException, ValidationException  {
 		String SELECT_ISSUES = ConstantsSQL.SELECT_LAST_ADDED_ISSUES + getSortingPartOfSelectQuery(sortingType);
 		List<Issue> issues = new ArrayList<Issue>();
-		UserDAO userDAO = UserFactory.getClassFromFactory();
-		StatusesDAO statusDAO = StatusFactory.getClassFromFactory();
-		TypesDAO typesDAO = TypeFactory.getClassFromFactory();
-		PrioritiesDAO priorityDAO = PriorityFactory.getClassFromFactory();
-		ProjectDAO projectDAO = ProjectFactory.getClassFromFactory();
 		ConnectionManager connectionMng = null;
 		Connection connection = null;
 		ResultSet rs = null;
+		ResultSet resultSet = null;
 		PreparedStatement ptmSelectIssues = null;
+		PreparedStatement ptmSelectUsers = null;
+		PreparedStatement ptmSelectProject = null;
+		PreparedStatement ptmSelectVersions = null;
 		try{
 			connectionMng = new ConnectionManager();
 			connection = connectionMng.getConnection();
 			ptmSelectIssues = connection.prepareStatement(SELECT_ISSUES);
+			ptmSelectUsers = connection.prepareStatement(ConstantsSQL.SELECT_USER_BY_ID);
+			ptmSelectProject = connection.prepareStatement(ConstantsSQL.SELECT_PROJECT_BY_ID);
+			ptmSelectVersions = connection.prepareStatement(ConstantsSQL.SELECT_VERSIONS_OF_PROJECT);
 			ptmSelectIssues.setInt(1, n);
 			rs = ptmSelectIssues.executeQuery();
 			while (rs.next()){
-				int id = rs.getInt(ConstantsSQL.ID_COLUMN);
-				Priority priority = priorityDAO.getById(rs.getInt(ConstantsSQL.PRIORITY_ID_COLUMN));
-				Type type = typesDAO.getById(rs.getInt(ConstantsSQL.TYPE_ID_COLUMN));
-				String summary = rs.getString(ConstantsSQL.SUMMARY_COLUMN);
-				String description = rs.getString(ConstantsSQL.DESCRIPTION_COLUMN);
-				Status status = statusDAO.getById(rs.getInt(ConstantsSQL.STATUS_ID_COLUMN));
-				Project project = 
-						projectDAO.getProjectById(rs.getInt(ConstantsSQL.PROJECT_ID_COLUMN));
-				Version version = 
-						projectDAO.getVersionById(rs.getInt(ConstantsSQL.VERSION_ID_COLUMN));
-				Date createDate = rs.getDate(ConstantsSQL.CREATE_DATE_COLUMN);
-				User author = 
-						userDAO.getUserById(rs.getInt(ConstantsSQL.AUTHOR_ID_COLUMN));
-				Issue issue = new Issue(id, priority, type, summary, description, status,
-						project, version, createDate, author);
-				if(rs.getInt(ConstantsSQL.ASSIGNEE_ID_COLUMN) != 0) {
-					User assignee = userDAO.getUserById(rs.getInt(ConstantsSQL.ASSIGNEE_ID_COLUMN));
-					issue.setAssignee(assignee);
-				}
-				if(rs.getDate(ConstantsSQL.MODIFY_DATE_COLUMN) != null) {
-					User modifier = 
-							userDAO.getUserById(rs.getInt(ConstantsSQL.MODIFIER_ID_COLUMN));
-					issue.setModifier(modifier);
-					issue.setModifyDate(rs.getDate(ConstantsSQL.MODIFY_DATE_COLUMN));
-				}
-				if(rs.getInt(ConstantsSQL.RESOLUTION_ID_COLUMN) != 0) {
-					ResolutionDAO resolutionDAO = ResolutionFactory.getClassFromFactory();
-					Resolution resolution = resolutionDAO.getById(rs.getInt(ConstantsSQL.RESOLUTION_ID_COLUMN));
-				    issue.setResolution(resolution);
-				}
+				int id = rs.getInt(1);
+				Priority priority = new Priority(rs.getInt(2), rs.getString(3));
+				User assignee = (rs.getInt(4) != Constants.NULL) ? getUserById(rs.getInt(4), connection, 
+						ptmSelectUsers, resultSet) : null;
+				Type type = new Type(rs.getInt(5), rs.getString(6));
+				String summary = rs.getString(7);
+				String description = rs.getString(8);
+				Status status = new Status(rs.getInt(9), rs.getString(10));
+				Project project = getProjectById(rs.getInt(11), connection, ptmSelectProject, 
+						ptmSelectVersions, resultSet);
+				Resolution resolution = (rs.getInt(12) != Constants.NULL) ? 
+						new Resolution(rs.getInt(12), rs.getString(13)) : null;
+				Version version = new Version(rs.getInt(14), rs.getString(15));
+				Date createDate = rs.getDate(16);
+				User author = getUserById(rs.getInt(17), connection, ptmSelectUsers, resultSet);
+				Date modifyDate = rs.getDate(18);
+				User modifier = (rs.getInt(19) != Constants.NULL) ? getUserById(rs.getInt(19), connection, 
+						ptmSelectUsers, resultSet) : null;
+				Issue issue = new Issue(id, priority, assignee,  type, summary, description, status,
+						project, resolution, version, createDate, modifyDate, author, modifier);
 				issues.add(issue);
-			}
+		}
 			return issues;
 		}catch (SQLException e) {
-			e.printStackTrace();
-			throw new DaoException(e);
+			throw new DaoException(Constants.DB_PROBLEM);
 		}finally {
 			if(connectionMng != null) {
-				connectionMng.closeStatements(ptmSelectIssues);
-				connectionMng.closeResultSets(rs);
+				connectionMng.closeStatements(ptmSelectIssues, ptmSelectUsers, 
+						ptmSelectProject, ptmSelectVersions);
+				connectionMng.closeResultSets(rs, resultSet);
 				connectionMng.closeConnection();
 			}
 		} 
 	}
 	
+	private User getUserById(int id, Connection connection, PreparedStatement ptmSelectUsers, 
+			ResultSet userRs) throws DaoException, ValidationException {
+		User user = null;
+		try{
+	    ptmSelectUsers.setInt(1, id);
+		userRs = ptmSelectUsers.executeQuery();
+    	if(!userRs.next()) {
+    		throw new ValidationException(Constants.SOME_PROBLEMS);
+    	}
+    	user = new User(id, userRs.getString(1), 
+    		userRs.getString(2), userRs.getString(3), new Role(userRs.getInt(4), userRs.getString(5)),
+    			userRs.getString(6));
+    	
+		}catch (SQLException e) {
+			e.printStackTrace();
+			throw new DaoException(e);
+		}
+    	return user;
+	}
+	
+	private Project getProjectById(int id, Connection connection, PreparedStatement ptmSelectProject, 
+			PreparedStatement ptmSelectVersions, ResultSet projectRs) throws DaoException, ValidationException {
+		Project project = null;
+		List<Version> versions = new ArrayList<Version>();
+		try {
+			ptmSelectVersions.setInt(1, id);
+			projectRs = ptmSelectVersions.executeQuery();
+			while(projectRs.next()) {
+				versions.add(new Version(projectRs.getInt(1), projectRs.getString(2)));
+			}
+			ptmSelectProject.setInt(1, id);
+			projectRs = ptmSelectProject.executeQuery();
+			if(!projectRs.next()) {
+	    		throw new ValidationException(Constants.SOME_PROBLEMS);
+	    	}
+			String name = projectRs.getString(1);
+			String description = projectRs.getString(2);
+			User manager = new User(projectRs.getInt(3), projectRs.getString(4), 
+				projectRs.getString(5), projectRs.getString(6), new Role(projectRs.getInt(7), 
+					projectRs.getString(8)), projectRs.getString(9));
+			project = new Project(id, name, manager, versions, description);
+			
+		}catch (SQLException e) {
+			throw new DaoException(Constants.DB_PROBLEM);
+		}
+		return project;
+		
+	}
+	
 	public List<Issue> getNAssignedIssues(int n, User user, String sortingType) throws DaoException, ValidationException {
 		String SELECT_ISSUES = ConstantsSQL.SELECT_ASSIGNED_ISSUES + getSortingPartOfSelectQuery(sortingType);
 		List<Issue> issues = new ArrayList<Issue>();
-		UserDAO userDAO = UserFactory.getClassFromFactory();
-		StatusesDAO statusDAO = StatusFactory.getClassFromFactory();
-		TypesDAO typesDAO = TypeFactory.getClassFromFactory();
-		PrioritiesDAO priorityDAO = PriorityFactory.getClassFromFactory();
-		ProjectDAO projectDAO = ProjectFactory.getClassFromFactory();
+		PreparedStatement ptmSelectUsers = null;
+		PreparedStatement ptmSelectProject = null;
+		PreparedStatement ptmSelectVersions = null;
 		ConnectionManager connectionMng = null;
 		Connection connection = null;
 		ResultSet rs = null;
+		ResultSet resultSet = null;
 		PreparedStatement ptmSelectIssues = null;
 		try{
 			connectionMng = new ConnectionManager();
 			connection = connectionMng.getConnection();
 			ptmSelectIssues = 
 					connection.prepareStatement(SELECT_ISSUES);
+			ptmSelectUsers = connection.prepareStatement(ConstantsSQL.SELECT_USER_BY_ID);
+			ptmSelectProject = connection.prepareStatement(ConstantsSQL.SELECT_PROJECT_BY_ID);
+			ptmSelectVersions = connection.prepareStatement(ConstantsSQL.SELECT_VERSIONS_OF_PROJECT);
 			ptmSelectIssues.setInt(1, n);
 			ptmSelectIssues.setInt(2, user.getId());
 			rs = ptmSelectIssues.executeQuery();
 			while (rs.next()) {
-				int id = rs.getInt(ConstantsSQL.ID_COLUMN);
-				Priority priority = priorityDAO.getById(rs.getInt(ConstantsSQL.PRIORITY_ID_COLUMN));
-				Type type = typesDAO.getById(rs.getInt(ConstantsSQL.TYPE_ID_COLUMN));
-				String summary = rs.getString(ConstantsSQL.SUMMARY_COLUMN);
-				String description = rs.getString(ConstantsSQL.DESCRIPTION_COLUMN);
-				Status status = statusDAO.getById(rs.getInt(ConstantsSQL.STATUS_ID_COLUMN));
-				Project project = 
-						projectDAO.getProjectById(rs.getInt(ConstantsSQL.PROJECT_ID_COLUMN));
-				Version version = 
-						projectDAO.getVersionById(rs.getInt(ConstantsSQL.VERSION_ID_COLUMN));
-				Date createDate = rs.getDate(ConstantsSQL.CREATE_DATE_COLUMN);
-				User author = 
-						userDAO.getUserById(rs.getInt(ConstantsSQL.AUTHOR_ID_COLUMN));
-				Issue issue = new Issue(id, priority, type, summary, description, status,
-						project, version, createDate, author);
-				issue.setAssignee(user);
-				if(rs.getDate(ConstantsSQL.MODIFY_DATE_COLUMN) != null) {
-					User modifier = 
-							userDAO.getUserById(rs.getInt(ConstantsSQL.MODIFIER_ID_COLUMN));
-					issue.setModifier(modifier);
-					issue.setModifyDate(rs.getDate(ConstantsSQL.MODIFY_DATE_COLUMN));
-				}
-				if(rs.getInt(ConstantsSQL.RESOLUTION_ID_COLUMN) != Constants.NULL) {
-					ResolutionDAO resolutionDAO = ResolutionFactory.getClassFromFactory();
-					Resolution resolution = resolutionDAO.getById(rs.getInt(ConstantsSQL.RESOLUTION_ID_COLUMN));
-					issue.setResolution(resolution);
-				}
+				int id = rs.getInt(1);
+				Priority priority = new Priority(rs.getInt(2), rs.getString(3));
+				Type type = new Type(rs.getInt(4), rs.getString(5));
+				String summary = rs.getString(6);
+				String description = rs.getString(7);
+				Status status = new Status(rs.getInt(8), rs.getString(9));
+				Project project = getProjectById(rs.getInt(10), connection, ptmSelectProject, 
+						ptmSelectVersions, resultSet);
+				Resolution resolution = (rs.getInt(11) != Constants.NULL) ? 
+						new Resolution(rs.getInt(11), rs.getString(12)) : null;
+				Version version = new Version(rs.getInt(13), rs.getString(14));
+				Date createDate = rs.getDate(15);
+				User author = getUserById(rs.getInt(16), connection, ptmSelectUsers, resultSet);
+				Date modifyDate = rs.getDate(17);
+				User modifier = (rs.getInt(18) != Constants.NULL) ? getUserById(rs.getInt(18), connection, 
+						ptmSelectUsers, resultSet) : null;
+				Issue issue = new Issue(id, priority, user,  type, summary, description, status,
+						project, resolution, version, createDate, modifyDate, author, modifier);
 				issues.add(issue);
 			}
 			return issues;
 		}catch (SQLException e) {
-			throw new DaoException(e);
+			throw new DaoException(Constants.DB_PROBLEM);
 		}finally {
 			if(connectionMng != null) {
-				connectionMng.closeStatements(ptmSelectIssues);
-				connectionMng.closeResultSets(rs);
+				connectionMng.closeStatements(ptmSelectIssues, ptmSelectUsers, 
+						ptmSelectProject, ptmSelectVersions);
+				connectionMng.closeResultSets(rs, resultSet);
 				connectionMng.closeConnection();
 			}
 		} 
@@ -266,7 +296,7 @@ public class DBIssueImpl implements IssueDAO {
 			}
 			ptmInsertIssue.executeUpdate();
 		}catch (SQLException e) {
-			throw new DaoException(e);
+			throw new DaoException(Constants.DB_PROBLEM);
 		}finally {
 			if(connectionMng != null) {
 				connectionMng.closeStatements(ptmInsertIssue);
@@ -314,7 +344,7 @@ public class DBIssueImpl implements IssueDAO {
 		    ptmUpdateIssue.executeUpdate();
 		}catch (SQLException e) {
 			e.printStackTrace();
-			throw new DaoException(e);
+			throw new DaoException(Constants.DB_PROBLEM);
 		}finally {
 			if(connectionMng != null) {
 				connectionMng.closeStatements(ptmUpdateIssue);
