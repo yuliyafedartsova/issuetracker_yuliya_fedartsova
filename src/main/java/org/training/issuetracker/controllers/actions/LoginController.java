@@ -36,11 +36,11 @@ public class LoginController extends AbstractController {
 		checkData(email, password);
 		user = userDAO.getUser(email, password);
 		}catch (ValidationException e) {
-			request.setAttribute(Constants.ERROR_MESSAGE, Constants.SOME_PROBLEMS);
+			request.setAttribute(Constants.ERROR_MESSAGE, e.getMessage());
         	jumpPage(Constants.MAIN, request, response);
 			return;
 		}catch (DaoException e) {
-			request.setAttribute(Constants.ERROR_MESSAGE, Constants.SOME_PROBLEMS);
+			request.setAttribute(Constants.ERROR_MESSAGE, e.getMessage());
         	jumpPage(Constants.MAIN, request, response);
 			return;
 		}

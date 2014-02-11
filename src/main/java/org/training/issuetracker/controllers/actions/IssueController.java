@@ -117,7 +117,7 @@ public class IssueController extends AbstractController {
     	    }
 		request.getRequestDispatcher("/main").forward(request, response);
         } catch (DaoException e) {
-        	request.setAttribute(Constants.ERROR_MESSAGE, Constants.SOME_PROBLEMS);
+        	request.setAttribute(Constants.ERROR_MESSAGE, e.getMessage());
         	jumpPage(Constants.MAIN, request, response);
   		} catch (ValidationException e) {
   			request.setAttribute(Constants.ERROR_MESSAGE, e.getMessage());

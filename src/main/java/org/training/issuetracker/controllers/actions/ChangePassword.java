@@ -43,7 +43,7 @@ public class ChangePassword extends AbstractController {
         	request.setAttribute(Constants.MESSAGE, Constants.SUCCESSFULLY_CHANGE_PASSWORD);
         	jumpPage(Constants.MAIN, request, response);
         }catch (DaoException e) {
-        	request.setAttribute(Constants.ERROR_MESSAGE, Constants.SOME_PROBLEMS);
+        	request.setAttribute(Constants.ERROR_MESSAGE, e.getMessage());
         	jumpPage(Constants.MAIN, request, response);
         	return;
         }catch (ValidationException e) {

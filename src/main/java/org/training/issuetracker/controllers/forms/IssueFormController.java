@@ -61,6 +61,7 @@ public class IssueFormController extends AbstractController {
 		case Constants.ADD:
 			url = Pages.ADD_ISSUE_PAGE;
 			statuses = DisplayManager.getAvailableStatusesForSubmitIssue(statuses);
+			request.setAttribute(Constants.PROJECTS, projects);
 			break;
 		case Constants.UPDATE:
 			int id = Integer.parseInt(request.getParameter(Constants.ID));
@@ -72,7 +73,6 @@ public class IssueFormController extends AbstractController {
 			request.setAttribute(Constants.RESOLUTIONS, resolutions);
 			url = Pages.UPDATE_ISSUE_PAGE;
 			statuses = DisplayManager.getAvailableStatuses(statuses, issue);
-			request.setAttribute(Constants.PROJECTS, projects);
 			break;
 	    }
     	request.setAttribute(Constants.USERS, users);
