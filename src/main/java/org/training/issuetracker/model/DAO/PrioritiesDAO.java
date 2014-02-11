@@ -9,7 +9,7 @@ import org.training.issuetracker.model.beans.properties.Priority;
 
 public interface PrioritiesDAO {
 	List<Priority> getAll() throws DaoException;
-	Priority getById(int id) throws DaoException;
+	Priority getById(int id) throws DaoException, ValidationException;
 	void add(Priority parameter) throws DaoException, ValidationException;
 	void update(int id, String name) throws DaoException, ValidationException;
 }

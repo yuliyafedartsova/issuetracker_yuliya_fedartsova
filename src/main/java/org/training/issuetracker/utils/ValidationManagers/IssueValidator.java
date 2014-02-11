@@ -8,27 +8,34 @@ public class IssueValidator extends PersistentObjectValidator {
 	
 	public String validateIssue(Issue issue) {
 		String message = Constants.EMPTY;
+		final String ERROR_MESSAGE_CHANGE_STATUS = "Choose assignee or change status.";
+		final String ERROR_MESSAGE_NOT_CLOSED = " Issue is not closed.";
+		final String ERROR_MESSAGE_CHOSE_RESOLUTION = " Choose resolution.";
+		final String ERROR_MESSAGE_EMPTY_DESCRIPTION = " Description is empty.";
+		final String ERROR_MESSAGE_EMPTY_SUMMARY = " Summary is empty.";
 		
 		if(issue.getAssignee() == null && !issue.getStatus().getName().equals(Constants.NEW)) { 
-	    	 message = "Choose assignee or change status.";
+	    	 message = ERROR_MESSAGE_CHANGE_STATUS;
 	    }
 		 
 	     if(issue.getResolution() != null && 
 	    		 !issue.getStatus().getName().equals(Constants.CLOSED)) {
-	    	 message += " Issue is not closed.";
+	    	 if(!issue.getStatus().getName().equals(Constants.RESOLVED)) {
+	    		 message += ERROR_MESSAGE_NOT_CLOSED;
+	    	 }
 	     }
 	     
 	     if(issue.getResolution() == null && 
-	    		 issue.getStatus().getName().equals(Constants.CLOSED)) {
-	    	 message += " Choose resolution.";
+	    		(issue.getStatus().getName().equals(Constants.CLOSED) || issue.getStatus().getName().equals(Constants.RESOLVED))) {
+	    	 message += ERROR_MESSAGE_CHOSE_RESOLUTION;
 	     }
 	     
 	     if(issue.getDescription().isEmpty() || issue.getDescription() == null) {
-	    	 message += " Description is empty.";	
+	    	 message += ERROR_MESSAGE_EMPTY_DESCRIPTION;	
 		 }
 	     
 	     if(issue.getSummary().isEmpty() || issue.getSummary() == null ) {
-	    	 message += " Summary is empty.";		
+	    	 message += ERROR_MESSAGE_EMPTY_SUMMARY;		
 		 }
 	     
 	     return message;

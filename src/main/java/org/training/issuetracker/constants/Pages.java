@@ -16,4 +16,7 @@ public class Pages {
 	public static final String UPDATE_PARAMETER_PAGE = PACKAGE + "/update_parameter.jsp";
 	public static final String UPDATE_PROJECT_PAGE = PACKAGE + "/update_project.jsp";
 	public static final String UPDATE_USER_DATA_PAGE = PACKAGE + "/update_user_data.jsp";
+	public static final String ADD_PARAMETER_PAGE = PACKAGE + "/add_parameter.jsp";
+
+
 }

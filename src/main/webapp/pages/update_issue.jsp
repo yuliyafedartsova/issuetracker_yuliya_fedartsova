@@ -69,42 +69,55 @@
 	    </select></td></tr>
     	<tr><td> Resolution </td>  
     	<td><select id="res" name='resolution' size='1'>
+    		<option></option>
     		<c:forEach var="resolution" items="${resolutions}"> 
-	        	<option></option>
 	        	<option value='${resolution.id}'> ${resolution} </option>
 			</c:forEach>
 	    </select></td></tr>
     	<tr><td> Type </td>
     	<td><select name='type' size='1'>
+    			<option value='${issue.type.id}'> ${issue.type} </option>
     		<c:forEach var="type" items="${types}"> 
-	        	<option value='${type.id}'> ${type} </option>
-			</c:forEach>
+	        	<c:if test="${issue.type.name !=  type.name}">
+					 <option value='${type.id}'> ${type} </option>
+				</c:if>
+	        </c:forEach>
 	    </select></td></tr>
    		<tr><td> Priority </td>
     	<td><select name='priority' size='1'>
+    		<option value='${issue.priority.id}'> ${issue.priority} </option>
     		<c:forEach var="priority" items="${priorities}"> 
-	        	<option value='${priority.id}'> ${priority} </option>
-			</c:forEach>
+	        	<c:if test="${issue.priority.name != priority.name}">
+					<option value='${priority.id}'> ${priority} </option>
+				</c:if>
+	        </c:forEach>
 	    </select></td></tr>
 	    <tr><td> Project </td>
     	<td><select name='project' size='1'>
+    		<option value='${issue.project.id}'> ${issue.project.name} </option>
     		<c:forEach var="project" items="${projects}"> 
-	        	<option value='${project.id}'> ${project.name} </option>
-			</c:forEach>
+	        	<c:if test="${issue.project.id != project.id}">
+					<option value='${project.id}'> ${project.name} </option>
+				</c:if>
+	        </c:forEach>
 	    </select></td></tr>
 	    <tr><td> Build found </td>
     	<td><select name='version' size='1'>
-    		<c:forEach var="project" items="${projects}"> 
-	        	<c:forEach var="version" items="${project.buildVersions}"> 
-	        		<option value='${version.id}'> ${version} </option>
+    		    <option value='${issue.buildFound.id}'> ${issue.buildFound.name} </option>
+    		    <c:forEach var="version" items="${issue.project.buildVersions}"> 
+	        		<c:if test="${issue.buildFound.name != version.name}">
+						<option value='${version.id}'> ${version} </option>
+					</c:if>
 	        	</c:forEach>
-	        </c:forEach>
-	    </select></td></tr>
+	      </select></td></tr>
 	   <tr><td> Assignee </td>
     	<td><select name='assignee' size='1'>
+    		<option value='${issue.assignee.id}'> ${issue.assignee.firstName} &nbsp; ${issue.assignee.lastName}</option>
     		<c:forEach var="user" items="${users}"> 
-	        	<option value='${user.id}'> ${user.firstName} &nbsp; ${user.lastName} </option>
-			</c:forEach>
+	        	<c:if test="${issue.assignee.id != user.id}">
+					<option value='${user.id}'> ${user.firstName} &nbsp; ${user.lastName} </option>
+				</c:if>
+	        </c:forEach>
 	    </select></td></tr>
 	    </table>
 	   </c:otherwise>

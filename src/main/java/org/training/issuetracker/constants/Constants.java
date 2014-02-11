@@ -1,5 +1,5 @@
 package org.training.issuetracker.constants;
-//
+
 public class Constants {  
 	public static String PATH;
 	public static final String FILES_PACKAGE = "files/";
@@ -74,7 +74,6 @@ public class Constants {
     public static final String SORTING = "sorting";
     public static final String EMPTY_MESSAGE_FOR_GUEST = "There are no issues";
     public static final String EMPTY_MESSAGE_FOR_USER = "There are no issues aasigned to you";
-//    public static final String MESSAGE = "collection is empty";
     public static final String LOGIN_EMPTY = "Email or password is empty";
     public static final String PARAMETER = "parameter";
     public static final String NAME = "name";
@@ -100,6 +99,14 @@ public class Constants {
     public static final String SUCCESSFULLY_UPDATE_PARAMETER = "Parameter has been updated successfully";
     public static final String CHANGE = "change";
     public static final String MESSAGE = "message";
-   // public static final String ERROR_MESSAGE = "";
     public static final String DEFAULT = "default";
+    public static final String SOME_PROBLEMS = "Some problems occured";
+    public static final String ISSUE_FORM_CONTROLLER = "/issue-form";
+    public static final String PROJECT_FORM_CONTROLLER = "/project-form";
+    public static final String PROJECT_REVIEW_CONTROLLER = "/projects-review";
+    public static final String PROPERTY_FORM_CONTROLLER = "/property-form";
+    public static final String USER_FORM_CONTROLLER = "/user-form";
+    public static final String PARAMETER_EXIST = "Such parameter is already exist";
+    public static final String VERSION_EXIST = "Version of project is already exist";
+    public static final String USER_EXIST = "User with such email and password is already exist";
 }

@@ -2,6 +2,7 @@ package org.training.issuetracker.utils.handlers;
 
 import java.util.List;
 import org.training.issuetracker.exceptions.DaoException;
+import org.training.issuetracker.exceptions.ValidationException;
 import org.training.issuetracker.model.beans.User;
 import org.training.issuetracker.model.beans.properties.Role;
 import org.training.issuetracker.model.factories.RoleFactory;
@@ -69,6 +70,8 @@ public class UsersHandler extends DefaultHandler {
 				try {
 				currentRole = rolesDAO.getById(id);
 				} catch (DaoException e) {
+					throw new RuntimeException(e);
+				} catch (ValidationException e) {
 					throw new RuntimeException(e);
 				}
 			}

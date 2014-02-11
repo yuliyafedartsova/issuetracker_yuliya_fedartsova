@@ -28,7 +28,7 @@ public class DBStatusImpl extends AbstractPropertyDAO implements StatusesDAO {
 	    return statuses;
 	}
 	
-	public Status getById(int id) throws DaoException {
+	public Status getById(int id) throws DaoException, ValidationException {
 		String name = getNameById(id, Constants.STATUSES_SOURCE_NAME);
 		Status status = new Status(id, name);
 	    return status;

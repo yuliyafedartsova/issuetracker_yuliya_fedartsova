@@ -10,7 +10,7 @@ import javax.servlet.http.HttpServletResponse;
 
 import org.training.issuetracker.constants.Constants;
 
-//
+
 public abstract class AbstractController extends HttpServlet {
 	private static final long serialVersionUID = 1L;
        

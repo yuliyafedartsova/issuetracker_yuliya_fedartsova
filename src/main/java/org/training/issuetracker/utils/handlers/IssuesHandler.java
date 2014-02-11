@@ -3,6 +3,7 @@ package org.training.issuetracker.utils.handlers;
 import java.sql.Date;
 import java.util.List;
 import org.training.issuetracker.exceptions.DaoException;
+import org.training.issuetracker.exceptions.ValidationException;
 import org.training.issuetracker.model.beans.Issue;
 import org.training.issuetracker.model.beans.Project;
 import org.training.issuetracker.model.beans.User;
@@ -175,6 +176,8 @@ public class IssuesHandler extends DefaultHandler {
 			} 
 		}
 		}catch (DaoException e) {
+			throw new RuntimeException(e);
+		}catch (ValidationException e) {
 			throw new RuntimeException(e);
 		}
 		

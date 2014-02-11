@@ -17,7 +17,7 @@
 		<tr><td> Name:&nbsp; </td>
 		<td><input type='text' name='name' value='${project.name}'></td></tr>
 		<tr><td> Description:&nbsp;</td>
-		<td><input type='text' name='description' value='${project.description}'></td></tr>
+		<td> <input type='text' style="height:100px;width:200px;" name='description' value='${project.description}'> </td></tr>
 		<tr><td>Builds:&nbsp;</td>
 		<td><select size='1'>
 			<c:forEach var="version" items="${project.buildVersions}"> 
@@ -28,9 +28,12 @@
 		<td> Add new version </td></tr>
 		<tr><td>Manager:&nbsp;</td>
 		<td><select name='manager' size='1'>
+			<option value='${project.manager.id}'> ${project.manager.firstName} &nbsp; ${project.manager.lastName} </option>
 			<c:forEach var="user" items="${users}"> 
-	         	<option value='${user.id}'> ${user.firstName} &nbsp; ${user.lastName} </option>
-		    </c:forEach>
+	         	<c:if test="${project.manager.id != user.id}">
+					<option value='${user.id}'> ${user.firstName} &nbsp; ${user.lastName} </option>
+				</c:if>
+	        </c:forEach>
 		</select></td></tr>
 	</table>
 	<input type="hidden" name='id' value='${project.id}'>

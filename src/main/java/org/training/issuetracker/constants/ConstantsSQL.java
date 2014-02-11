@@ -22,8 +22,6 @@ public class ConstantsSQL {
 	public static final String EMAIL_COLUMN = "email";
 	public static final String ROLE_ID_COLUMN = "roleId";
 	public static final String PASSWORD = "password";
-
-
 	public static final String SELECT_PROJECTS = "SELECT * FROM projects;";
 	public static final String SELECT_PROJECT_BY_ID = "SELECT name, " +
 				"description, managerId FROM projects WHERE id = ?;";
@@ -45,7 +43,7 @@ public class ConstantsSQL {
     public static final String ADD_USER = "INSERT INTO users(firstName, lastName, " +
 				"email, roleId, password) VALUES (?,?,?,?,?);";
     public static final String SELECT_IF_USER_EXISTS = "SELECT id " +
-					"FROM users where firstName = ? AND lastName = ? AND email = ?;";
+					"FROM users where email = ? AND password = ?;";
     public static final String ADD_ISSUE = "INSERT INTO issues(priorityId, assigneeId, " +
 				"typeId, summary, description, statusId, projectId, resolutionId, " +
 					"versionId, createDate, authorId, modifyDate, modifierId) " +
@@ -61,5 +59,13 @@ public class ConstantsSQL {
 					"FROM projects where name = ?;";
     public static final String SELECT_IF_VERSION_EXISTS = "SELECT id " +
 					"FROM versions where name = ? AND projectId = ?;";
+    public static final String UPDATE_ISSUE = "UPDATE issues SET priorityId = ?, assigneeId = ?, " +
+			"typeId = ?, summary = ?, description = ?, statusId = ?, " +
+			"projectId = ?, resolutionId = ?, versionId = ?, createDate = ?, " +
+			"authorId = ?, modifyDate = ?, modifierId = ?   WHERE id = ?;";
+    public static final String UPDATE_PROJECT = "UPDATE projects SET name = ?, description = ?, " +
+			"managerId = ?   WHERE id = ?;";
+    public static final String UPDATE_USER = "UPDATE users SET firstName = ?, lastName = ?, " +
+			"email = ?, roleId = ?, password = ?  WHERE id = ?;";
 
 }

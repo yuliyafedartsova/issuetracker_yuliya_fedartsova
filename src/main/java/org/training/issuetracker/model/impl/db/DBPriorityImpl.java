@@ -23,7 +23,7 @@ public class DBPriorityImpl extends AbstractPropertyDAO implements PrioritiesDAO
 	    return priorities;
 	}
 	
-	public Priority getById(int id) throws DaoException {
+	public Priority getById(int id) throws DaoException, ValidationException {
 		String name = getNameById(id, Constants.PRIORITIES_SOURCE_NAME);
 		Priority priority = new Priority(id, name);
 	    return priority;

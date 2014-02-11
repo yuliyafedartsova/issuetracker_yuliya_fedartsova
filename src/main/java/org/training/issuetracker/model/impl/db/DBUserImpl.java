@@ -7,6 +7,8 @@ import java.sql.SQLException;
 import java.sql.Statement;
 import java.util.ArrayList;
 import java.util.List;
+
+import org.training.issuetracker.constants.Constants;
 import org.training.issuetracker.constants.ConstantsSQL;
 import org.training.issuetracker.exceptions.DaoException;
 import org.training.issuetracker.exceptions.ValidationException;
@@ -22,7 +24,7 @@ import org.training.issuetracker.utils.ConnectionManager;
 import org.training.issuetracker.utils.ValidationManagers.UserValidator;
 
 public class DBUserImpl implements UserDAO {
-	public User getUserById(int id) throws DaoException {
+	public User getUserById(int id) throws DaoException, ValidationException {
 		User user = null;
 		RolesDAO rolesDAO = RoleFactory.getClassFromFactory();
 		ConnectionManager manager = new ConnectionManager();
@@ -36,7 +38,9 @@ public class DBUserImpl implements UserDAO {
 				connection.prepareStatement(ConstantsSQL.SELECT_USER_BY_ID);
 			ptmSelectUser.setInt(1, id);
 			rs = ptmSelectUser.executeQuery();
-			rs.next();
+			if(!rs.next()){
+				throw new ValidationException(Constants.SOME_PROBLEMS);
+			}
 			String firstName = rs.getString(ConstantsSQL.FIRST_NAME_COLUMN);
 			String lastName = rs.getString(ConstantsSQL.LAST_NAME_COLUMN);
 			String email = rs.getString(ConstantsSQL.EMAIL_COLUMN);
@@ -57,6 +61,7 @@ public class DBUserImpl implements UserDAO {
 	}
 	
 	public User getUser(String email, String password) throws ValidationException, DaoException {
+		final String ERROR_MESSAGE = "Wrong email or password";
 		RolesDAO rolesDAO = RoleFactory.getClassFromFactory();
 		User user = null;
 		ConnectionManager manager = null;
@@ -72,7 +77,7 @@ public class DBUserImpl implements UserDAO {
 			ptmSelectUser.setString(2, password);
 			rs = ptmSelectUser.executeQuery();
 			if (!rs.next()) {
-				throw new ValidationException("Wrong email or password");
+				throw new ValidationException(ERROR_MESSAGE);
 			}
 			int id = rs.getInt(ConstantsSQL.ID_COLUMN);
 			String firstName = rs.getString(ConstantsSQL.FIRST_NAME_COLUMN);
@@ -92,7 +97,7 @@ public class DBUserImpl implements UserDAO {
 		}
 	}
 	
-	public List<User> getUsers() throws DaoException {
+	public List<User> getUsers() throws DaoException, ValidationException {
 		RolesDAO rolesDAO = RoleFactory.getClassFromFactory();
 		List<User> users = new ArrayList<User>();
 		ConnectionManager manager = null;
@@ -130,8 +135,10 @@ public class DBUserImpl implements UserDAO {
 		ConnectionManager connectionMng = new ConnectionManager();
 		Connection connection = connectionMng.getConnection();
 		PreparedStatement ptmInsertUser = null;
+		PreparedStatement ptmSelectUser = null;
 		UserValidator validator = new UserValidator();
 		String errorMessage = null;
+		ResultSet rs = null;
 		errorMessage = validator.validateUserFields(user);
 		if(!errorMessage.isEmpty()) {
 			throw new ValidationException(errorMessage);
@@ -145,14 +152,19 @@ public class DBUserImpl implements UserDAO {
 			connection = connectionMng.getConnection();
 			ptmInsertUser = 
 				connection.prepareStatement(ConstantsSQL.ADD_USER);
+			ptmSelectUser = 
+					connection.prepareStatement(ConstantsSQL.SELECT_IF_USER_EXISTS);
 			ptmInsertUser.setString(1, user.getFirstName());	
 			ptmInsertUser.setString(2, user.getLastName());
 			ptmInsertUser.setString(3, user.getEmail());
 			ptmInsertUser.setInt(4, user.getRole().getId());
 			ptmInsertUser.setString(5, user.getPassword());
+			ptmSelectUser.setString(1, user.getEmail());
+			ptmSelectUser.setString(2, user.getPassword());
+			rs = ptmSelectUser.executeQuery();
 			synchronized (DBUserImpl.class) {
-				if(whetherTheUserExists(user, connection)) {
-					return;
+				if(rs.next()) {
+					throw new ValidationException(Constants.USER_EXIST);
 				}
 				ptmInsertUser.executeUpdate();
 			}
@@ -160,41 +172,21 @@ public class DBUserImpl implements UserDAO {
 			throw new DaoException(e);
 		}finally {
 			if(connectionMng != null) {
-				connectionMng.closeStatements(ptmInsertUser);
+				connectionMng.closeStatements(ptmInsertUser, ptmSelectUser);
+				connectionMng.closeResultSets(rs);
 				connectionMng.closeConnection();
 			}
 		}
-	}
-	
-	private boolean whetherTheUserExists(User user, Connection connection) throws DaoException, SQLException  {
-		boolean exist = false;
-		PreparedStatement ptmSelectUser = null;
-		ResultSet rs = null;
-		try {
-			ptmSelectUser = 
-					connection.prepareStatement(ConstantsSQL.SELECT_IF_USER_EXISTS);
-			ptmSelectUser.setString(1, user.getFirstName());
-			ptmSelectUser.setString(2, user.getLastName());
-			ptmSelectUser.setString(3, user.getEmail());
-			rs = ptmSelectUser.executeQuery();
-		    if(rs.next()) {
-		    	exist = true;
-		    }
-		    return exist;
-		}catch (SQLException e) {
-			throw new DaoException(e);
-		}finally {
-			rs.close();
-			ptmSelectUser.close();
-		} 
 	}
 	
 	public void updateUserData(User user) throws DaoException, ValidationException {
 		ConnectionManager connectionMng = null;
 		Connection connection = null;
 		PreparedStatement ptmUpdateUser = null;
+		PreparedStatement ptmSelectUser = null;
 		UserValidator validator = new UserValidator();
 		String errorMessage = null;
+		ResultSet rs = null;
 		errorMessage = validator.validateUserFields(user);
 		if(!errorMessage.isEmpty()) {
 			throw new ValidationException(errorMessage);
@@ -207,25 +199,30 @@ public class DBUserImpl implements UserDAO {
 			connectionMng = new ConnectionManager();
 			connection = connectionMng.getConnection();
 			ptmUpdateUser = 
-				connection.prepareStatement("UPDATE users SET firstName = ?, lastName = ?, " +
-							"email = ?, roleId = ?, password = ?  WHERE id = ?;");
+				connection.prepareStatement(ConstantsSQL.UPDATE_USER);
+			ptmSelectUser = 
+					connection.prepareStatement(ConstantsSQL.SELECT_IF_USER_EXISTS);
 			ptmUpdateUser.setString(1, user.getFirstName());	
 			ptmUpdateUser.setString(2, user.getLastName());
 			ptmUpdateUser.setString(3, user.getEmail());
 			ptmUpdateUser.setInt(4, user.getRole().getId());
 			ptmUpdateUser.setString(5, user.getPassword());
 			ptmUpdateUser.setInt(6, user.getId());
+			ptmSelectUser.setString(1, user.getEmail());
+			ptmSelectUser.setString(2, user.getPassword());
+			rs = ptmSelectUser.executeQuery();
 			synchronized (DBUserImpl.class) {
-				if(whetherTheUserExists(user, connection)) {
-					return;
+				if(rs.next()) {
+					throw new ValidationException(Constants.USER_EXIST);
 				}
-				ptmUpdateUser.executeUpdate();
+			ptmUpdateUser.executeUpdate();
 			}
 		}catch (SQLException e) {
 			throw new DaoException(e);
 		}finally {
 			if(connectionMng != null) {
-				connectionMng.closeStatements(ptmUpdateUser);
+				connectionMng.closeStatements(ptmUpdateUser, ptmSelectUser);
+				connectionMng.closeResultSets(rs);
 				connectionMng.closeConnection();
 			}
 		}

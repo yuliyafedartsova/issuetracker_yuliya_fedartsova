@@ -5,10 +5,8 @@ import java.sql.Date;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
-import java.sql.Statement;
 import java.util.ArrayList;
 import java.util.List;
-
 import org.training.issuetracker.constants.Constants;
 import org.training.issuetracker.constants.ConstantsSQL;
 import org.training.issuetracker.exceptions.DaoException;
@@ -39,68 +37,8 @@ import org.training.issuetracker.utils.ValidationManagers.IssueValidator;
 
 public class DBIssueImpl implements IssueDAO {
 
-	public List<Issue> getIssues() throws DaoException {
-		List<Issue> issues = new ArrayList<Issue>();
-		UserDAO userDAO = UserFactory.getClassFromFactory();
-		StatusesDAO statusDAO = StatusFactory.getClassFromFactory();
-		TypesDAO typesDAO = TypeFactory.getClassFromFactory();
-		PrioritiesDAO priorityDAO = PriorityFactory.getClassFromFactory();
-		ProjectDAO projectDAO = ProjectFactory.getClassFromFactory();
-		ConnectionManager connectionMng = null;
-		Connection connection = null;
-		ResultSet rs = null;
-		Statement stSelectIssues = null;
-		try{
-		connectionMng = new ConnectionManager();
-		connection = connectionMng.getConnection();
-		stSelectIssues = connection.createStatement();
-		rs = stSelectIssues.executeQuery("SELECT id, priorityId, assigneeId, " +
-					"typeId, summary, description, statusId, projectId, " +
-					"resolutionId, versionId, createDate, authorId, modifyDate, " +
-					"modifierId FROM issues;");	
-			while (rs.next()){
-				String summary = rs.getString(5);
-				String description = rs.getString(6);
-				Date createDate = rs.getDate(11);
-				Date modifyDate = rs.getDate(13);
-				Priority priority = priorityDAO.getById(rs.getInt(2));
-				Type type = typesDAO.getById(rs.getInt(4));
-				Status status = statusDAO.getById(rs.getInt(7));
-				Project project = projectDAO.getProjectById(rs.getInt(8));
-				Version version = projectDAO.getVersionById(rs.getInt(10)); 
-				User author = userDAO.getUserById(rs.getInt(12));
-				Issue issue = new Issue(rs.getInt(1), priority, type, summary, description, status,
-						project, version, createDate, author);
-				if(rs.getInt(3) != 0) {
-					User assignee = userDAO.getUserById(rs.getInt(3));
-					issue.setAssignee(assignee);
-				}
-				if(modifyDate != null) {
-					User modifier = userDAO.getUserById(rs.getInt(14));
-					issue.setModifier(modifier);
-					issue.setModifyDate(modifyDate);
-				}
-				if(rs.getInt(9) != 0) {
-					ResolutionDAO resolutionDAO = ResolutionFactory.getClassFromFactory();
-					Resolution resolution = resolutionDAO.getById(rs.getInt(9));
-					issue.setResolution(resolution);
-				}
-				issues.add(issue);
-			}
-			return issues;
-		}catch (SQLException e) {
-			throw new DaoException(e);
-		}finally {
-			if(connectionMng != null) {
-				connectionMng.closeStatements(stSelectIssues);
-				connectionMng.closeResultSets(rs);
-				connectionMng.closeConnection();
-			}
-		}
-	}
-	
-	public Issue getIssueById(int id) throws DaoException {
-		Issue issue = null;
+   public Issue getIssueById(int id) throws DaoException, ValidationException {
+	    Issue issue = null;
 		UserDAO userDAO = UserFactory.getClassFromFactory();
 		StatusesDAO statusDAO = StatusFactory.getClassFromFactory();
 		TypesDAO typesDAO = TypeFactory.getClassFromFactory();
@@ -117,11 +55,11 @@ public class DBIssueImpl implements IssueDAO {
 					connection.prepareStatement(ConstantsSQL.SELECT_ISSUE_BY_ID);
 			ptmSelectIssue.setInt(1, id);
 			rs = ptmSelectIssue.executeQuery();
-			rs.next();
+			if(!rs.next()) {
+				throw new ValidationException(Constants.SOME_PROBLEMS);
+			}
 			Priority priority = priorityDAO.getById(rs.getInt(ConstantsSQL.PRIORITY_ID_COLUMN));
-					
 			Type type = typesDAO.getById(rs.getInt(ConstantsSQL.TYPE_ID_COLUMN));
-					
 			String summary = rs.getString(ConstantsSQL.SUMMARY_COLUMN);
 			String description = rs.getString(ConstantsSQL.DESCRIPTION_COLUMN);
 			Status status = statusDAO.getById(rs.getInt(ConstantsSQL.STATUS_ID_COLUMN));
@@ -160,9 +98,7 @@ public class DBIssueImpl implements IssueDAO {
 		} 
 	}
 	
-	
-	
-	public List<Issue> getNLastAddedIssues(int n, String sortingType) throws DaoException {
+	public List<Issue> getNLastAddedIssues(int n, String sortingType) throws DaoException, ValidationException  {
 		String SELECT_ISSUES = ConstantsSQL.SELECT_LAST_ADDED_ISSUES + getSortingPartOfSelectQuery(sortingType);
 		List<Issue> issues = new ArrayList<Issue>();
 		UserDAO userDAO = UserFactory.getClassFromFactory();
@@ -226,7 +162,7 @@ public class DBIssueImpl implements IssueDAO {
 		} 
 	}
 	
-	public List<Issue> getNAssignedIssues(int n, User user, String sortingType) throws DaoException {
+	public List<Issue> getNAssignedIssues(int n, User user, String sortingType) throws DaoException, ValidationException {
 		String SELECT_ISSUES = ConstantsSQL.SELECT_ASSIGNED_ISSUES + getSortingPartOfSelectQuery(sortingType);
 		List<Issue> issues = new ArrayList<Issue>();
 		UserDAO userDAO = UserFactory.getClassFromFactory();
@@ -269,7 +205,7 @@ public class DBIssueImpl implements IssueDAO {
 					issue.setModifier(modifier);
 					issue.setModifyDate(rs.getDate(ConstantsSQL.MODIFY_DATE_COLUMN));
 				}
-				if(rs.getInt(ConstantsSQL.RESOLUTION_ID_COLUMN) != 0) {
+				if(rs.getInt(ConstantsSQL.RESOLUTION_ID_COLUMN) != Constants.NULL) {
 					ResolutionDAO resolutionDAO = ResolutionFactory.getClassFromFactory();
 					Resolution resolution = resolutionDAO.getById(rs.getInt(ConstantsSQL.RESOLUTION_ID_COLUMN));
 					issue.setResolution(resolution);
@@ -306,7 +242,7 @@ public class DBIssueImpl implements IssueDAO {
 			if(issue.getAssignee() != null) {
 				ptmInsertIssue.setInt(2, issue.getAssignee().getId());
 			} else {
-				ptmInsertIssue.setInt(2, 0);
+				ptmInsertIssue.setInt(2, Constants.NULL);
 			}
 			ptmInsertIssue.setInt(3, issue.getType().getId());	
 			ptmInsertIssue.setString(4, issue.getSummary());
@@ -316,7 +252,7 @@ public class DBIssueImpl implements IssueDAO {
 			if(issue.getResolution() != null) {
 				ptmInsertIssue.setInt(8, issue.getResolution().getId());
 			} else {
-				ptmInsertIssue.setInt(8, 0);
+				ptmInsertIssue.setInt(8, Constants.NULL);
 			}
 			ptmInsertIssue.setInt(9, issue.getBuildFound().getId());
 			ptmInsertIssue.setDate(10, issue.getCreateDate());
@@ -326,14 +262,9 @@ public class DBIssueImpl implements IssueDAO {
 				ptmInsertIssue.setInt(13, issue.getModifier().getId());
 			} else {
 				ptmInsertIssue.setDate(12, null);
-				ptmInsertIssue.setInt(13, 0);
+				ptmInsertIssue.setInt(13, Constants.NULL);
 			}
-			synchronized (DBIssueImpl.class) {
-				if(whetherTheIssueExists(issue, connection)) {
-					return;
-				}
-				ptmInsertIssue.executeUpdate();
-			}
+			ptmInsertIssue.executeUpdate();
 		}catch (SQLException e) {
 			throw new DaoException(e);
 		}finally {
@@ -342,31 +273,6 @@ public class DBIssueImpl implements IssueDAO {
 			    connectionMng.closeConnection();
 			}
 		} 
-	}
-	
-	private boolean whetherTheIssueExists(Issue issue, Connection connection) throws DaoException, SQLException  {
-		boolean exist = false;
-		ResultSet rs = null;
-		PreparedStatement ptmSelectIssue = null;
-		try {
-			ptmSelectIssue = 
-					connection.prepareStatement(ConstantsSQL.SELECT_IF_ISSUE_EXISTS);
-			ptmSelectIssue.setString(1, issue.getSummary());
-			ptmSelectIssue.setString(2, issue.getDescription());
-			ptmSelectIssue.setInt(3, issue.getProject().getId());
-			ptmSelectIssue.setInt(4, issue.getBuildFound().getId());
-			rs = ptmSelectIssue.executeQuery();
-			    if(rs.next()) {
-			    	exist = true;
-			    }
-			return exist;
-		}catch (SQLException e) {
-			throw new DaoException(e);
-		}finally {
-			rs.close();
-			ptmSelectIssue.close();
-		}
-		
 	}
 	
     public void updateIssue(Issue issue) throws DaoException, ValidationException {
@@ -382,15 +288,12 @@ public class DBIssueImpl implements IssueDAO {
 			connectionMng = new ConnectionManager();
 			connection = connectionMng.getConnection();
 		    ptmUpdateIssue = 
-					connection.prepareStatement("UPDATE issues SET priorityId = ?, assigneeId = ?, " +
-							"typeId = ?, summary = ?, description = ?, statusId = ?, " +
-							"projectId = ?, resolutionId = ?, versionId = ?, createDate = ?, " +
-							"authorId = ?, modifyDate = ?, modifierId = ?   WHERE id = ?;");
+					connection.prepareStatement(ConstantsSQL.UPDATE_ISSUE);
 			ptmUpdateIssue.setInt(1, issue.getPriority().getId());
 			if(issue.getAssignee() != null) {
 				ptmUpdateIssue.setInt(2, issue.getAssignee().getId());
 			} else {
-				ptmUpdateIssue.setInt(2, 0);
+				ptmUpdateIssue.setInt(2, Constants.NULL);
 			}
 			ptmUpdateIssue.setInt(3, issue.getType().getId());
 			ptmUpdateIssue.setString(4, issue.getSummary());
@@ -400,7 +303,7 @@ public class DBIssueImpl implements IssueDAO {
 			if(issue.getResolution() != null) {
 				ptmUpdateIssue.setInt(8, issue.getResolution().getId());
 			} else {
-				ptmUpdateIssue.setInt(8, 0);
+				ptmUpdateIssue.setInt(8, Constants.NULL);
 			}
 			ptmUpdateIssue.setInt(9, issue.getBuildFound().getId());
 			ptmUpdateIssue.setDate(10, issue.getCreateDate());
@@ -408,13 +311,9 @@ public class DBIssueImpl implements IssueDAO {
 			ptmUpdateIssue.setDate(12, issue.getModifyDate());
 			ptmUpdateIssue.setInt(13, issue.getModifier().getId());
 			ptmUpdateIssue.setInt(14, issue.getId());
-			synchronized (DBIssueImpl.class) {
-				if(whetherTheIssueExists(issue, connection)) {
-					return;
-				}
-				ptmUpdateIssue.executeUpdate();
-			}
+		    ptmUpdateIssue.executeUpdate();
 		}catch (SQLException e) {
+			e.printStackTrace();
 			throw new DaoException(e);
 		}finally {
 			if(connectionMng != null) {
@@ -425,26 +324,32 @@ public class DBIssueImpl implements IssueDAO {
 	}
     
     private String getSortingPartOfSelectQuery(String sortingType) {
-		String sorting = null;
+		final String BY_ID_DESC = "order by id desc";
+    	final String BY_ID = "order by id";
+    	final String BY_TYPE = "order by typeId";
+    	final String BY_PRIORITY = "order by priorityId";
+    	final String BY_ASSIGNEE = "order by assigneeId";
+    	final String BY_STATUS = "order by statusId";
+    	String sorting = null;
 		switch(sortingType) {
-		case Constants.DEFAULT :
-			sorting = "order by id desc";
-			break;
-		case Constants.ID:
-			sorting = "order by id";
-			break;
-		case Constants.TYPE:
-			sorting = "order by typeId";
-			break;
-		case Constants.PRIORITY:
-			sorting = "order by priorityId";
-			break;
-		case Constants.ASSIGNEE:
-			sorting = "order by assigneeId";
-			break;
-		case Constants.STATUS:
-			sorting = "order by statusId";
-			break;
+			case Constants.DEFAULT :
+				sorting = BY_ID_DESC;
+				break;
+			case Constants.ID:
+				sorting = BY_ID;
+				break;
+			case Constants.TYPE:
+				sorting = BY_TYPE;
+				break;
+			case Constants.PRIORITY:
+				sorting = BY_PRIORITY;
+				break;
+			case Constants.ASSIGNEE:
+				sorting = BY_ASSIGNEE;
+				break;
+			case Constants.STATUS:
+				sorting = BY_STATUS;
+				break;
 		}
 		return sorting;
 	}

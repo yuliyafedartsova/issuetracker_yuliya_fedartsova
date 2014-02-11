@@ -56,7 +56,7 @@ public class ProjectController extends AbstractController {
     	        project = new Project(name, manager, versions, description);
     	        projectDAO.addProject(project);
     	        request.setAttribute(Constants.MESSAGE, Constants.SUCCESSFULLY_ADD_PROJECT);
-    	 	    request.getRequestDispatcher("/projects").forward(request, response);
+    	 	    request.getRequestDispatcher(Constants.PROJECT_FORM_CONTROLLER).forward(request, response);
     	        break;
     		case Constants.UPDATE:
     			int id = Integer.parseInt(request.getParameter(Constants.ID));
@@ -67,19 +67,17 @@ public class ProjectController extends AbstractController {
             	project = new Project(id, name, manager, versions, description);
             	projectDAO.updateProject(project);
             	request.setAttribute(Constants.MESSAGE, Constants.SUCCESSFULLY_UPDATE_PROJECT);
-         	    request.getRequestDispatcher("/projects").forward(request, response);
+         	    request.getRequestDispatcher(Constants.PROJECT_REVIEW_CONTROLLER).forward(request, response);
     			break;
     	    }
-        
-       }catch (DaoException e) {
-			jumpPage(Pages.ERROR_PAGE, request, response);
-			return;
-		}catch (ValidationException e) {
+        }catch (DaoException e) {
+        	request.setAttribute(Constants.ERROR_MESSAGE, e.getMessage());
+        	jumpPage(Constants.MAIN, request, response);
+        	return;
+    	}catch (ValidationException e) {
 			request.setAttribute(Constants.ERROR_MESSAGE, e.getMessage());
-			jumpPage("/project-form", request, response);
+			jumpPage(Constants.PROJECT_FORM_CONTROLLER, request, response);
 			return;
 		}
-    
-    
     }
 }

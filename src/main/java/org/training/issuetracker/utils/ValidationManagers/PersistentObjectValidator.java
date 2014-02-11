@@ -1,5 +1,6 @@
 package org.training.issuetracker.utils.ValidationManagers;
 
+import org.training.issuetracker.constants.Constants;
 import org.training.issuetracker.exceptions.ValidationException;
 
 public class PersistentObjectValidator {
@@ -9,10 +10,10 @@ public class PersistentObjectValidator {
 			try {
 				id = Integer.parseInt(idPar);
 			}catch (NumberFormatException e) {
-		  		throw new ValidationException("Some problem");
+		  		throw new ValidationException(Constants.SOME_PROBLEMS);
 		  	}
-			if(id < 0) {
-				throw new ValidationException("Some problem");
+			if(id < Constants.NULL || id == Constants.NULL) {
+				throw new ValidationException(Constants.SOME_PROBLEMS);
 			}
 		}
 	}

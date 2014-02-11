@@ -23,7 +23,7 @@ public class DBTypeImp extends AbstractPropertyDAO implements TypesDAO {
 	    return types;
 	}
 	
-	public Type getById(int id) throws DaoException {
+	public Type getById(int id) throws DaoException, ValidationException {
 		String name = getNameById(id, Constants.TYPES_SOURCE_NAME);
 		Type type = new Type(id, name);
 	    return type;

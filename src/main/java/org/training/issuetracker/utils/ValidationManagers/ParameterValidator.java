@@ -10,9 +10,10 @@ public class ParameterValidator extends PersistentObjectValidator {
 	} 
 	    
 	public String validateParameter(String parameter) {
-		String message = Constants.EMPTY;
+		String ERROR_MESSAGE = "Name is empty";
+	    String message = Constants.EMPTY;
 		if(parameter.isEmpty() || parameter == null) { 
-	    	 message = "Name is empty";
+	    	 message = ERROR_MESSAGE;
 	    }
 	    return message;	
     }

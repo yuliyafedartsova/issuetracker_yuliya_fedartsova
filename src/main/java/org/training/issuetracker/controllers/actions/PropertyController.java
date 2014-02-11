@@ -54,14 +54,15 @@ public class PropertyController extends AbstractController {
 			break;
 	    }
     	}catch (DaoException e) {
-  		  System.out.println("DaoException");
+    		request.setAttribute(Constants.ERROR_MESSAGE, e.getMessage());
+        	jumpPage(Constants.MAIN, request, response);
+        	return;
   	    }catch (ValidationException e) {
   	    	request.setAttribute(Constants.ERROR_MESSAGE, e.getMessage());
-			jumpPage("/property-form", request, response);
+			jumpPage(Constants.PROPERTY_FORM_CONTROLLER, request, response);
   	        return;
   	    }  
-    	request.getRequestDispatcher("/main").forward(request, response); //сделать через jump
-    
+    	jumpPage(Constants.MAIN, request, response);
     }
     
     private void addParameter(String property, String parameter) throws DaoException, ValidationException {

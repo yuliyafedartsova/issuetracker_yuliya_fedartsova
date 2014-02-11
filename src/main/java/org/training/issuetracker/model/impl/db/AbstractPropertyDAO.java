@@ -5,18 +5,16 @@ import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
-import java.util.ArrayList;
 import java.util.HashMap;
-import java.util.List;
 import java.util.Map;
-
+import org.training.issuetracker.constants.Constants;
 import org.training.issuetracker.constants.ConstantsSQL;
 import org.training.issuetracker.exceptions.DaoException;
 import org.training.issuetracker.exceptions.ValidationException;
 import org.training.issuetracker.model.beans.Property;
 import org.training.issuetracker.utils.ConnectionManager;
 import org.training.issuetracker.utils.ValidationManagers.ParameterValidator;
-import org.training.issuetracker.utils.ValidationManagers.ProjectValidator;
+
 
 public abstract class AbstractPropertyDAO {
 	public Map<Integer, String> getMap(String tableName) throws DaoException {
@@ -49,7 +47,7 @@ public abstract class AbstractPropertyDAO {
 		
 	}
 	
-	public String getNameById(int id, String tableName) throws DaoException {
+	public String getNameById(int id, String tableName) throws DaoException, ValidationException {
 		final String SELECT_PARAMETER = "SELECT name FROM " + tableName + 
 				" WHERE id = ?;";
 		String name = null;
@@ -63,7 +61,9 @@ public abstract class AbstractPropertyDAO {
 			ptmSelectParameter = connection.prepareStatement(SELECT_PARAMETER);
 			ptmSelectParameter.setInt(1, id);
 			rs = ptmSelectParameter.executeQuery();
-			rs.next();
+			if(!rs.next()) {
+				throw new ValidationException(Constants.SOME_PROBLEMS);
+			}
 			name = rs.getString(ConstantsSQL.NAME_COLUMN);
 			return name;
 		}catch (SQLException e) {
@@ -76,14 +76,16 @@ public abstract class AbstractPropertyDAO {
 				manager.closeConnection();
 			}
 		}
-	
 	}
 	
 	public void add(Property parameter, String tableName) throws DaoException, ValidationException {
 		String INSERT_PARAMETER = "INSERT INTO " + tableName + "(name) VALUES (?);";
+		String SELECT_PARAMETER = "SELECT id FROM " + tableName + " WHERE name = ?";
 		ConnectionManager manager = null;
 		Connection connection = null;
 		PreparedStatement ptmInsertParameter = null;
+		ResultSet rs = null;
+		PreparedStatement ptmSelectParameter = null;
 		ParameterValidator validator = new ParameterValidator();
 		String errorMessage = validator.validateParameter(parameter);
 		if(!errorMessage.isEmpty()) {
@@ -94,51 +96,36 @@ public abstract class AbstractPropertyDAO {
 			connection = manager.getConnection();
 			ptmInsertParameter = 
 					connection.prepareStatement(INSERT_PARAMETER);
+			ptmSelectParameter = 
+					connection.prepareStatement(SELECT_PARAMETER);
 			ptmInsertParameter.setString(1, parameter.getName());
-			synchronized (AbstractPropertyDAO.class) {
-			if(whetherTheParameterExists(parameter.getName(), tableName, connection)) {
-				return;
-			}
-			ptmInsertParameter.executeUpdate();
+			ptmSelectParameter.setString(1, parameter.getName());
+			rs = ptmSelectParameter.executeQuery();
+		    synchronized (AbstractPropertyDAO.class) {
+				 if(rs.next()) {
+				    throw new ValidationException(Constants.PARAMETER_EXIST);
+				 }
+				 ptmInsertParameter.executeUpdate();
 			}
 		}catch (SQLException e) {
 			throw new DaoException(e);
 		}finally {
 			if(manager != null) {
-				manager.closeStatements(ptmInsertParameter);
+				manager.closeStatements(ptmInsertParameter, ptmSelectParameter);
+				manager.closeResultSets(rs);
 				manager.closeConnection();
 			}
 		}
-	
-	}
-	
-	public boolean whetherTheParameterExists(String name, String tableName, Connection connection) throws DaoException, SQLException {
-		String SELECT_PARAMETER = "SELECT id FROM " + tableName + " WHERE name = ?";
-		boolean exist = false;
-		ResultSet rs = null;
-		PreparedStatement ptmSelectParameter = null;
-		try {
-			ptmSelectParameter = 
-					connection.prepareStatement(SELECT_PARAMETER);
-			ptmSelectParameter.setString(1, name);
-			rs = ptmSelectParameter.executeQuery();
-		    if(rs.next()) {
-		    	exist = true;
-		    }
-		    return exist;
-		}catch (SQLException e) {
-			throw new DaoException(e);
-		}finally {
-			rs.close();
-			ptmSelectParameter.close();
-		} 
 	}
 	
 	public void update(int id, String name, String tableName) throws DaoException, ValidationException {
 		String UPDATE_PARAMETER = "UPDATE " + tableName + " SET name = ? WHERE id = ?;";
+		String SELECT_PARAMETER = "SELECT id FROM " + tableName + " WHERE name = ?";
 		ConnectionManager manager = null;
 		Connection connection = null;
+		ResultSet rs = null;
 		PreparedStatement ptmUpdateParameter = null;
+		PreparedStatement ptmSelectParameter = null;
 		ParameterValidator validator = new ParameterValidator();
 		String errorMessage = validator.validateParameter(name);
 		if(!errorMessage.isEmpty()) {
@@ -149,19 +136,24 @@ public abstract class AbstractPropertyDAO {
 			connection = manager.getConnection();
 			ptmUpdateParameter = 
 					connection.prepareStatement(UPDATE_PARAMETER);
+			ptmSelectParameter = 
+					connection.prepareStatement(SELECT_PARAMETER);
 			ptmUpdateParameter.setString(1, name);
 			ptmUpdateParameter.setInt(2, id);
+			ptmSelectParameter.setString(1, name);
+			rs = ptmSelectParameter.executeQuery();
 			synchronized (AbstractPropertyDAO.class) {
-			if(whetherTheParameterExists(name, tableName, connection)) {
-				return; 
-			}
-			ptmUpdateParameter.executeUpdate();
+				if(rs.next()) {
+				    throw new ValidationException(Constants.PARAMETER_EXIST);
+				 }
+			     ptmUpdateParameter.executeUpdate();
 			}
 		}catch (SQLException e) {
 			throw new DaoException(e);
 		}finally {
 			if(manager != null) {
-				manager.closeStatements(ptmUpdateParameter);
+				manager.closeStatements(ptmUpdateParameter, ptmSelectParameter);
+				manager.closeResultSets(rs);
 				manager.closeConnection();
 			}
 		}

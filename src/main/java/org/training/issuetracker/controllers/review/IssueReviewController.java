@@ -2,7 +2,6 @@ package org.training.issuetracker.controllers.review;
 
 import java.io.IOException;
 import javax.servlet.ServletException;
-import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import org.training.issuetracker.constants.Constants;
@@ -33,11 +32,13 @@ public class IssueReviewController extends AbstractController {
     		request.setAttribute(Constants.ISSUE, issue);
     		jumpPage(Pages.REVIEW_ISSUE_PAGE, request, response);
     	}catch (DaoException e) {
-    			jumpPage(Pages.ERROR_PAGE, request, response);
-    			return;
-    	}catch (Exception e) {
-    			jumpPage(Pages.ERROR_PAGE, request, response);
-    			return;
+    		request.setAttribute(Constants.ERROR_MESSAGE, e.getMessage());
+        	jumpPage(Constants.MAIN, request, response);
+        	return;	
+    	}catch (ValidationException e) {
+    		request.setAttribute(Constants.ERROR_MESSAGE, e.getMessage());
+        	jumpPage(Constants.MAIN, request, response);
+        	return;	
     	}
     }
 

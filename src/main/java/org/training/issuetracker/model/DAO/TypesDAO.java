@@ -10,7 +10,7 @@ import org.training.issuetracker.model.beans.properties.Type;
 
 public interface TypesDAO  {
 	List<Type> getAll() throws DaoException;
-	Type getById(int id) throws DaoException;
+	Type getById(int id) throws DaoException, ValidationException;
 	void add(Type parameter) throws DaoException, ValidationException;
 	void update(int id, String name) throws DaoException, ValidationException;
 }

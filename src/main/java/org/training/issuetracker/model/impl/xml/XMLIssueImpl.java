@@ -89,7 +89,7 @@ public class XMLIssueImpl implements IssueDAO {
 	
 	private void sortIssues(String sortingType, List<Issue> issues) {
     	switch(sortingType) {
-    	    case "default":
+    	    case Constants.DEFAULT:
     	    	
     	    	break;
     		case Constants.TYPE:

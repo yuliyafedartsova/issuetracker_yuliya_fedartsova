@@ -23,7 +23,7 @@ public class DBResolutionImpl extends AbstractPropertyDAO implements ResolutionD
 	    return resolutions;
 	}
 	
-	public Resolution getById(int id) throws DaoException {
+	public Resolution getById(int id) throws DaoException, ValidationException {
 		String name = getNameById(id, Constants.RESOLUTIONS_SOURCE_NAME);
 		Resolution resolution = new Resolution(id, name);
 	    return resolution;

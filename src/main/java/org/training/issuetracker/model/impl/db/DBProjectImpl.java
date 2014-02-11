@@ -7,6 +7,8 @@ import java.sql.SQLException;
 import java.sql.Statement;
 import java.util.ArrayList;
 import java.util.List;
+
+import org.training.issuetracker.constants.Constants;
 import org.training.issuetracker.constants.ConstantsSQL;
 import org.training.issuetracker.exceptions.DaoException;
 import org.training.issuetracker.exceptions.ValidationException;
@@ -22,7 +24,7 @@ import org.training.issuetracker.utils.ConnectionManager;
 import org.training.issuetracker.utils.ValidationManagers.ProjectValidator;
 
 public class DBProjectImpl implements ProjectDAO {
-	public List<Project> getProjects() throws DaoException {
+	public List<Project> getProjects() throws DaoException, ValidationException {
 		List<Project> projects = new ArrayList<Project>();
 		UserDAO userDAO = UserFactory.getClassFromFactory();
 		ConnectionManager connectionMng = null;
@@ -55,7 +57,7 @@ public class DBProjectImpl implements ProjectDAO {
 		}
 	}
 	
-	public Project getProjectById(int id) throws DaoException {
+	public Project getProjectById(int id) throws DaoException, ValidationException {
 		Project project = null;
 		UserDAO userDAO = UserFactory.getClassFromFactory();
 		ConnectionManager connectionMng = null;
@@ -69,7 +71,9 @@ public class DBProjectImpl implements ProjectDAO {
 				connection.prepareStatement(ConstantsSQL.SELECT_PROJECT_BY_ID);
 			ptmSelectProject.setInt(1, id);
 			rs = ptmSelectProject.executeQuery();
-			rs.next();
+			if(!rs.next()){
+				throw new ValidationException(Constants.SOME_PROBLEMS);
+			}
 			String name = rs.getString(ConstantsSQL.NAME_COLUMN);
 			String description  = rs.getString(ConstantsSQL.DESCRIPTION_COLUMN);
 			int managerId = rs.getInt(ConstantsSQL.MANAGER_ID_COLUMN);
@@ -88,7 +92,7 @@ public class DBProjectImpl implements ProjectDAO {
 		}
 	}
 	
-	public Version getVersionById(int id) throws DaoException {
+	public Version getVersionById(int id) throws DaoException, ValidationException {
 		 Version version = null; 
 		 ConnectionManager connectionMng = null;
 		 Connection connection = null;
@@ -101,7 +105,9 @@ public class DBProjectImpl implements ProjectDAO {
 				 connection.prepareStatement(ConstantsSQL.SELECT_VERSION_BY_ID);
 			 ptmSelectVersion.setInt(1, id);
 			 rs = ptmSelectVersion.executeQuery();
-			 rs.next();
+			 if(!rs.next()){
+					throw new ValidationException(Constants.SOME_PROBLEMS);
+			 }
 			 String name = rs.getString(ConstantsSQL.NAME_COLUMN);
 			 version = new Version(id, name);
 			 return version;
@@ -133,7 +139,7 @@ public class DBProjectImpl implements ProjectDAO {
 					int id = rs.getInt(1);
 				    String name = rs.getString(ConstantsSQL.NAME_COLUMN);
 				    versions.add(new Version(id, name));
-				}
+			 }
 			 return versions;
 		 }catch (SQLException e) {
 				throw new DaoException(e);
@@ -165,14 +171,11 @@ public class DBProjectImpl implements ProjectDAO {
 			ptmInsertProject.setString(1, project.getName());	
 			ptmInsertProject.setString(2, project.getDescription());	
 			ptmInsertProject.setInt(3, project.getManager().getId());
-			synchronized (DBProjectImpl.class) {
-				if(whetherTheProjectExists(project, connection)) {
-					return;
-				}
-				ptmInsertProject.executeUpdate();
-			}
+			ptmInsertProject.executeUpdate();
 			rs = ptmInsertProject.getGeneratedKeys();
-			rs.next();
+			if(!rs.next()){
+				throw new ValidationException(Constants.SOME_PROBLEMS);
+		    }
 			int projectId = rs.getInt(1);
 			for(Version version : project.getBuildVersions()) {
 		    	addVersion(version.getName(), projectId);
@@ -185,15 +188,16 @@ public class DBProjectImpl implements ProjectDAO {
 				connectionMng.closeStatements(ptmInsertProject);
 				connectionMng.closeResultSets(rs);
 				connectionMng.closeConnection();
+			}
 		}
-	}
-	
 	}
 	
 	public void addVersion(String version, int projectId) throws DaoException, ValidationException {
 		ConnectionManager connectionMng = null;
 		Connection connection = null;
 		PreparedStatement ptmInsertVersion = null;
+		PreparedStatement ptmSelectVersion = null;
+		ResultSet rs = null;
 		ProjectValidator validator = new ProjectValidator();
 		String errorMessage = validator.validateVersion(version);
 		if(!errorMessage.isEmpty()) {
@@ -204,11 +208,15 @@ public class DBProjectImpl implements ProjectDAO {
 			connection = connectionMng.getConnection();
 			ptmInsertVersion = 
 				connection.prepareStatement(ConstantsSQL.ADD_VERSION);
+			ptmSelectVersion = connection.prepareStatement(ConstantsSQL.SELECT_IF_VERSION_EXISTS);
+			ptmSelectVersion.setString(1, version);
+			ptmSelectVersion.setInt(2, projectId);
+			rs = ptmSelectVersion.executeQuery();
 			ptmInsertVersion.setString(1, version);
 			ptmInsertVersion.setInt(2, projectId);
 			synchronized (DBProjectImpl.class) {
-				if(whetherTheVersionExists(version, projectId, connection)) {
-					return;
+				if(rs.next()) {
+					throw new ValidationException(Constants.VERSION_EXIST);
 				}
 				ptmInsertVersion.executeUpdate();
 			}
@@ -216,52 +224,10 @@ public class DBProjectImpl implements ProjectDAO {
 			throw new DaoException(e);
 		}finally {
 			if(connectionMng != null) {
-				connectionMng.closeStatements(ptmInsertVersion);
+				connectionMng.closeStatements(ptmInsertVersion, ptmSelectVersion);
+				connectionMng.closeResultSets(rs);
 				connectionMng.closeConnection();
 			}
-		}
-	}
-	
-	private boolean whetherTheProjectExists(Project project, Connection connection) throws DaoException, SQLException {
-		boolean exist = false;
-		PreparedStatement ptmSelectProject = null;
-		ResultSet rs = null;
-		try {
-			ptmSelectProject = 
-					connection.prepareStatement(ConstantsSQL.SELECT_IF_PROJECT_EXISTS);
-			ptmSelectProject.setString(1, project.getName());
-			rs = ptmSelectProject.executeQuery();
-		    if(rs.next()) {
-		    	exist = true;
-		    }
-		    return exist;
-		}catch (SQLException e) {
-			throw new DaoException(e);
-		}finally {
-			rs.close();
-			ptmSelectProject.close();
-		}
-	}
-	
-	private boolean whetherTheVersionExists(String version, int projectId, Connection connection) 
-			throws DaoException, SQLException {
-		boolean exist = false;
-		ResultSet rs = null;
-		PreparedStatement ptmSelectVersion = null;
-		try {
-			ptmSelectVersion = 
-					connection.prepareStatement(ConstantsSQL.SELECT_IF_VERSION_EXISTS);
-			ptmSelectVersion.setString(1, version);
-			rs = ptmSelectVersion.executeQuery();
-		    if(rs.next()) {
-		    	exist = true;
-		    }
-		    return exist;
-		}catch (SQLException e) {
-			throw new DaoException(e);
-		}finally {
-			rs.close();
-			ptmSelectVersion.close();
 		}
 	}
 	
@@ -278,18 +244,12 @@ public class DBProjectImpl implements ProjectDAO {
 			connectionMng = new ConnectionManager();
 			connection = connectionMng.getConnection();
 			ptmUpdateProject = 
-					connection.prepareStatement("UPDATE projects SET name = ?, description = ?, " +
-							"managerId = ?   WHERE id = ?;");
+					connection.prepareStatement(ConstantsSQL.UPDATE_PROJECT);
 			ptmUpdateProject.setString(1, project.getName());
 			ptmUpdateProject.setString(2, project.getDescription());
 			ptmUpdateProject.setInt(3, project.getManager().getId());
 			ptmUpdateProject.setInt(4, project.getId());
-			synchronized (DBProjectImpl.class) {
-				if(whetherTheProjectExists(project, connection)) {
-					return;
-				}
-				ptmUpdateProject.executeUpdate();
-			}
+			ptmUpdateProject.executeUpdate();
 		}catch (SQLException e) {
 			throw new DaoException(e);
 		}finally {

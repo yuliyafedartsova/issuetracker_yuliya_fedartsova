@@ -13,7 +13,11 @@
 				<c:out value="${message}"/>
 				<hr>
 			</c:if>
-			<c:if test="${user.role != 'Guest'}">
+			<c:if test="${not empty errorMessage}">
+				<c:out value="${message}"/>
+				<hr>
+			</c:if>
+		   <c:if test="${user.role != 'Guest'}">
 				<a href='issue-form?action=add'> Submit Issue </a> <br>
 			</c:if>
 	        <c:if test="${user.role eq 'Administrator'}">

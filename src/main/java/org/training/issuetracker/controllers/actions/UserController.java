@@ -37,27 +37,35 @@ public class UserController extends AbstractController {
         String firstName = request.getParameter(Constants.FIRST_NAME).trim();
   	    String lastName = request.getParameter(Constants.LAST_NAME).trim();
   	    String email = request.getParameter(Constants.EMAIL).trim();
-        String roleIdPar = request.getParameter(Constants.ROLE);
-        String password = request.getParameter(Constants.PASSWORD).trim();
-        String password2 = request.getParameter(Constants.PASSWORD_CONFIRMATION).trim();
+        User user = (User)request.getSession().getAttribute(Constants.USER);
         UserValidator validator = new UserValidator();
-        String errorMessage = validator.validatePasswords(password, password2);
+        Role role = null;
         try{
-        	if(!errorMessage.isEmpty()) {
-        		throw new ValidationException(errorMessage);
-        	}
-        	validator.validateIdParameters(roleIdPar);
-        	User user = null;
-        	Role role = rolesDAO.getById(Integer.parseInt(roleIdPar));
-        	switch(action) {
+        if(user.getRole().getName().equals(Constants.ADMINISTRATOR)) {
+        	 String roleIdPar = request.getParameter(Constants.ROLE);
+        	 validator.validateIdParameters(roleIdPar);
+        	 role = rolesDAO.getById(Integer.parseInt(roleIdPar));
+        } else {
+        	role = user.getRole();
+        }
+        switch(action) {
     		case Constants.ADD:
+    			String password = request.getParameter(Constants.PASSWORD).trim();
+    	        String password2 = request.getParameter(Constants.PASSWORD_CONFIRMATION).trim();
+    	        validator = new UserValidator();
+    	        String errorMessage = validator.validatePasswords(password, password2);
+    	        	if(!errorMessage.isEmpty()) {
+    	        		throw new ValidationException(errorMessage);
+    	        	}
     			user = new User(firstName, lastName, email, role, password);
     	     	userDAO.addUser(user);
     	     	request.setAttribute(Constants.MESSAGE, Constants.SUCCESSFULLY_ADD_USER);
     	   	    break;
     		case Constants.UPDATE:
-    			int id = Integer.parseInt(request.getParameter(Constants.ID));
-    			User originalUser = userDAO.getUserById(id); 
+    			String idPar = request.getParameter(Constants.ID);
+    			validator.validateIdParameters(idPar);
+    			int id = Integer.parseInt(idPar);
+    			User originalUser = userDAO.getUserById(user.getId()); 
     			user = new User(id, firstName, lastName, email, role, originalUser.getPassword());
      		    userDAO.updateUserData(user);
     			User currentUser = (User)request.getSession().getAttribute(Constants.USER);
@@ -68,13 +76,15 @@ public class UserController extends AbstractController {
      		   request.setAttribute(Constants.MESSAGE, Constants.SUCCESSFULLY_UPDATE_USER);
     		   break;
         	}
-        	request.getRequestDispatcher("/main").forward(request, response);
+        	jumpPage(Constants.MAIN, request, response);
         
         }catch (DaoException e) {
-  		   
+        	request.setAttribute(Constants.ERROR_MESSAGE, e.getMessage());
+        	jumpPage(Constants.MAIN, request, response);
+        	return;
   	    }catch (ValidationException e) {
   			request.setAttribute(Constants.ERROR_MESSAGE, e.getMessage());
-  			jumpPage("/user-form", request, response);
+  			jumpPage(Constants.USER_FORM_CONTROLLER, request, response);
     	}  
     
     

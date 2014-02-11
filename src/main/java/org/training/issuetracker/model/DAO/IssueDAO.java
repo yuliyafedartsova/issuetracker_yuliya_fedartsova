@@ -8,14 +8,9 @@ import org.training.issuetracker.model.beans.Issue;
 import org.training.issuetracker.model.beans.User;
 
 public interface IssueDAO {
-	List<Issue> getIssues() throws DaoException;
-	Issue getIssueById(int id) throws DaoException; 
-	List<Issue> getNLastAddedIssues(int n, String sortingType) throws DaoException;
-	List<Issue> getNAssignedIssues(int n, User user, String sortingType) throws DaoException;
+	Issue getIssueById(int id) throws DaoException, ValidationException; 
+	List<Issue> getNLastAddedIssues(int n, String sortingType) throws DaoException, ValidationException;
+	List<Issue> getNAssignedIssues(int n, User user, String sortingType) throws DaoException, ValidationException;
     void addIssue(Issue issue) throws DaoException, ValidationException;
     void updateIssue(Issue issue) throws DaoException, ValidationException;
-
-
-
-
 }

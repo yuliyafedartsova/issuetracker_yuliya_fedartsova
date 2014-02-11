@@ -2,12 +2,9 @@ package org.training.issuetracker.controllers.forms;
 
 import java.io.IOException;
 import java.util.List;
-
 import javax.servlet.ServletException;
-import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
-
 import org.training.issuetracker.constants.Constants;
 import org.training.issuetracker.constants.Pages;
 import org.training.issuetracker.controllers.AbstractController;
@@ -33,11 +30,13 @@ public class UserFormController extends AbstractController {
     	try {
     	roles = rolesDAO.getAll();
     	}catch (DaoException e) {
-			jumpPage(Pages.ERROR_PAGE, request, response);
-			return;
+    		request.setAttribute(Constants.ERROR_MESSAGE, e.getMessage());
+        	jumpPage(Constants.MAIN, request, response);
+        	return;
 		}catch (Exception e) {
-			jumpPage(Pages.ERROR_PAGE, request, response);
-			return;
+			request.setAttribute(Constants.ERROR_MESSAGE, e.getMessage());
+        	jumpPage(Constants.MAIN, request, response);
+        	return;
 		}
     	request.setAttribute(Constants.ROLES, roles);
     	if(Constants.ADD.equals(action)) {
@@ -46,6 +45,4 @@ public class UserFormController extends AbstractController {
     		jumpPage(Pages.UPDATE_USER_DATA_PAGE, request, response);
     	}
     }
-	
-
 }

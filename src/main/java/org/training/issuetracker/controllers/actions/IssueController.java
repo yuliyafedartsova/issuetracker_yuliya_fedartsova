@@ -61,7 +61,7 @@ public class IssueController extends AbstractController {
 		String statusIdPar = request.getParameter(Constants.STATUS);
 		validator.validateIdParameters(statusIdPar);
 		Status status = statusDAO.getById(Integer.parseInt(statusIdPar));
-		if(status.getName().equals("Reopened")) {
+		if(status.getName().equals(Constants.REOPENED)) {
 			reopenIssue(issueDao, request, response);
 			return;
 		}
@@ -117,10 +117,11 @@ public class IssueController extends AbstractController {
     	    }
 		request.getRequestDispatcher("/main").forward(request, response);
         } catch (DaoException e) {
-  		  System.out.println("DaoException");
+        	request.setAttribute(Constants.ERROR_MESSAGE, Constants.SOME_PROBLEMS);
+        	jumpPage(Constants.MAIN, request, response);
   		} catch (ValidationException e) {
   			request.setAttribute(Constants.ERROR_MESSAGE, e.getMessage());
-  			jumpPage("/issue-form", request, response);
+  			jumpPage(Constants.ISSUE_FORM_CONTROLLER, request, response);
     	} 
      }
     
@@ -135,13 +136,13 @@ public class IssueController extends AbstractController {
 	    issue.setResolution(null);
 	    issueDAO.updateIssue(issue);
     	}catch (DaoException e) {
-    		  System.out.println("DaoException");
-     		   
-   	    }catch (ValidationException e) {
-  			request.setAttribute(Constants.ERROR_MESSAGE, e.getMessage());
-  			jumpPage("/issue-form", request, response);
+    		request.setAttribute(Constants.ERROR_MESSAGE, Constants.SOME_PROBLEMS);
+        	jumpPage(Constants.MAIN, request, response); 
+     	}catch (ValidationException e) {
+     		request.setAttribute(Constants.ERROR_MESSAGE, e.getMessage());
+  			jumpPage(Constants.ISSUE_FORM_CONTROLLER, request, response);
     	} 
-	    request.setAttribute(Constants.MESSAGE, Constants.REOPEN);
-	    request.getRequestDispatcher("/main").forward(request, response);
+	    request.setAttribute(Constants.MESSAGE, Constants.SUCCESSFULLY_REOPEN_ISSUE);
+	    request.getRequestDispatcher(Constants.MAIN).forward(request, response);
     }
 }

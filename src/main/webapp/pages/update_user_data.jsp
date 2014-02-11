@@ -12,7 +12,7 @@
 		<hr>
 	</c:if>
 	Update your data:<br>
-	<form name='update' method='POST' action='update-user'>
+	<form name='update' method='POST' action='user'>
 	<table>
 	<tr><td>First Name:</td>
 	<td><input type='text' name='firstName' value='${user.firstName}'> </td></tr>
@@ -23,9 +23,14 @@
 	<c:if test="${user.role eq 'Administrator'}">
 		<tr><td>Role:</td>
 		<td><select name='role' size='1'>
+			<option value='${user.role.id}'> ${user.role} </option>
 			<c:forEach var="role" items="${roles}"> 
-	         <option value='${role.id}'> ${role} </option>
-			</c:forEach>
+	         	<c:if test="${user.role.id != role.id}">
+					<c:if test="${role.name != 'Guest'}">
+						<option value='${role.id}'> ${role} </option>
+					</c:if>
+				</c:if>
+	         </c:forEach>
 		</select></td></tr>
 	</c:if>
 	</table>

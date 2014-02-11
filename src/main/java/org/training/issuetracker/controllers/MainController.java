@@ -9,6 +9,7 @@ import javax.servlet.http.HttpServletResponse;
 import org.training.issuetracker.constants.Constants;
 import org.training.issuetracker.constants.Pages;
 import org.training.issuetracker.exceptions.DaoException;
+import org.training.issuetracker.exceptions.ValidationException;
 import org.training.issuetracker.model.beans.Issue;
 import org.training.issuetracker.model.beans.User;
 import org.training.issuetracker.model.beans.properties.Role;
@@ -30,7 +31,6 @@ public class MainController extends AbstractController {
     protected void performTask(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
     	//init params!!!!
     	//
-    	
     	IssueDAO issuesDao = IssueFactory.getClassFromFactory();
     	List<Issue> issues = null;
     	User user = (User)request.getSession().getAttribute(Constants.USER);
@@ -49,26 +49,16 @@ public class MainController extends AbstractController {
     		}
     	}
     	}catch (DaoException e) {
-    		System.out.println("Dao exception");
     		jumpPage(Pages.ERROR_PAGE, request, response);
 			return;
-		}catch (Exception e) {
-			e.printStackTrace();
-			System.out.println("exception");
+		}catch (ValidationException e) {
 			jumpPage(Pages.ERROR_PAGE, request, response);
 			return;
 	    }
-    	
     	if(issues.size() != Constants.NULL) {
     		request.setAttribute(Constants.ISSUES, issues);
-    	} else {
-    		String message = (user == null) ? Constants.EMPTY_MESSAGE_FOR_GUEST : 
-    			Constants.EMPTY_MESSAGE_FOR_USER;
-    		jumpError(Pages.MAIN_PAGE, message, request, response);
-    		return;
     	}
     	jumpPage(Pages.MAIN_PAGE, request, response);
-    
     }
     
  }
