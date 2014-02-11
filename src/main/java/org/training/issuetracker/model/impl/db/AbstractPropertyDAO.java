@@ -59,7 +59,7 @@ public abstract class AbstractPropertyDAO {
 			manager = new ConnectionManager();
 			connection = manager.getConnection();
 			ptmSelectParameter = connection.prepareStatement(SELECT_PARAMETER);
-			ptmSelectParameter.setInt(1, id);
+			ptmSelectParameter.setInt(Constants.INDEX_1, id);
 			rs = ptmSelectParameter.executeQuery();
 			if(!rs.next()) {
 				throw new ValidationException(Constants.SOME_PROBLEMS);
@@ -68,7 +68,7 @@ public abstract class AbstractPropertyDAO {
 			return name;
 		}catch (SQLException e) {
 			e.printStackTrace();
-			throw new DaoException(e);
+			throw new DaoException(Constants.DB_PROBLEM);
 		}finally {
 			if(manager != null) {
 				manager.closeStatements(ptmSelectParameter);
@@ -98,8 +98,8 @@ public abstract class AbstractPropertyDAO {
 					connection.prepareStatement(INSERT_PARAMETER);
 			ptmSelectParameter = 
 					connection.prepareStatement(SELECT_PARAMETER);
-			ptmInsertParameter.setString(1, parameter.getName());
-			ptmSelectParameter.setString(1, parameter.getName());
+			ptmInsertParameter.setString(Constants.INDEX_1, parameter.getName());
+			ptmSelectParameter.setString(Constants.INDEX_1, parameter.getName());
 			rs = ptmSelectParameter.executeQuery();
 		    synchronized (AbstractPropertyDAO.class) {
 				 if(rs.next()) {
@@ -138,9 +138,9 @@ public abstract class AbstractPropertyDAO {
 					connection.prepareStatement(UPDATE_PARAMETER);
 			ptmSelectParameter = 
 					connection.prepareStatement(SELECT_PARAMETER);
-			ptmUpdateParameter.setString(1, name);
-			ptmUpdateParameter.setInt(2, id);
-			ptmSelectParameter.setString(1, name);
+			ptmUpdateParameter.setString(Constants.INDEX_1, name);
+			ptmUpdateParameter.setInt(Constants.INDEX_2, id);
+			ptmSelectParameter.setString(Constants.INDEX_1, name);
 			rs = ptmSelectParameter.executeQuery();
 			synchronized (AbstractPropertyDAO.class) {
 				if(rs.next()) {

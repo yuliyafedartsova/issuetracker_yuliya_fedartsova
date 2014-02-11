@@ -56,27 +56,28 @@ public class DBIssueImpl implements IssueDAO {
 			ptmSelectUsers = connection.prepareStatement(ConstantsSQL.SELECT_USER_BY_ID);
 			ptmSelectProject = connection.prepareStatement(ConstantsSQL.SELECT_PROJECT_BY_ID);
 			ptmSelectVersions = connection.prepareStatement(ConstantsSQL.SELECT_VERSIONS_OF_PROJECT);
-			ptmSelectIssue.setInt(1, id);
+			ptmSelectIssue.setInt(Constants.INDEX_1, id);
 			rs = ptmSelectIssue.executeQuery();
 			if(!rs.next()) {
 				throw new ValidationException(Constants.SOME_PROBLEMS);
 			}
-			Priority priority = new Priority(rs.getInt(1), rs.getString(2));
-			User assignee = (rs.getInt(3) != Constants.NULL) ? getUserById(rs.getInt(3), connection, 
-					ptmSelectUsers, resultSet) : null;
-			Type type = new Type(rs.getInt(4), rs.getString(5));    
-			String summary = rs.getString(6);
-			String description = rs.getString(7);
-			Status status = new Status(rs.getInt(8), rs.getString(9));   
-			Project project = getProjectById(rs.getInt(10), connection, ptmSelectProject, 
+			Priority priority = new Priority(rs.getInt(Constants.INDEX_1), rs.getString(Constants.INDEX_2));
+			User assignee = (rs.getInt(Constants.INDEX_3) != Constants.NULL) ? 
+					getUserById(rs.getInt(Constants.INDEX_3), connection, ptmSelectUsers, 
+							resultSet) : null;
+			Type type = new Type(rs.getInt(Constants.INDEX_4), rs.getString(Constants.INDEX_5));    
+			String summary = rs.getString(Constants.INDEX_6);
+			String description = rs.getString(Constants.INDEX_7);
+			Status status = new Status(rs.getInt(Constants.INDEX_8), rs.getString(Constants.INDEX_9));   
+			Project project = getProjectById(rs.getInt(Constants.INDEX_10), connection, ptmSelectProject, 
 					ptmSelectVersions, resultSet);
-			Resolution resolution = (rs.getInt(11) != Constants.NULL) ? 
-					new Resolution(rs.getInt(11), rs.getString(12)) : null;
-			Version version = new Version(rs.getInt(13), rs.getString(14));
-			Date createDate = rs.getDate(15);
-			User author = getUserById(rs.getInt(16), connection, ptmSelectUsers, resultSet);
-			Date modifyDate = rs.getDate(17);
-			User modifier = (rs.getInt(18) != Constants.NULL) ? getUserById(rs.getInt(18), connection, 
+			Resolution resolution = (rs.getInt(Constants.INDEX_11) != Constants.NULL) ? 
+					new Resolution(rs.getInt(Constants.INDEX_11), rs.getString(Constants.INDEX_12)) : null;
+			Version version = new Version(rs.getInt(Constants.INDEX_13), rs.getString(Constants.INDEX_14));
+			Date createDate = rs.getDate(Constants.INDEX_15);
+			User author = getUserById(rs.getInt(Constants.INDEX_16), connection, ptmSelectUsers, resultSet);
+			Date modifyDate = rs.getDate(Constants.INDEX_17);
+			User modifier = (rs.getInt(Constants.INDEX_18) != Constants.NULL) ? getUserById(rs.getInt(Constants.INDEX_18), connection, 
 					ptmSelectUsers, resultSet) : null;
 			issue = new Issue(id, priority, assignee,  type, summary, description, status,
 					project, resolution, version, createDate, modifyDate, author, modifier);
@@ -111,26 +112,26 @@ public class DBIssueImpl implements IssueDAO {
 			ptmSelectUsers = connection.prepareStatement(ConstantsSQL.SELECT_USER_BY_ID);
 			ptmSelectProject = connection.prepareStatement(ConstantsSQL.SELECT_PROJECT_BY_ID);
 			ptmSelectVersions = connection.prepareStatement(ConstantsSQL.SELECT_VERSIONS_OF_PROJECT);
-			ptmSelectIssues.setInt(1, n);
+			ptmSelectIssues.setInt(Constants.INDEX_1, n);
 			rs = ptmSelectIssues.executeQuery();
 			while (rs.next()){
-				int id = rs.getInt(1);
-				Priority priority = new Priority(rs.getInt(2), rs.getString(3));
-				User assignee = (rs.getInt(4) != Constants.NULL) ? getUserById(rs.getInt(4), connection, 
+				int id = rs.getInt(Constants.INDEX_1);
+				Priority priority = new Priority(rs.getInt(Constants.INDEX_2), rs.getString(Constants.INDEX_3));
+				User assignee = (rs.getInt(Constants.INDEX_4) != Constants.NULL) ? getUserById(rs.getInt(Constants.INDEX_4), connection, 
 						ptmSelectUsers, resultSet) : null;
-				Type type = new Type(rs.getInt(5), rs.getString(6));
-				String summary = rs.getString(7);
-				String description = rs.getString(8);
-				Status status = new Status(rs.getInt(9), rs.getString(10));
-				Project project = getProjectById(rs.getInt(11), connection, ptmSelectProject, 
+				Type type = new Type(rs.getInt(Constants.INDEX_5), rs.getString(Constants.INDEX_6));
+				String summary = rs.getString(Constants.INDEX_7);
+				String description = rs.getString(Constants.INDEX_8);
+				Status status = new Status(rs.getInt(Constants.INDEX_9), rs.getString(Constants.INDEX_10));
+				Project project = getProjectById(rs.getInt(Constants.INDEX_11), connection, ptmSelectProject, 
 						ptmSelectVersions, resultSet);
-				Resolution resolution = (rs.getInt(12) != Constants.NULL) ? 
-						new Resolution(rs.getInt(12), rs.getString(13)) : null;
-				Version version = new Version(rs.getInt(14), rs.getString(15));
-				Date createDate = rs.getDate(16);
-				User author = getUserById(rs.getInt(17), connection, ptmSelectUsers, resultSet);
-				Date modifyDate = rs.getDate(18);
-				User modifier = (rs.getInt(19) != Constants.NULL) ? getUserById(rs.getInt(19), connection, 
+				Resolution resolution = (rs.getInt(Constants.INDEX_12) != Constants.NULL) ? 
+						new Resolution(rs.getInt(Constants.INDEX_12), rs.getString(Constants.INDEX_13)) : null;
+				Version version = new Version(rs.getInt(Constants.INDEX_14), rs.getString(Constants.INDEX_15));
+				Date createDate = rs.getDate(Constants.INDEX_16);
+				User author = getUserById(rs.getInt(Constants.INDEX_17), connection, ptmSelectUsers, resultSet);
+				Date modifyDate = rs.getDate(Constants.INDEX_18);
+				User modifier = (rs.getInt(Constants.INDEX_19) != Constants.NULL) ? getUserById(rs.getInt(Constants.INDEX_19), connection, 
 						ptmSelectUsers, resultSet) : null;
 				Issue issue = new Issue(id, priority, assignee,  type, summary, description, status,
 						project, resolution, version, createDate, modifyDate, author, modifier);
@@ -153,14 +154,15 @@ public class DBIssueImpl implements IssueDAO {
 			ResultSet userRs) throws DaoException, ValidationException {
 		User user = null;
 		try{
-	    ptmSelectUsers.setInt(1, id);
+	    ptmSelectUsers.setInt(Constants.INDEX_1, id);
 		userRs = ptmSelectUsers.executeQuery();
     	if(!userRs.next()) {
     		throw new ValidationException(Constants.SOME_PROBLEMS);
     	}
-    	user = new User(id, userRs.getString(1), 
-    		userRs.getString(2), userRs.getString(3), new Role(userRs.getInt(4), userRs.getString(5)),
-    			userRs.getString(6));
+    	user = new User(id, userRs.getString(Constants.INDEX_1), 
+    		userRs.getString(Constants.INDEX_2), userRs.getString(Constants.INDEX_3), 
+    			new Role(userRs.getInt(Constants.INDEX_4), userRs.getString(Constants.INDEX_5)),
+    				userRs.getString(Constants.INDEX_6));
     	
 		}catch (SQLException e) {
 			e.printStackTrace();
@@ -174,21 +176,22 @@ public class DBIssueImpl implements IssueDAO {
 		Project project = null;
 		List<Version> versions = new ArrayList<Version>();
 		try {
-			ptmSelectVersions.setInt(1, id);
+			ptmSelectVersions.setInt(Constants.INDEX_1, id);
 			projectRs = ptmSelectVersions.executeQuery();
 			while(projectRs.next()) {
-				versions.add(new Version(projectRs.getInt(1), projectRs.getString(2)));
+				versions.add(new Version(projectRs.getInt(Constants.INDEX_1), projectRs.getString(2)));
 			}
-			ptmSelectProject.setInt(1, id);
+			ptmSelectProject.setInt(Constants.INDEX_1, id);
 			projectRs = ptmSelectProject.executeQuery();
 			if(!projectRs.next()) {
 	    		throw new ValidationException(Constants.SOME_PROBLEMS);
 	    	}
-			String name = projectRs.getString(1);
-			String description = projectRs.getString(2);
-			User manager = new User(projectRs.getInt(3), projectRs.getString(4), 
-				projectRs.getString(5), projectRs.getString(6), new Role(projectRs.getInt(7), 
-					projectRs.getString(8)), projectRs.getString(9));
+			String name = projectRs.getString(Constants.INDEX_1);
+			String description = projectRs.getString(Constants.INDEX_2);
+			User manager = new User(projectRs.getInt(Constants.INDEX_3), projectRs.getString(Constants.INDEX_4), 
+				projectRs.getString(Constants.INDEX_5), projectRs.getString(Constants.INDEX_6), 
+					new Role(projectRs.getInt(Constants.INDEX_7), projectRs.getString(Constants.INDEX_8)), 
+						projectRs.getString(Constants.INDEX_9));
 			project = new Project(id, name, manager, versions, description);
 			
 		}catch (SQLException e) {
@@ -217,26 +220,31 @@ public class DBIssueImpl implements IssueDAO {
 			ptmSelectUsers = connection.prepareStatement(ConstantsSQL.SELECT_USER_BY_ID);
 			ptmSelectProject = connection.prepareStatement(ConstantsSQL.SELECT_PROJECT_BY_ID);
 			ptmSelectVersions = connection.prepareStatement(ConstantsSQL.SELECT_VERSIONS_OF_PROJECT);
-			ptmSelectIssues.setInt(1, n);
-			ptmSelectIssues.setInt(2, user.getId());
+			ptmSelectIssues.setInt(Constants.INDEX_1, n);
+			ptmSelectIssues.setInt(Constants.INDEX_2, user.getId());
 			rs = ptmSelectIssues.executeQuery();
 			while (rs.next()) {
-				int id = rs.getInt(1);
-				Priority priority = new Priority(rs.getInt(2), rs.getString(3));
-				Type type = new Type(rs.getInt(4), rs.getString(5));
-				String summary = rs.getString(6);
-				String description = rs.getString(7);
-				Status status = new Status(rs.getInt(8), rs.getString(9));
-				Project project = getProjectById(rs.getInt(10), connection, ptmSelectProject, 
+				int id = rs.getInt(Constants.INDEX_1);
+				Priority priority = new Priority(rs.getInt(Constants.INDEX_2), 
+						rs.getString(Constants.INDEX_3));
+				Type type = new Type(rs.getInt(Constants.INDEX_4), rs.getString(Constants.INDEX_5));
+				String summary = rs.getString(Constants.INDEX_6);
+				String description = rs.getString(Constants.INDEX_7);
+				Status status = new Status(rs.getInt(Constants.INDEX_8), 
+						rs.getString(Constants.INDEX_9));
+				Project project = getProjectById(rs.getInt(Constants.INDEX_10), connection, ptmSelectProject, 
 						ptmSelectVersions, resultSet);
-				Resolution resolution = (rs.getInt(11) != Constants.NULL) ? 
-						new Resolution(rs.getInt(11), rs.getString(12)) : null;
-				Version version = new Version(rs.getInt(13), rs.getString(14));
-				Date createDate = rs.getDate(15);
-				User author = getUserById(rs.getInt(16), connection, ptmSelectUsers, resultSet);
-				Date modifyDate = rs.getDate(17);
-				User modifier = (rs.getInt(18) != Constants.NULL) ? getUserById(rs.getInt(18), connection, 
-						ptmSelectUsers, resultSet) : null;
+				Resolution resolution = (rs.getInt(Constants.INDEX_11) != Constants.NULL) ? 
+						new Resolution(rs.getInt(Constants.INDEX_11), rs.getString(Constants.INDEX_12)) 
+							: null;
+				Version version = new Version(rs.getInt(Constants.INDEX_13), 
+						rs.getString(Constants.INDEX_14));
+				Date createDate = rs.getDate(Constants.INDEX_15);
+				User author = getUserById(rs.getInt(Constants.INDEX_16), connection, ptmSelectUsers, resultSet);
+				Date modifyDate = rs.getDate(Constants.INDEX_17);
+				User modifier = (rs.getInt(Constants.INDEX_18) != Constants.NULL) ? 
+						getUserById(rs.getInt(Constants.INDEX_18), connection, 
+								ptmSelectUsers, resultSet) : null;
 				Issue issue = new Issue(id, priority, user,  type, summary, description, status,
 						project, resolution, version, createDate, modifyDate, author, modifier);
 				issues.add(issue);
@@ -268,31 +276,31 @@ public class DBIssueImpl implements IssueDAO {
 			connection = connectionMng.getConnection();
 			ptmInsertIssue = 
 				connection.prepareStatement(ConstantsSQL.ADD_ISSUE);
-			ptmInsertIssue.setInt(1, issue.getPriority().getId());	
+			ptmInsertIssue.setInt(Constants.INDEX_1, issue.getPriority().getId());	
 			if(issue.getAssignee() != null) {
-				ptmInsertIssue.setInt(2, issue.getAssignee().getId());
+				ptmInsertIssue.setInt(Constants.INDEX_2, issue.getAssignee().getId());
 			} else {
-				ptmInsertIssue.setInt(2, Constants.NULL);
+				ptmInsertIssue.setInt(Constants.INDEX_2, Constants.NULL);
 			}
-			ptmInsertIssue.setInt(3, issue.getType().getId());	
-			ptmInsertIssue.setString(4, issue.getSummary());
-			ptmInsertIssue.setString(5, issue.getDescription());
-			ptmInsertIssue.setInt(6, issue.getStatus().getId());
-			ptmInsertIssue.setInt(7, issue.getProject().getId());
+			ptmInsertIssue.setInt(Constants.INDEX_3, issue.getType().getId());	
+			ptmInsertIssue.setString(Constants.INDEX_4, issue.getSummary());
+			ptmInsertIssue.setString(Constants.INDEX_5, issue.getDescription());
+			ptmInsertIssue.setInt(Constants.INDEX_6, issue.getStatus().getId());
+			ptmInsertIssue.setInt(Constants.INDEX_7, issue.getProject().getId());
 			if(issue.getResolution() != null) {
-				ptmInsertIssue.setInt(8, issue.getResolution().getId());
+				ptmInsertIssue.setInt(Constants.INDEX_8, issue.getResolution().getId());
 			} else {
-				ptmInsertIssue.setInt(8, Constants.NULL);
+				ptmInsertIssue.setInt(Constants.INDEX_8, Constants.NULL);
 			}
-			ptmInsertIssue.setInt(9, issue.getBuildFound().getId());
-			ptmInsertIssue.setDate(10, issue.getCreateDate());
-			ptmInsertIssue.setInt(11, issue.getAuthor().getId());
+			ptmInsertIssue.setInt(Constants.INDEX_9, issue.getBuildFound().getId());
+			ptmInsertIssue.setDate(Constants.INDEX_10, issue.getCreateDate());
+			ptmInsertIssue.setInt(Constants.INDEX_11, issue.getAuthor().getId());
 			if(issue.getModifyDate() != null) {
-				ptmInsertIssue.setDate(12, issue.getModifyDate());
-				ptmInsertIssue.setInt(13, issue.getModifier().getId());
+				ptmInsertIssue.setDate(Constants.INDEX_12, issue.getModifyDate());
+				ptmInsertIssue.setInt(Constants.INDEX_13, issue.getModifier().getId());
 			} else {
-				ptmInsertIssue.setDate(12, null);
-				ptmInsertIssue.setInt(13, Constants.NULL);
+				ptmInsertIssue.setDate(Constants.INDEX_12, null);
+				ptmInsertIssue.setInt(Constants.INDEX_13, Constants.NULL);
 			}
 			ptmInsertIssue.executeUpdate();
 		}catch (SQLException e) {
@@ -319,28 +327,28 @@ public class DBIssueImpl implements IssueDAO {
 			connection = connectionMng.getConnection();
 		    ptmUpdateIssue = 
 					connection.prepareStatement(ConstantsSQL.UPDATE_ISSUE);
-			ptmUpdateIssue.setInt(1, issue.getPriority().getId());
+			ptmUpdateIssue.setInt(Constants.INDEX_1, issue.getPriority().getId());
 			if(issue.getAssignee() != null) {
-				ptmUpdateIssue.setInt(2, issue.getAssignee().getId());
+				ptmUpdateIssue.setInt(Constants.INDEX_2, issue.getAssignee().getId());
 			} else {
-				ptmUpdateIssue.setInt(2, Constants.NULL);
+				ptmUpdateIssue.setInt(Constants.INDEX_2, Constants.NULL);
 			}
-			ptmUpdateIssue.setInt(3, issue.getType().getId());
-			ptmUpdateIssue.setString(4, issue.getSummary());
-			ptmUpdateIssue.setString(5, issue.getDescription());
-			ptmUpdateIssue.setInt(6, issue.getStatus().getId());
-			ptmUpdateIssue.setInt(7, issue.getProject().getId());
+			ptmUpdateIssue.setInt(Constants.INDEX_3, issue.getType().getId());
+			ptmUpdateIssue.setString(Constants.INDEX_4, issue.getSummary());
+			ptmUpdateIssue.setString(Constants.INDEX_5, issue.getDescription());
+			ptmUpdateIssue.setInt(Constants.INDEX_6, issue.getStatus().getId());
+			ptmUpdateIssue.setInt(Constants.INDEX_7, issue.getProject().getId());
 			if(issue.getResolution() != null) {
-				ptmUpdateIssue.setInt(8, issue.getResolution().getId());
+				ptmUpdateIssue.setInt(Constants.INDEX_8, issue.getResolution().getId());
 			} else {
-				ptmUpdateIssue.setInt(8, Constants.NULL);
+				ptmUpdateIssue.setInt(Constants.INDEX_8, Constants.NULL);
 			}
-			ptmUpdateIssue.setInt(9, issue.getBuildFound().getId());
-			ptmUpdateIssue.setDate(10, issue.getCreateDate());
-			ptmUpdateIssue.setInt(11, issue.getAuthor().getId());
-			ptmUpdateIssue.setDate(12, issue.getModifyDate());
-			ptmUpdateIssue.setInt(13, issue.getModifier().getId());
-			ptmUpdateIssue.setInt(14, issue.getId());
+			ptmUpdateIssue.setInt(Constants.INDEX_9, issue.getBuildFound().getId());
+			ptmUpdateIssue.setDate(Constants.INDEX_10, issue.getCreateDate());
+			ptmUpdateIssue.setInt(Constants.INDEX_11, issue.getAuthor().getId());
+			ptmUpdateIssue.setDate(Constants.INDEX_12, issue.getModifyDate());
+			ptmUpdateIssue.setInt(Constants.INDEX_13, issue.getModifier().getId());
+			ptmUpdateIssue.setInt(Constants.INDEX_14, issue.getId());
 		    ptmUpdateIssue.executeUpdate();
 		}catch (SQLException e) {
 			e.printStackTrace();

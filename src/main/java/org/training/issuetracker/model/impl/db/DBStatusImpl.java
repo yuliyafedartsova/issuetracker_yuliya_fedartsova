@@ -45,7 +45,7 @@ public class DBStatusImpl extends AbstractPropertyDAO implements StatusesDAO {
 			manager = new ConnectionManager();
 			connection = manager.getConnection();
 			ptmSelectParameter = connection.prepareStatement(SELECT_PARAMETER);
-			ptmSelectParameter.setString(1, name);
+			ptmSelectParameter.setString(Constants.INDEX_1, name);
 			rs = ptmSelectParameter.executeQuery();
 			rs.next();
 			int id = rs.getInt(ConstantsSQL.ID_COLUMN);

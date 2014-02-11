@@ -34,16 +34,19 @@ public class DBProjectImpl implements ProjectDAO {
 			ptmSelectVersions = connection.prepareStatement(ConstantsSQL.SELECT_VERSIONS_OF_PROJECT);
 			rs = ptmSelectProjects.executeQuery();	
 			while (rs.next()){
-				int id = rs.getInt(1);
-			    String name = rs.getString(2);
-			    String description  = rs.getString(3);
-			    User manager = new User(rs.getInt(4), rs.getString(5), rs.getString(6), 
-			    		rs.getString(7), new Role(rs.getInt(8), rs.getString(9)), rs.getString(10));
-			    ptmSelectVersions.setInt(1, id);
+				int id = rs.getInt(Constants.INDEX_1);
+			    String name = rs.getString(Constants.INDEX_2);
+			    String description  = rs.getString(Constants.INDEX_3);
+			    User manager = new User(rs.getInt(Constants.INDEX_4), rs.getString(Constants.INDEX_5),
+			    	rs.getString(Constants.INDEX_6), rs.getString(Constants.INDEX_7), 
+			    		new Role(rs.getInt(Constants.INDEX_8), rs.getString(Constants.INDEX_9)), 
+			    			rs.getString(Constants.INDEX_10));
+			    ptmSelectVersions.setInt(Constants.INDEX_1, id);
 			    resultSet = ptmSelectVersions.executeQuery();
 			    List<Version> versions = new ArrayList<Version>();
 			    while(resultSet.next()) {
-					versions.add(new Version(resultSet.getInt(1), resultSet.getString(2)));
+					versions.add(new Version(resultSet.getInt(Constants.INDEX_1), 
+							resultSet.getString(Constants.INDEX_2)));
 				}
 			    projects.add(new Project(id, name, manager, versions, description));
 			}
@@ -73,20 +76,23 @@ public class DBProjectImpl implements ProjectDAO {
 			ptmSelectProject = 
 				connection.prepareStatement(ConstantsSQL.SELECT_PROJECT_BY_ID);
 			ptmSelectVersions = connection.prepareStatement(ConstantsSQL.SELECT_VERSIONS_OF_PROJECT);
-			ptmSelectProject.setInt(1, id);
+			ptmSelectProject.setInt(Constants.INDEX_1, id);
 			rs = ptmSelectProject.executeQuery();
 			if(!rs.next()){
 				throw new ValidationException(Constants.SOME_PROBLEMS);
 			}
-			String name = rs.getString(1);
-			String description  = rs.getString(2);
-			User manager = new User(rs.getInt(3), rs.getString(4), rs.getString(5), rs.getString(6),
-					new Role(rs.getInt(7), rs.getString(8)), rs.getString(9));
-			ptmSelectVersions.setInt(1, id);
+			String name = rs.getString(Constants.INDEX_1);
+			String description  = rs.getString(Constants.INDEX_2);
+			User manager = new User(rs.getInt(Constants.INDEX_3), rs.getString(Constants.INDEX_4), 
+					rs.getString(Constants.INDEX_5), rs.getString(Constants.INDEX_6),
+						new Role(rs.getInt(Constants.INDEX_7), rs.getString(Constants.INDEX_8)), 
+							rs.getString(Constants.INDEX_9));
+			ptmSelectVersions.setInt(Constants.INDEX_1, id);
 		    resultSet = ptmSelectVersions.executeQuery();
 		    List<Version> versions = new ArrayList<Version>();
 		    while(resultSet.next()) {
-				versions.add(new Version(resultSet.getInt(1), resultSet.getString(2)));
+				versions.add(new Version(resultSet.getInt(Constants.INDEX_1), 
+						resultSet.getString(Constants.INDEX_2)));
 			}
 			project = new Project(id, name, manager, versions, description);
 			return project;
@@ -112,7 +118,7 @@ public class DBProjectImpl implements ProjectDAO {
 			 connection = connectionMng.getConnection();
 			 ptmSelectVersion = 
 				 connection.prepareStatement(ConstantsSQL.SELECT_VERSION_BY_ID);
-			 ptmSelectVersion.setInt(1, id);
+			 ptmSelectVersion.setInt(Constants.INDEX_1, id);
 			 rs = ptmSelectVersion.executeQuery();
 			 if(!rs.next()){
 					throw new ValidationException(Constants.SOME_PROBLEMS);
@@ -142,10 +148,10 @@ public class DBProjectImpl implements ProjectDAO {
 			 connection = connectionMng.getConnection();
 			 ptmSelectVersions = 
 					 connection.prepareStatement(ConstantsSQL.SELECT_VERSIONS_OF_PROJECT);
-			 ptmSelectVersions.setInt(1, projectId);
+			 ptmSelectVersions.setInt(Constants.INDEX_1, projectId);
 			 rs = ptmSelectVersions.executeQuery();
 			 while (rs.next()){
-					int id = rs.getInt(1);
+					int id = rs.getInt(Constants.INDEX_1);
 				    String name = rs.getString(ConstantsSQL.NAME_COLUMN);
 				    versions.add(new Version(id, name));
 			 }
@@ -177,15 +183,15 @@ public class DBProjectImpl implements ProjectDAO {
 			connection = connectionMng.getConnection();
 			ptmInsertProject = 
 				connection.prepareStatement(ConstantsSQL.ADD_PROJECT, PreparedStatement.RETURN_GENERATED_KEYS);
-			ptmInsertProject.setString(1, project.getName());	
-			ptmInsertProject.setString(2, project.getDescription());	
-			ptmInsertProject.setInt(3, project.getManager().getId());
+			ptmInsertProject.setString(Constants.INDEX_1, project.getName());	
+			ptmInsertProject.setString(Constants.INDEX_2, project.getDescription());	
+			ptmInsertProject.setInt(Constants.INDEX_3, project.getManager().getId());
 			ptmInsertProject.executeUpdate();
 			rs = ptmInsertProject.getGeneratedKeys();
 			if(!rs.next()){
 				throw new ValidationException(Constants.SOME_PROBLEMS);
 		    }
-			int projectId = rs.getInt(1);
+			int projectId = rs.getInt(Constants.INDEX_1);
 			for(Version version : project.getBuildVersions()) {
 		    	addVersion(version.getName(), projectId);
 		    }
@@ -218,11 +224,11 @@ public class DBProjectImpl implements ProjectDAO {
 			ptmInsertVersion = 
 				connection.prepareStatement(ConstantsSQL.ADD_VERSION);
 			ptmSelectVersion = connection.prepareStatement(ConstantsSQL.SELECT_IF_VERSION_EXISTS);
-			ptmSelectVersion.setString(1, version);
-			ptmSelectVersion.setInt(2, projectId);
+			ptmSelectVersion.setString(Constants.INDEX_1, version);
+			ptmSelectVersion.setInt(Constants.INDEX_2, projectId);
 			rs = ptmSelectVersion.executeQuery();
-			ptmInsertVersion.setString(1, version);
-			ptmInsertVersion.setInt(2, projectId);
+			ptmInsertVersion.setString(Constants.INDEX_1, version);
+			ptmInsertVersion.setInt(Constants.INDEX_2, projectId);
 			synchronized (DBProjectImpl.class) {
 				if(rs.next()) {
 					throw new ValidationException(Constants.VERSION_EXIST);
@@ -254,10 +260,10 @@ public class DBProjectImpl implements ProjectDAO {
 			connection = connectionMng.getConnection();
 			ptmUpdateProject = 
 					connection.prepareStatement(ConstantsSQL.UPDATE_PROJECT);
-			ptmUpdateProject.setString(1, project.getName());
-			ptmUpdateProject.setString(2, project.getDescription());
-			ptmUpdateProject.setInt(3, project.getManager().getId());
-			ptmUpdateProject.setInt(4, project.getId());
+			ptmUpdateProject.setString(Constants.INDEX_1, project.getName());
+			ptmUpdateProject.setString(Constants.INDEX_2, project.getDescription());
+			ptmUpdateProject.setInt(Constants.INDEX_3, project.getManager().getId());
+			ptmUpdateProject.setInt(Constants.INDEX_4, project.getId());
 			ptmUpdateProject.executeUpdate();
 		}catch (SQLException e) {
 			throw new DaoException(Constants.DB_PROBLEM);

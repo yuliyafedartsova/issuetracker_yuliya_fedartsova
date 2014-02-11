@@ -31,16 +31,16 @@ public class DBUserImpl implements UserDAO {
 			connection = manager.getConnection();
 			ptmSelectUser = 
 				connection.prepareStatement(ConstantsSQL.SELECT_USER_BY_ID);
-			ptmSelectUser.setInt(1, id);
+			ptmSelectUser.setInt(Constants.INDEX_1, id);
 			rs = ptmSelectUser.executeQuery();
 			if(!rs.next()){
 				throw new ValidationException(Constants.SOME_PROBLEMS);
 			}
-			String firstName = rs.getString(1);
-			String lastName = rs.getString(2);
-			String email = rs.getString(3);
-			Role role = new Role(rs.getInt(4), rs.getString(5));
-			String password = rs.getString(6);
+			String firstName = rs.getString(Constants.INDEX_1);
+			String lastName = rs.getString(Constants.INDEX_2);
+			String email = rs.getString(Constants.INDEX_3);
+			Role role = new Role(rs.getInt(Constants.INDEX_4), rs.getString(Constants.INDEX_5));
+			String password = rs.getString(Constants.INDEX_6);
 			user = new User(id, firstName, lastName, email, role, password);
 			return user;
 		}catch (SQLException e) {
@@ -66,16 +66,16 @@ public class DBUserImpl implements UserDAO {
 			connection = manager.getConnection();
 			ptmSelectUser = 
 				connection.prepareStatement(ConstantsSQL.SELECT_USER_BY_EMAIL_AND_PASSWORD);	
-			ptmSelectUser.setString(1, email);
-			ptmSelectUser.setString(2, password);
+			ptmSelectUser.setString(Constants.INDEX_1, email);
+			ptmSelectUser.setString(Constants.INDEX_2, password);
 			rs = ptmSelectUser.executeQuery();
 			if (!rs.next()) {
 				throw new ValidationException(ERROR_MESSAGE);
 			}
-			int id = rs.getInt(1);
-			String firstName = rs.getString(2);
-			String lastName = rs.getString(3);
-			Role role = new Role(rs.getInt(4), rs.getString(5));
+			int id = rs.getInt(Constants.INDEX_1);
+			String firstName = rs.getString(Constants.INDEX_2);
+			String lastName = rs.getString(Constants.INDEX_3);
+			Role role = new Role(rs.getInt(Constants.INDEX_4), rs.getString(Constants.INDEX_5));
 			user = new User(id, firstName, lastName, email, role, password);
 			return user;
 		}catch (SQLException e) {
@@ -101,11 +101,11 @@ public class DBUserImpl implements UserDAO {
 			ptmSelectUsers = connection.createStatement();
 			rs = ptmSelectUsers.executeQuery(ConstantsSQL.SELECT_USERS);		
 			while (rs.next()){
-				int id = rs.getInt(1);
-			    String firstName = rs.getString(2);
-			    String lastName = rs.getString(3);
-			    String email = rs.getString(4);
-			    Role role = new Role(rs.getInt(5), rs.getString(6));
+				int id = rs.getInt(Constants.INDEX_1);
+			    String firstName = rs.getString(Constants.INDEX_2);
+			    String lastName = rs.getString(Constants.INDEX_3);
+			    String email = rs.getString(Constants.INDEX_4);
+			    Role role = new Role(rs.getInt(Constants.INDEX_5), rs.getString(Constants.INDEX_6));
 			    String password = rs.getString(ConstantsSQL.PASSWORD);
 			    users.add(new User(id, firstName, lastName, email, role, password));
 			}
@@ -144,13 +144,13 @@ public class DBUserImpl implements UserDAO {
 				connection.prepareStatement(ConstantsSQL.ADD_USER);
 			ptmSelectUser = 
 					connection.prepareStatement(ConstantsSQL.SELECT_IF_USER_EXISTS);
-			ptmInsertUser.setString(1, user.getFirstName());	
-			ptmInsertUser.setString(2, user.getLastName());
-			ptmInsertUser.setString(3, user.getEmail());
-			ptmInsertUser.setInt(4, user.getRole().getId());
-			ptmInsertUser.setString(5, user.getPassword());
-			ptmSelectUser.setString(1, user.getEmail());
-			ptmSelectUser.setString(2, user.getPassword());
+			ptmInsertUser.setString(Constants.INDEX_1, user.getFirstName());	
+			ptmInsertUser.setString(Constants.INDEX_2, user.getLastName());
+			ptmInsertUser.setString(Constants.INDEX_3, user.getEmail());
+			ptmInsertUser.setInt(Constants.INDEX_4, user.getRole().getId());
+			ptmInsertUser.setString(Constants.INDEX_5, user.getPassword());
+			ptmSelectUser.setString(Constants.INDEX_1, user.getEmail());
+			ptmSelectUser.setString(Constants.INDEX_2, user.getPassword());
 			rs = ptmSelectUser.executeQuery();
 			synchronized (DBUserImpl.class) {
 				if(rs.next()) {
@@ -192,14 +192,14 @@ public class DBUserImpl implements UserDAO {
 				connection.prepareStatement(ConstantsSQL.UPDATE_USER);
 			ptmSelectUser = 
 					connection.prepareStatement(ConstantsSQL.SELECT_IF_USER_EXISTS);
-			ptmUpdateUser.setString(1, user.getFirstName());	
-			ptmUpdateUser.setString(2, user.getLastName());
-			ptmUpdateUser.setString(3, user.getEmail());
-			ptmUpdateUser.setInt(4, user.getRole().getId());
-			ptmUpdateUser.setString(5, user.getPassword());
-			ptmUpdateUser.setInt(6, user.getId());
-			ptmSelectUser.setString(1, user.getEmail());
-			ptmSelectUser.setString(2, user.getPassword());
+			ptmUpdateUser.setString(Constants.INDEX_1, user.getFirstName());	
+			ptmUpdateUser.setString(Constants.INDEX_2, user.getLastName());
+			ptmUpdateUser.setString(Constants.INDEX_3, user.getEmail());
+			ptmUpdateUser.setInt(Constants.INDEX_4, user.getRole().getId());
+			ptmUpdateUser.setString(Constants.INDEX_5, user.getPassword());
+			ptmUpdateUser.setInt(Constants.INDEX_6, user.getId());
+			ptmSelectUser.setString(Constants.INDEX_1, user.getEmail());
+			ptmSelectUser.setString(Constants.INDEX_2, user.getPassword());
 			rs = ptmSelectUser.executeQuery();
 			synchronized (DBUserImpl.class) {
 				if(rs.next()) {

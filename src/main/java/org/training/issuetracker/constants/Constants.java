@@ -110,6 +110,24 @@ public class Constants {
     public static final String VERSION_EXIST = "Version of project is already exist";
     public static final String USER_EXIST = "User with such email and password is already exist";
     public static final String DB_PROBLEM = "Problem with data base occured";
-    
-
+    public static final int INDEX_1 = 1;
+    public static final int INDEX_2 = 2;
+    public static final int INDEX_3 = 3;
+    public static final int INDEX_4 = 4;
+    public static final int INDEX_5 = 5;
+    public static final int INDEX_6 = 6;
+    public static final int INDEX_7 = 7;
+    public static final int INDEX_8 = 8;
+    public static final int INDEX_9 = 9;
+    public static final int INDEX_10 = 10;
+    public static final int INDEX_11 = 11;
+    public static final int INDEX_12 = 12;
+    public static final int INDEX_13 = 13;
+    public static final int INDEX_14 = 14;
+    public static final int INDEX_15 = 15;
+    public static final int INDEX_16 = 16;
+    public static final int INDEX_17 = 17;
+    public static final int INDEX_18 = 18;
+    public static final int INDEX_19 = 19;
+    public static final int INDEX_20 = 20;
 }
