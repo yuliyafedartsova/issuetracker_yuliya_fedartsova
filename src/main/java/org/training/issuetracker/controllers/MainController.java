@@ -24,25 +24,26 @@ public class MainController extends AbstractController {
     public MainController() {
         super();
     }
-
+    
    
-   protected void performTask(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+    protected void performTask(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
     	IssueDAO issuesDao = IssueFactory.getClassFromFactory();
     	List<Issue> issues = null;
     	User user = (User)request.getSession().getAttribute(Constants.USER);
     	String sortingType = request.getParameter(Constants.SORTING);
     	sortingType = (sortingType == null) ? Constants.DEFAULT : sortingType;
     	try {
-    	if(user != null) { 
-    		issues = issuesDao.getNAssignedIssues(Constants.ISSUES_QUANTITY, user, sortingType);
-    		if(issues.size() == Constants.NULL) {
-    			request.setAttribute(Constants.EMPTY_MESSAGE, Constants.EMPTY_MESSAGE_FOR_USER);
-    		}
-    	} else {
+    	if(user == null) { 
     		issues = issuesDao.getNLastAddedIssues(Constants.ISSUES_QUANTITY, sortingType);
     		if(issues.size() == Constants.NULL) {
     			request.setAttribute(Constants.EMPTY_MESSAGE, Constants.EMPTY_MESSAGE_FOR_GUEST);
     		}
+    	} else {
+    		issues = issuesDao.getNAssignedIssues(Constants.ISSUES_QUANTITY, user, sortingType);
+    		if(issues.size() == Constants.NULL) {
+    			request.setAttribute(Constants.EMPTY_MESSAGE, Constants.EMPTY_MESSAGE_FOR_USER);
+    		}
+    	
     	}
     	}catch (DaoException e) {
     		e.printStackTrace();

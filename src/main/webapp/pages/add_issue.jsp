@@ -23,7 +23,8 @@
 	<table>
 	<tr><td> Summary:  </td><td><input type='text' name='summary' value=''></td></tr>
 	<tr><td>Description: </td>
-	<td><input type='text' name='description' value=''></td></tr>
+	<td><textarea name="description" rows="4" cols="50">
+    </textarea></td></tr>
 	<tr><td> Status: </td>
 		<td> <select name='status' size='1'>
 	         <c:forEach var="status" items="${statuses}"> 

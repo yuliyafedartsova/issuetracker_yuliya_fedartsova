@@ -8,10 +8,7 @@ import org.training.issuetracker.constants.Constants;
 import org.training.issuetracker.model.beans.User;
 import org.training.issuetracker.model.beans.properties.Role;
 
-/**
- * Application Lifecycle Listener implementation class ContextListener
- *
- */
+
 public class ContextListener implements ServletContextListener {
 
     
@@ -33,7 +30,7 @@ public class ContextListener implements ServletContextListener {
     	Configurations.DB_USER = 
     			arg0.getServletContext().getInitParameter(Constants.USER);
     	arg0.getServletContext().setAttribute("path", Configurations.PATH);
-    	User guest = new User();
+        User guest = new User();
         guest.setRole(new Role(Constants.GUEST));
         arg0.getServletContext().setAttribute(Constants.USER, guest);
     }

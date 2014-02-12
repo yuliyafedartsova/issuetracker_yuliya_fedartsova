@@ -17,10 +17,10 @@
 				<c:out value="${message}"/>
 				<hr>
 			</c:if>
-		   <c:if test="${user.role != 'Guest'}">
+		   <c:if test="${user.role.name != 'Guest'}">
 				<a href='issue-form?action=add'> Submit Issue </a> <br>
 			</c:if>
-	        <c:if test="${user.role eq 'Administrator'}">
+	        <c:if test="${user.role.name eq 'Administrator'}">
 				<%@ include file="admin_submenu.jsp" %> 
 			</c:if>
 			<form name="main" method="POST" action='main'>

@@ -18,7 +18,8 @@
     <tr><td> Name: &nbsp;</td>
 	<td><input type='text' name='name' value=''></td></tr>
 	<tr><td>Description: &nbsp;</td>
-	<td><input type='text' name='description' value=''></td></tr>
+	<td><textarea name="description" rows="4" cols="50">
+    </textarea></td></tr>
 	<tr><td>Build: &nbsp;</td>
 	<td><input type='text' name='version' value=''></td></tr>
 	<tr><td>Manager: &nbsp;</td>

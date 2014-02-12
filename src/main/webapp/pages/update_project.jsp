@@ -17,15 +17,17 @@
 		<tr><td> Name:&nbsp; </td>
 		<td><input type='text' name='name' value='${project.name}'></td></tr>
 		<tr><td> Description:&nbsp;</td>
-		<td> <input type='text' style="height:100px;width:200px;" name='description' value='${project.description}'> </td></tr>
-		<tr><td>Builds:&nbsp;</td>
+		<td> <textarea name="description" rows="4" cols="50">${project.description}
+    	</textarea></td></tr>
+    	
+	 <tr><td>Builds:&nbsp;</td>
 		<td><select size='1'>
 			<c:forEach var="version" items="${project.buildVersions}"> 
 	         	<option value='${version.id}'> ${version} </option>
 		    </c:forEach>
-		</select></td>
-		<td> <input type='text' name='version' value=''> </option> </td>
-		<td> Add new version </td></tr>
+		</select> <input type='text' name='version' value=''> </option>    
+		Add new version
+		</td>
 		<tr><td>Manager:&nbsp;</td>
 		<td><select name='manager' size='1'>
 			<option value='${project.manager.id}'> ${project.manager.firstName} &nbsp; ${project.manager.lastName} </option>

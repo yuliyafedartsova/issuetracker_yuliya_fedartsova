@@ -109,8 +109,8 @@ public class IssueFormController extends AbstractController {
     			statuses.add(statusDAO.getByName(Constants.REOPENED));
     			break;
     		case Constants.IN_PROGRESS:
-    			statuses.add(statusDAO.getByName(Constants.CLOSED));
     			statuses.add(issue.getStatus());
+    			statuses.add(statusDAO.getByName(Constants.CLOSED));
     			statuses.add(statusDAO.getByName(Constants.RESOLVED));
     			break;
     		case Constants.RESOLVED:

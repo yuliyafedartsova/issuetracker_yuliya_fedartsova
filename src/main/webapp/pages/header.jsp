@@ -8,7 +8,7 @@
 </head>
 <body bgcolor= "FA F0 E6">
 	<c:choose>
-		  <c:when test="${user.role != 'Guest'}">
+		  <c:when test="${user.role.name != 'Guest'}">
 		  		Hello, ${user.firstName} <br><br>
 		  		<a href='main'> Main page </a><br>
 		  		<a href='/issuetracker/pages/change_password.jsp'> Change password </a> <br>
