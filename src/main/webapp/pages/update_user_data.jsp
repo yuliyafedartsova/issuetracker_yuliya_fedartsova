@@ -12,7 +12,7 @@
 		<hr>
 	</c:if>
 	Update your data:<br>
-	<form name='update' method='POST' action='user'>
+	<form name='${path}/update' method='POST' action='user'>
 	<table>
 	<tr><td>First Name:</td>
 	<td><input type='text' name='firstName'>${user.firstName} </td></tr>

@@ -10,7 +10,7 @@
 		<c:out value="${errorMessage}"/>
 		<hr>
 	</c:if>
-	<form name="loginForm" method="POST" action="login">
+	<form name="loginForm" method="POST" action="${path}/login">
 		Email:<br>
 		<input type="text" name=<%= Constants.EMAIL %> value=""><br>
 		Password:<br>

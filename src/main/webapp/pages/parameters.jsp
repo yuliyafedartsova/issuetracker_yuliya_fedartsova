@@ -22,7 +22,7 @@
 		</c:when>
 	</c:choose>
 	<c:forEach var="parameter" items="${parametres}"> 
-		<a href='property-form?action=update&property=${property}&id=${parameter.id}'>
+		<a href='${path}/property-form?action=update&property=${property}&id=${parameter.id}'>
 	        ${parameter}</a><br>
 	 </c:forEach>
    </body>

@@ -23,7 +23,13 @@
 	        <c:if test="${user.role.name eq 'Administrator'}">
 				<%@ include file="admin_submenu.jsp" %> 
 			</c:if>
-			<form name="main" method="POST" action='main'>
+		  <c:choose>
+		  <c:when test="${not empty emptyMessage}">
+		  		<c:out value="${emptyMessage}"/>
+				<hr>
+		  </c:when>
+		  <c:otherwise>
+		  <form name="main" method="POST" action='main'>
 		    <select name='sorting' size='1'>
 		    	<option value=id> Sort by id </option>
 		        <option value=type> Sort by type </option>
@@ -33,12 +39,6 @@
 		   </select>
 		   <input type='submit' value='Sort'> 
 		   </form> <br>
-		   <c:choose>
-		  <c:when test="${not empty emptyMessage}">
-		  		<c:out value="${emptyMessage}"/>
-				<hr>
-		  </c:when>
-		  <c:otherwise>
 		  <table>  
 		   <tr> <td> Id </td> <td> Priority </td> <td> Assignee </td> <td> Type </td>
 		   <td> Status </td> <td> Summary </td> </tr>
@@ -47,10 +47,10 @@
 		      	<td> 
 		      	<c:choose>
 		      		<c:when test="${user.role eq 'Guest'}">
-		      			<a href='issue-review?id=${issue.id}'> ${issue.id} </a>
+		      			<a href='${path}/issue-review?id=${issue.id}'> ${issue.id} </a>
 		      		</c:when>
 				    <c:otherwise>
-						<a href='issue-form?action=update&id=${issue.id}'> ${issue.id} </a>		
+						<a href='${path}/issue-form?action=update&id=${issue.id}'> ${issue.id} </a>		
 					</c:otherwise>
 		      	</c:choose>
 		      	</td>

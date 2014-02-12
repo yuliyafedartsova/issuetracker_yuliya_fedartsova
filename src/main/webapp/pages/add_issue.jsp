@@ -19,7 +19,7 @@
 		<hr>
 	</c:if>
 	Add issue: <br>
-	<form method='post' action='issue'>
+	<form method='post' id="issue-form" action='${path}/issue'>
 	<table>
 	<tr><td> Summary: </td><td><input type='text' name='summary'></td></tr>
 	<tr><td>Description: </td>
@@ -53,9 +53,9 @@
 	<tr><td>Build found: </td>
 	<td>
 	<c:forEach var="project" items="${projects}"> 
-	   <select name='version' size='1' id='${project.id}' class="versions">
+	   <select name="version" size='1' id='${project.id}' class="versions">
 	    	<c:forEach var="version" items="${project.buildVersions}">   
-	         <option value='${version.id}'> ${version.id} </option>
+	         	<option value='${version.id}'> ${version.name} </option>
 			</c:forEach>
 	    </select>
 	</c:forEach>

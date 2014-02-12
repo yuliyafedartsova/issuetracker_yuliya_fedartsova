@@ -2,14 +2,11 @@ package org.training.issuetracker.controllers.actions;
 
 import java.io.IOException;
 import java.sql.Date;
-import java.util.List;
 import javax.servlet.ServletException;
-import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 import org.training.issuetracker.constants.Constants;
-import org.training.issuetracker.constants.Pages;
 import org.training.issuetracker.controllers.AbstractController;
 import org.training.issuetracker.exceptions.DaoException;
 import org.training.issuetracker.exceptions.ValidationException;
@@ -82,10 +79,6 @@ public class IssueController extends AbstractController {
 	    Priority priority = priorityDAO.getById(Integer.parseInt(priorityIdPar));
 	    Project project = projectDAO.getProjectById(Integer.parseInt(projectIdPar));
 	    Version version = null;
-	    
-	    System.out.println(versionIdPar);
-	    
-	    
 	    if(versionIdPar != null && !versionIdPar.isEmpty()) {
 	    	validator.validateIdParameters(versionIdPar);
 	    	version = projectDAO.getVersionById(Integer.parseInt(versionIdPar));
@@ -138,8 +131,10 @@ public class IssueController extends AbstractController {
      }
     
     private void reopenIssue(IssueDAO issueDAO, HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-    	int id = Integer.parseInt(request.getParameter(Constants.ID));
+    	IssueValidator validator = new IssueValidator();
     	try {
+    	validator.validateIdParameters(request.getParameter(Constants.ID));
+        int id = Integer.parseInt(request.getParameter(Constants.ID));
     	Issue issue = issueDAO.getIssueById(id);
 	    StatusesDAO statusDAO = StatusFactory.getClassFromFactory();
 	    Status status = statusDAO.getByName(Constants.NEW);

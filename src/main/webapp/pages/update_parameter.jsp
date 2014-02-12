@@ -26,7 +26,7 @@
 		</c:when>
 	</c:choose>
 	<br>
-	<form action='property'>
+	<form action='${path}/property'>
 	<input type='text' name='parameter'>${parameter}<br>
 	<input type='hidden' name='property'  value='${property}'>
 	<input type='hidden' name='id'  value='${parameter.id}'>

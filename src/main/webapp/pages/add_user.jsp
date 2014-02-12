@@ -13,7 +13,7 @@
 		<hr>
 	</c:if>
 	Add user:<br>
-	<form action='user'>
+	<form action='${path}/user'>
     <table>
     <tr><td> First name: &nbsp;</td>
 	<td><input type='text' name='firstName' value=''></td></tr>

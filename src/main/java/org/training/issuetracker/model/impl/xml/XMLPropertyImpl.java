@@ -3,12 +3,10 @@ package org.training.issuetracker.model.impl.xml;
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
-
 import org.training.issuetracker.constants.Configurations;
 import org.training.issuetracker.constants.Constants;
 import org.training.issuetracker.exceptions.DaoException;
 import org.training.issuetracker.model.beans.Property;
-import org.training.issuetracker.model.enums.Properties;
 import org.xml.sax.SAXException;
 import org.xml.sax.XMLReader;
 import org.xml.sax.helpers.XMLReaderFactory;
@@ -133,8 +131,6 @@ public class XMLPropertyImpl  {
 		return role;
 	}
 	
-	public void addParameter(Properties propertyName, Property parameter) throws DaoException {
-		
-	}
+	
 
 }

@@ -23,7 +23,7 @@
 		<tr><td>Modified By:&nbsp;</td><td> ${issue.modifier.firstName} &nbsp; ${issue.modifier.lastName} </td></tr>
 	</c:if>
 	</table>
-	<form action='issue'>
+	<form action='${path}/issue'>
 		<c:choose>
 		<c:when test="${issue.status.name eq 'Closed'}">
 		<table>

@@ -14,7 +14,7 @@
 	</c:if>
 	Change password: 
 	<br><br>
-<form name="change_password" method="POST" action="change-password">
+<form name="change_password" method="POST" action="${path}/change-password">
 	New Password:<br>
 	<input type="password" name="password" value=""><br>
 	Password Confirmation:<br>

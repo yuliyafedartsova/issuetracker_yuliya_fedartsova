@@ -64,10 +64,6 @@ public class ProjectController extends AbstractController {
                 }
             	versions = projectDAO.getVersionsOfProject(id);
             	project = new Project(id, name, manager, versions, description);
-            	
-            	System.out.println(project.getDescription());
-            	
-            	
             	projectDAO.updateProject(project);
             	request.setAttribute(Constants.MESSAGE, Constants.SUCCESSFULLY_UPDATE_PROJECT);
          	    request.getRequestDispatcher(Constants.PROJECT_REVIEW_CONTROLLER).forward(request, response);

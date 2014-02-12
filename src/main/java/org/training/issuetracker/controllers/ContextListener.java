@@ -33,6 +33,9 @@ public class ContextListener implements ServletContextListener {
         User guest = new User();
         guest.setRole(new Role(Constants.GUEST));
         arg0.getServletContext().setAttribute(Constants.USER, guest);
+        String contextPath = arg0.getServletContext().getContextPath();
+        arg0.getServletContext().setAttribute(Constants.PATH, contextPath);
+    
     }
 
 	

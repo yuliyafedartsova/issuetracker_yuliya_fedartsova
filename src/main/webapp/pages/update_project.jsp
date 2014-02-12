@@ -12,7 +12,7 @@
 		<hr>
 	</c:if>
 	Update project: <br>	
-	<form action='project'>
+	<form method="post" action='${path}/project'>
 	<table>
 		<tr><td> Name:&nbsp; </td>
 		<td><input type="text" name="name"></td> <td>${project.name}

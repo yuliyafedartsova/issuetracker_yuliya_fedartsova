@@ -1,19 +1,15 @@
 package org.training.issuetracker.controllers.actions;
 
 import java.io.IOException;
-import java.util.List;
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import org.training.issuetracker.constants.Constants;
-import org.training.issuetracker.constants.Pages;
 import org.training.issuetracker.controllers.AbstractController;
 import org.training.issuetracker.exceptions.DaoException;
 import org.training.issuetracker.exceptions.ValidationException;
-import org.training.issuetracker.model.beans.Project;
 import org.training.issuetracker.model.beans.User;
 import org.training.issuetracker.model.beans.properties.Role;
-import org.training.issuetracker.model.beans.properties.Version;
 import org.training.issuetracker.model.factories.RoleFactory;
 import org.training.issuetracker.model.factories.UserFactory;
 import org.training.issuetracker.model.DAO.RolesDAO;
@@ -55,7 +51,7 @@ public class UserController extends AbstractController {
         switch(action) {
     		case Constants.ADD:
     			if(user == null || !user.getRole().getName().equals(Constants.ADMINISTRATOR)) {
-    				jumpPage(Constants.MAIN, request, response);
+    	        	jumpPage(Constants.MAIN, request, response);
     				return;
     			}
     			String password = request.getParameter(Constants.PASSWORD).trim();

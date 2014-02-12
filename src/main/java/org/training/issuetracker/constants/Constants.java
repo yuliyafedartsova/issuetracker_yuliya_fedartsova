@@ -115,6 +115,7 @@ public class Constants {
     public static final String LOCAL_PASS_TO_DB = "WEB-INF\\classes\\db\\";
     public static final String DRIVER_TYPE = "jdbc:";
     public static final int ISSUES_QUANTITY = 10;
+    public static final String PATH = "path";
     public static final int INDEX_1 = 1;
     public static final int INDEX_2 = 2;
     public static final int INDEX_3 = 3;
@@ -135,4 +136,4 @@ public class Constants {
     public static final int INDEX_18 = 18;
     public static final int INDEX_19 = 19;
     public static final int INDEX_20 = 20;
-}
+}//

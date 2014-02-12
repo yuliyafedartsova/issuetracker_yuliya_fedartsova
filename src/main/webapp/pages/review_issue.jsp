@@ -3,7 +3,7 @@
 <html>
 <head>
 <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
-<title>Insert title here</title>
+<title>Review issue</title>
 </head>
 <body bgcolor= "FA F0 E6">
 <%@ include file="header.jsp" %> 
