@@ -49,7 +49,7 @@ public class IssueController extends AbstractController {
     
     protected void performTask(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
     	User user = (User) request.getSession().getAttribute(Constants.USER);
-        if(user == null || user.getRole().getName() == Constants.GUEST) {
+        if(user == null || user.getRole().getName().equals(Constants.GUEST)) {
 			jumpPage(Constants.MAIN, request, response);
 			return;
 		}
@@ -77,16 +77,19 @@ public class IssueController extends AbstractController {
 		String projectIdPar = request.getParameter(Constants.PROJECT);
 	    String versionIdPar = request.getParameter(Constants.VERSION);
 	    String assigneeIdPar = request.getParameter(Constants.ASSIGNEE);
-	    validator.validateIdParameters(typeIdPar, priorityIdPar, projectIdPar, 
-	    		versionIdPar);
+	    validator.validateIdParameters(typeIdPar, priorityIdPar, projectIdPar);
+	    Type type = typesDAO.getById(Integer.parseInt(typeIdPar));
+	    Priority priority = priorityDAO.getById(Integer.parseInt(priorityIdPar));
+	    Project project = projectDAO.getProjectById(Integer.parseInt(projectIdPar));
+	    Version version = null;
 	    
 	    System.out.println(versionIdPar);
 	    
 	    
-	    Type type = typesDAO.getById(Integer.parseInt(typeIdPar));
-	    Priority priority = priorityDAO.getById(Integer.parseInt(priorityIdPar));
-	    Project project = projectDAO.getProjectById(Integer.parseInt(projectIdPar));
-	    Version version = projectDAO.getVersionById(Integer.parseInt(versionIdPar));
+	    if(versionIdPar != null && !versionIdPar.isEmpty()) {
+	    	validator.validateIdParameters(versionIdPar);
+	    	version = projectDAO.getVersionById(Integer.parseInt(versionIdPar));
+	    }
 	    HttpSession session = request.getSession();
 	    User currentUser = (User)session.getAttribute(Constants.USER);
 	    long curTime = System.currentTimeMillis(); 
@@ -124,8 +127,8 @@ public class IssueController extends AbstractController {
     		    request.setAttribute(Constants.MESSAGE, Constants.SUCCESSFULLY_UPDATE_ISSUE);
     			break;
     	    }
-		request.getRequestDispatcher("/main").forward(request, response);
-        } catch (DaoException e) {
+		jumpPage(Constants.MAIN, request, response);
+		} catch (DaoException e) {
         	request.setAttribute(Constants.ERROR_MESSAGE, e.getMessage());
         	jumpPage(Constants.MAIN, request, response);
   		} catch (ValidationException e) {

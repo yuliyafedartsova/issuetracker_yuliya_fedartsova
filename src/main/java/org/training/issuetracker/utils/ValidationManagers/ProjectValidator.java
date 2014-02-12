@@ -10,6 +10,8 @@ public class ProjectValidator extends PersistentObjectValidator {
 		String message = Constants.EMPTY;
 		final String ERROR_MESSAGE_NAME = " Project name is empty.";	
 		final String ERROR_MESSAGE_DESCRIPTION = " Description is empty.";
+		final String ERROR_MESSAGE_VERSION = " Version is empty.";
+		
 		
 		if(project.getName().isEmpty() || project.getName() == null) {
 	    	 message += ERROR_MESSAGE_NAME;	
@@ -17,6 +19,10 @@ public class ProjectValidator extends PersistentObjectValidator {
 		
 		if(project.getDescription().isEmpty() || project.getDescription() == null) {
 	    	 message += ERROR_MESSAGE_DESCRIPTION;	
+		}
+		
+		if(project.getBuildVersions().size() == Constants.NULL) {
+			 message += ERROR_MESSAGE_VERSION;
 		}
 		
 		return message;

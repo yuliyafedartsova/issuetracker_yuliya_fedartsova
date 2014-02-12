@@ -27,7 +27,7 @@
 	</c:choose>
 	<br>
 	<form action='property'>
-	<input type='text' name='parameter' value='${parameter}'><br>
+	<input type='text' name='parameter'>${parameter}<br>
 	<input type='hidden' name='property'  value='${property}'>
 	<input type='hidden' name='id'  value='${parameter.id}'>
 	<input type='hidden' name='action'  value='update'>

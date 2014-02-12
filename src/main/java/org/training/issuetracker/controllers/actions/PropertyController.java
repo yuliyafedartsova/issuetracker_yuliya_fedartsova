@@ -31,7 +31,7 @@ public class PropertyController extends AbstractController {
 
     protected void performTask(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
     	User user = (User) request.getSession().getAttribute(Constants.USER);
-        if(user == null || user.getRole().getName() != Constants.ADMINISTRATOR) {
+        if(user == null || !user.getRole().getName().equals(Constants.ADMINISTRATOR)) {
 			jumpPage(Constants.MAIN, request, response);
 			return;
 		}

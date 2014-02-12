@@ -6,7 +6,7 @@
 		<lastName> Glover </lastName>
 		<email>roger@gmail.com</email>
 		<role> 1 </role>
-		<password> aaaa </password>
+		<password> 2222b </password>
 	</user>
 	<user>
 		<id> 2 </id>
@@ -15,69 +15,5 @@
 		<email> ian@gmail.com </email>
 		<role> 2 </role>
 		<password> 1111a </password>
-	</user>
-	<user>
-		<id> 3 </id>
-		<firstName> Steve </firstName>
-		<lastName> Morse </lastName>
-		<email> steve@gmail.com </email>
-		<role> 2 </role>
-		<password> 22222 </password>
-	</user>
-	<user>
-		<id> 4 </id>
-		<firstName> David </firstName>
-		<lastName> Coverdale </lastName>
-		<email> david@gmail.com </email>
-		<role> 1 </role>
-		<password> 3333 </password>
-	</user>
-	<user>
-		<id> 5 </id>
-		<firstName> Nick </firstName>
-		<lastName> Simper </lastName>
-		<email> nick@gmail.com </email>
-		<role> 1 </role>
-		<password> 4444 </password>
-	</user>
-	<user>
-		<id> 6 </id>
-		<firstName> Don </firstName>
-		<lastName> Airey </lastName>
-		<email> don@gmail.com </email>
-		<role> 1 </role>
-		<password> 5555 </password>
-	</user>
-	<user>
-		<id> 7 </id>
-		<firstName> Glenn </firstName>
-		<lastName> Hughes </lastName>
-		<email> glenn@gmail.com </email>
-		<role> 2 </role>
-		<password> 6666 </password>
-	</user>
-	<user>
-		<id> 8 </id>
-		<firstName> Rod </firstName>
-		<lastName> Evans </lastName>
-		<email> rod@gmail.com </email>
-		<role> 1 </role>
-		<password> 7777 </password>
-	</user>
-	<user>
-		<id> 9 </id>
-		<firstName> Tom </firstName>
-		<lastName> Bolin </lastName>
-		<email> tom@gmail.com </email>
-		<role> 1 </role>
-		<password> 8888 </password>
-	</user>
-	<user>
-		<id> 10 </id>
-		<firstName> Joe </firstName>
-		<lastName> Satriani </lastName>
-		<email> joe@gmail.com </email>
-		<role> 2 </role>
-		<password> 9999 </password>
 	</user>
 </users>

@@ -128,6 +128,7 @@
   <servlet-mapping>
     <servlet-name>ProjectFormController</servlet-name>
     <url-pattern>/project-form</url-pattern>
+   <url-pattern>/pages/project-form</url-pattern>
   </servlet-mapping>
   <servlet>
     <description></description>
@@ -138,6 +139,7 @@
   <servlet-mapping>
     <servlet-name>ProjectsReviewController</servlet-name>
     <url-pattern>/projects-review</url-pattern>
+    <url-pattern>/pages/projects-review</url-pattern>
   </servlet-mapping>
   <servlet>
     <description></description>
@@ -159,6 +161,7 @@
   <servlet-mapping>
     <servlet-name>IssueController</servlet-name>
     <url-pattern>/issue</url-pattern>
+    <url-pattern>/pages/issue</url-pattern>
   </servlet-mapping>
   <servlet>
     <description></description>

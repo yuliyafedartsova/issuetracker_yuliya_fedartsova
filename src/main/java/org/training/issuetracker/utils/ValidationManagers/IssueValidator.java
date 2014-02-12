@@ -1,7 +1,6 @@
 package org.training.issuetracker.utils.ValidationManagers;
 
 import org.training.issuetracker.constants.Constants;
-import org.training.issuetracker.exceptions.ValidationException;
 import org.training.issuetracker.model.beans.Issue;
 
 public class IssueValidator extends PersistentObjectValidator {
@@ -13,6 +12,7 @@ public class IssueValidator extends PersistentObjectValidator {
 		final String ERROR_MESSAGE_CHOSE_RESOLUTION = " Choose resolution.";
 		final String ERROR_MESSAGE_EMPTY_DESCRIPTION = " Description is empty.";
 		final String ERROR_MESSAGE_EMPTY_SUMMARY = " Summary is empty.";
+		final String ERROR_VERSION_EMPTY = " Version is empty.";
 		
 		if(issue.getAssignee() == null && !issue.getStatus().getName().equals(Constants.NEW)) { 
 	    	 message = ERROR_MESSAGE_CHANGE_STATUS;
@@ -22,7 +22,6 @@ public class IssueValidator extends PersistentObjectValidator {
 	    	 message = ERROR_MESSAGE_CHANGE_STATUS;
 	    }
 		 
-		
 		if(issue.getResolution() != null && 
 	    		 !issue.getStatus().getName().equals(Constants.CLOSED)) {
 	    	 if(!issue.getStatus().getName().equals(Constants.RESOLVED)) {
@@ -41,6 +40,10 @@ public class IssueValidator extends PersistentObjectValidator {
 	     
 	     if(issue.getSummary().isEmpty() || issue.getSummary() == null ) {
 	    	 message += ERROR_MESSAGE_EMPTY_SUMMARY;		
+		 }
+	     
+	     if(issue.getBuildFound() == null ) {
+	    	 message += ERROR_VERSION_EMPTY;		
 		 }
 	     
 	     return message;

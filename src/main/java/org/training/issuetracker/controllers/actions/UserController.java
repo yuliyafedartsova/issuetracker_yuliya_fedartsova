@@ -32,7 +32,7 @@ public class UserController extends AbstractController {
     
     protected void performTask(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
     	User user = (User) request.getSession().getAttribute(Constants.USER);
-        if(user == null || user.getRole().getName() == Constants.GUEST) {
+        if(user == null || user.getRole().getName().equals(Constants.GUEST)) {
         	jumpPage(Constants.MAIN, request, response);
 			return;
 		}
@@ -54,7 +54,7 @@ public class UserController extends AbstractController {
         }
         switch(action) {
     		case Constants.ADD:
-    			if(user == null || user.getRole().getName() != Constants.ADMINISTRATOR) {
+    			if(user == null || !user.getRole().getName().equals(Constants.ADMINISTRATOR)) {
     				jumpPage(Constants.MAIN, request, response);
     				return;
     			}

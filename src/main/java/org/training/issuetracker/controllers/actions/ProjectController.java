@@ -29,7 +29,7 @@ public class ProjectController extends AbstractController {
     
     protected void performTask(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
     	User user = (User) request.getSession().getAttribute(Constants.USER);
-        if(user == null || user.getRole().getName() != Constants.ADMINISTRATOR) {
+        if(user == null || !user.getRole().getName().equals(Constants.ADMINISTRATOR)) {
 			jumpPage(Constants.MAIN, request, response);
 			return;
 		}
@@ -48,9 +48,11 @@ public class ProjectController extends AbstractController {
         	String versionName = request.getParameter(Constants.VERSION).trim();
             switch(action) {
     		case Constants.ADD:
-    			Version version = new Version(versionName);
-    	        versions.add(version);
-    	        project = new Project(name, manager, versions, description);
+    			if(!versionName.equals(Constants.EMPTY)) {
+    				Version version = new Version(versionName);
+        	        versions.add(version);
+    			}
+    			project = new Project(name, manager, versions, description);
     	        projectDAO.addProject(project);
     	        request.setAttribute(Constants.MESSAGE, Constants.SUCCESSFULLY_ADD_PROJECT);
     	 	    request.getRequestDispatcher(Constants.PROJECT_REVIEW_CONTROLLER).forward(request, response);
@@ -62,6 +64,10 @@ public class ProjectController extends AbstractController {
                 }
             	versions = projectDAO.getVersionsOfProject(id);
             	project = new Project(id, name, manager, versions, description);
+            	
+            	System.out.println(project.getDescription());
+            	
+            	
             	projectDAO.updateProject(project);
             	request.setAttribute(Constants.MESSAGE, Constants.SUCCESSFULLY_UPDATE_PROJECT);
          	    request.getRequestDispatcher(Constants.PROJECT_REVIEW_CONTROLLER).forward(request, response);

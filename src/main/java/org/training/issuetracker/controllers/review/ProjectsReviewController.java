@@ -28,7 +28,7 @@ public class ProjectsReviewController extends AbstractController {
 
     protected void performTask(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
     	User user = (User) request.getSession().getAttribute(Constants.USER);
-   	    if(user == null || user.getRole().getName() == Constants.GUEST) {
+   	    if(user == null || user.getRole().getName().equals(Constants.GUEST)) {
 			jumpPage(Constants.MAIN, request, response);
 			return;
 		}

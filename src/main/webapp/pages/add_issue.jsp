@@ -19,12 +19,11 @@
 		<hr>
 	</c:if>
 	Add issue: <br>
-	<form action='issue'>
+	<form method='post' action='issue'>
 	<table>
-	<tr><td> Summary:  </td><td><input type='text' name='summary' value=''></td></tr>
+	<tr><td> Summary: </td><td><input type='text' name='summary'></td></tr>
 	<tr><td>Description: </td>
-	<td><textarea name="description" rows="4" cols="50">
-    </textarea></td></tr>
+	<td><textarea name="description" rows="4" cols="50"></textarea></td></tr>
 	<tr><td> Status: </td>
 		<td> <select name='status' size='1'>
 	         <c:forEach var="status" items="${statuses}"> 
@@ -55,9 +54,8 @@
 	<td>
 	<c:forEach var="project" items="${projects}"> 
 	   <select name='version' size='1' id='${project.id}' class="versions">
-	    	<option></option>
 	    	<c:forEach var="version" items="${project.buildVersions}">   
-	         <option value='${version.id}'> ${version} </option>
+	         <option value='${version.id}'> ${version.id} </option>
 			</c:forEach>
 	    </select>
 	</c:forEach>

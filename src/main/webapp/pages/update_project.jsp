@@ -15,18 +15,20 @@
 	<form action='project'>
 	<table>
 		<tr><td> Name:&nbsp; </td>
-		<td><input type='text' name='name' value='${project.name}'></td></tr>
+		<td><input type="text" name="name"></td> <td>${project.name}
+    	</td></tr>
 		<tr><td> Description:&nbsp;</td>
-		<td> <textarea name="description" rows="4" cols="50">${project.description}
-    	</textarea></td></tr>
+		<td><input type="text" name="description"></td> 
+		 <td>${project.description}
+    	</td></tr>
     	
 	 <tr><td>Builds:&nbsp;</td>
 		<td><select size='1'>
 			<c:forEach var="version" items="${project.buildVersions}"> 
 	         	<option value='${version.id}'> ${version} </option>
 		    </c:forEach>
-		</select> <input type='text' name='version' value=''> </option>    
-		Add new version
+		</select></td> <td> <input type='text' name='version'>  
+		Add new version </td>
 		</td>
 		<tr><td>Manager:&nbsp;</td>
 		<td><select name='manager' size='1'>

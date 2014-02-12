@@ -15,11 +15,11 @@
 	<form name='update' method='POST' action='user'>
 	<table>
 	<tr><td>First Name:</td>
-	<td><input type='text' name='firstName' value='${user.firstName}'> </td></tr>
+	<td><input type='text' name='firstName'>${user.firstName} </td></tr>
 	<tr><td>Last Name:</td>
-	<td><input type='text' name='lastName' value='${user.lastName}'></td></tr>
+	<td><input type='text' name='lastName'>${user.lastName}</td></tr>
 	<tr><td>Email Address:</td>
-	<td><input type='text' name='email' value='${user.email}'></td></tr>
+	<td><input type='text' name='email'>${user.email}</td></tr>
 	<c:if test="${user.role eq 'Administrator'}">
 		<tr><td>Role:</td>
 		<td><select name='role' size='1'>

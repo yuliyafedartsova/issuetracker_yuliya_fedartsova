@@ -26,8 +26,7 @@
 	<form action='issue'>
 		<c:choose>
 		<c:when test="${issue.status.name eq 'Closed'}">
-		
-		 <table>
+		<table>
 		<tr><td>Summary</td><td> ${issue.summary} </td></tr>
     	<tr><td>Description</td><td> ${issue.description} </td></tr>
     	<tr><td> Status </td>  
@@ -48,10 +47,9 @@
 		<c:otherwise>
 		<table>
 		<tr><td>Summary</td>
-    	<td><input type='text' name='summary' value="${issue.summary}"></td></tr>
+    	<td><input type='text' name='summary'> </td> <td> ${issue.summary}</td></tr>
     	<tr><td>Description</td>
-    	<td><textarea name="description" rows="4" cols="50">${issue.description}
-    	</textarea></td></tr>
+    	<td><input name="description"></td> <td>${issue.description}</td></tr>
     	<tr><td> Status </td>
     	<td><select name='status' size='1'>
     		<c:forEach var="status" items="${statuses}"> 
