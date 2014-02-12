@@ -48,7 +48,12 @@ public class IssueController extends AbstractController {
     }
     
     protected void performTask(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-        IssueDAO issueDao = IssueFactory.getClassFromFactory();
+    	User user = (User) request.getSession().getAttribute(Constants.USER);
+        if(user == null || user.getRole().getName() == Constants.GUEST) {
+			jumpPage(Constants.MAIN, request, response);
+			return;
+		}
+    	IssueDAO issueDao = IssueFactory.getClassFromFactory();
         Issue issue = null;
         String action = request.getParameter(Constants.ACTION);
         UserDAO userDAO = UserFactory.getClassFromFactory();
@@ -74,6 +79,10 @@ public class IssueController extends AbstractController {
 	    String assigneeIdPar = request.getParameter(Constants.ASSIGNEE);
 	    validator.validateIdParameters(typeIdPar, priorityIdPar, projectIdPar, 
 	    		versionIdPar);
+	    
+	    System.out.println(versionIdPar);
+	    
+	    
 	    Type type = typesDAO.getById(Integer.parseInt(typeIdPar));
 	    Priority priority = priorityDAO.getById(Integer.parseInt(priorityIdPar));
 	    Project project = projectDAO.getProjectById(Integer.parseInt(projectIdPar));

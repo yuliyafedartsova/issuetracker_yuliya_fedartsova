@@ -13,6 +13,7 @@ import org.training.issuetracker.model.DAO.PrioritiesDAO;
 import org.training.issuetracker.model.DAO.ResolutionDAO;
 import org.training.issuetracker.model.DAO.StatusesDAO;
 import org.training.issuetracker.model.DAO.TypesDAO;
+import org.training.issuetracker.model.beans.User;
 import org.training.issuetracker.model.beans.properties.Priority;
 import org.training.issuetracker.model.beans.properties.Resolution;
 import org.training.issuetracker.model.beans.properties.Status;
@@ -34,6 +35,11 @@ public class PropertyReviewController extends AbstractController {
 
     protected void performTask(HttpServletRequest request,
 			HttpServletResponse response) throws ServletException, IOException {
+    	User user = (User) request.getSession().getAttribute(Constants.USER);
+   	    if(user == null || user.getRole().getName() == Constants.GUEST) {
+			jumpPage(Constants.MAIN, request, response);
+			return;
+		}
     	String property = request.getParameter(Constants.PROPERTY);
     	request.setAttribute(Constants.PROPERTY, property);
     	try {

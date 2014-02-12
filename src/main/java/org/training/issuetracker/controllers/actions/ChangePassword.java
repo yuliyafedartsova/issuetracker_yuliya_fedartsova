@@ -28,6 +28,11 @@ public class ChangePassword extends AbstractController {
     
     protected void performTask(HttpServletRequest request,
 			HttpServletResponse response) throws ServletException, IOException {
+        User user = (User) request.getSession().getAttribute(Constants.USER);
+        if(user == null || user.getRole().getName() == Constants.GUEST) {
+			jumpPage(Constants.MAIN, request, response);
+			return;
+		}
     	UserDAO userDAO = UserFactory.getClassFromFactory();
     	UserValidator validator = new UserValidator();
     	String password = request.getParameter(Constants.PASSWORD).trim();
@@ -37,7 +42,6 @@ public class ChangePassword extends AbstractController {
         	if(!errorMessage.isEmpty()) {
         		throw new ValidationException(errorMessage);
         	}
-        	User user = (User)request.getSession().getAttribute(Constants.USER);
         	user.setPassword(password);
         	userDAO.updateUserData(user);
         	request.setAttribute(Constants.MESSAGE, Constants.SUCCESSFULLY_CHANGE_PASSWORD);

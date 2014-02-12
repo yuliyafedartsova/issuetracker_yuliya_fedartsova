@@ -55,6 +55,7 @@
 	<td>
 	<c:forEach var="project" items="${projects}"> 
 	   <select name='version' size='1' id='${project.id}' class="versions">
+	    	<option></option>
 	    	<c:forEach var="version" items="${project.buildVersions}">   
 	         <option value='${version.id}'> ${version} </option>
 			</c:forEach>

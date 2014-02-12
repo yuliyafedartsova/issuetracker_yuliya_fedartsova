@@ -45,6 +45,11 @@ public class IssueFormController extends AbstractController {
     }
 
     protected void performTask(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+    	User user = (User) request.getSession().getAttribute(Constants.USER);
+    	if(user == null || user.getRole().getName() == Constants.GUEST) {
+			jumpPage(Constants.MAIN, request, response);
+			return;
+		}
     	String action = request.getParameter(Constants.ACTION);
     	String url = null;
     	TypesDAO typesDAO = TypeFactory.getClassFromFactory();

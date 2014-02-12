@@ -29,6 +29,11 @@ public class ProjectFormController extends AbstractController {
     }
 
     protected void performTask(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+    	User user = (User) request.getSession().getAttribute(Constants.USER);
+    	 if(user == null || user.getRole().getName() == Constants.GUEST) {
+ 			jumpPage(Constants.MAIN, request, response);
+ 			return;
+ 		}
     	ProjectDAO projectDAO = ProjectFactory.getClassFromFactory();
     	String action = request.getParameter(Constants.ACTION);
     	List<User> users = null;

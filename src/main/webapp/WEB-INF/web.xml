@@ -180,6 +180,7 @@
   <servlet-mapping>
     <servlet-name>PropertyFormController</servlet-name>
     <url-pattern>/property-form</url-pattern>
+     <url-pattern>/pages/property-form</url-pattern>
   </servlet-mapping>
   <servlet>
     <description></description>

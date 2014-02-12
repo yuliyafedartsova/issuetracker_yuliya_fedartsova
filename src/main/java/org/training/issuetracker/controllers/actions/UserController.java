@@ -31,13 +31,17 @@ public class UserController extends AbstractController {
     }
     
     protected void performTask(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+    	User user = (User) request.getSession().getAttribute(Constants.USER);
+        if(user == null || user.getRole().getName() == Constants.GUEST) {
+        	jumpPage(Constants.MAIN, request, response);
+			return;
+		}
     	String action = request.getParameter(Constants.ACTION);
     	UserDAO userDAO = UserFactory.getClassFromFactory();
         RolesDAO rolesDAO = RoleFactory.getClassFromFactory();
         String firstName = request.getParameter(Constants.FIRST_NAME).trim();
   	    String lastName = request.getParameter(Constants.LAST_NAME).trim();
   	    String email = request.getParameter(Constants.EMAIL).trim();
-        User user = (User)request.getSession().getAttribute(Constants.USER);
         UserValidator validator = new UserValidator();
         Role role = null;
         try{
@@ -50,6 +54,10 @@ public class UserController extends AbstractController {
         }
         switch(action) {
     		case Constants.ADD:
+    			if(user == null || user.getRole().getName() != Constants.ADMINISTRATOR) {
+    				jumpPage(Constants.MAIN, request, response);
+    				return;
+    			}
     			String password = request.getParameter(Constants.PASSWORD).trim();
     	        String password2 = request.getParameter(Constants.PASSWORD_CONFIRMATION).trim();
     	        validator = new UserValidator();

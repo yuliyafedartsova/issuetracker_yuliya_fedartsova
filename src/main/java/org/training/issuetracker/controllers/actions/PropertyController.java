@@ -1,12 +1,10 @@
 package org.training.issuetracker.controllers.actions;
 
 import java.io.IOException;
-import java.util.List;
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import org.training.issuetracker.constants.Constants;
-import org.training.issuetracker.constants.Pages;
 import org.training.issuetracker.controllers.AbstractController;
 import org.training.issuetracker.exceptions.DaoException;
 import org.training.issuetracker.exceptions.ValidationException;
@@ -14,13 +12,10 @@ import org.training.issuetracker.model.DAO.PrioritiesDAO;
 import org.training.issuetracker.model.DAO.ResolutionDAO;
 import org.training.issuetracker.model.DAO.StatusesDAO;
 import org.training.issuetracker.model.DAO.TypesDAO;
-import org.training.issuetracker.model.beans.Project;
-import org.training.issuetracker.model.beans.Property;
+import org.training.issuetracker.model.beans.User;
 import org.training.issuetracker.model.beans.properties.Priority;
 import org.training.issuetracker.model.beans.properties.Resolution;
-import org.training.issuetracker.model.beans.properties.Status;
 import org.training.issuetracker.model.beans.properties.Type;
-import org.training.issuetracker.model.beans.properties.Version;
 import org.training.issuetracker.model.factories.PriorityFactory;
 import org.training.issuetracker.model.factories.ResolutionFactory;
 import org.training.issuetracker.model.factories.StatusFactory;
@@ -35,6 +30,11 @@ public class PropertyController extends AbstractController {
     }
 
     protected void performTask(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+    	User user = (User) request.getSession().getAttribute(Constants.USER);
+        if(user == null || user.getRole().getName() != Constants.ADMINISTRATOR) {
+			jumpPage(Constants.MAIN, request, response);
+			return;
+		}
     	String action = request.getParameter(Constants.ACTION);
     	String property = request.getParameter(Constants.PROPERTY);
     	ParameterValidator validator = new ParameterValidator();

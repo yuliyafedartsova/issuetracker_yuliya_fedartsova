@@ -12,6 +12,7 @@ import org.training.issuetracker.exceptions.DaoException;
 import org.training.issuetracker.exceptions.ValidationException;
 import org.training.issuetracker.model.DAO.ProjectDAO;
 import org.training.issuetracker.model.beans.Project;
+import org.training.issuetracker.model.beans.User;
 import org.training.issuetracker.model.factories.ProjectFactory;
 
 
@@ -26,6 +27,11 @@ public class ProjectsReviewController extends AbstractController {
     }
 
     protected void performTask(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+    	User user = (User) request.getSession().getAttribute(Constants.USER);
+   	    if(user == null || user.getRole().getName() == Constants.GUEST) {
+			jumpPage(Constants.MAIN, request, response);
+			return;
+		}
     	ProjectDAO projectDAO = ProjectFactory.getClassFromFactory();
     	List<Project> projects = null;
     	try {

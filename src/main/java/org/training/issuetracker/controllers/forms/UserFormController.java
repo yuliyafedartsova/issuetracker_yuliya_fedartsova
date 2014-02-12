@@ -10,6 +10,7 @@ import org.training.issuetracker.constants.Pages;
 import org.training.issuetracker.controllers.AbstractController;
 import org.training.issuetracker.exceptions.DaoException;
 import org.training.issuetracker.model.DAO.RolesDAO;
+import org.training.issuetracker.model.beans.User;
 import org.training.issuetracker.model.beans.properties.Role;
 import org.training.issuetracker.model.factories.RoleFactory;
 
@@ -24,6 +25,11 @@ public class UserFormController extends AbstractController {
     }
 
     protected void performTask(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+    	User user = (User) request.getSession().getAttribute(Constants.USER);
+   	    if(user == null || user.getRole().getName() == Constants.GUEST) {
+			jumpPage(Constants.MAIN, request, response);
+			return;
+		}
     	String action = request.getParameter(Constants.ACTION);
     	RolesDAO rolesDAO = RoleFactory.getClassFromFactory();
     	List<Role> roles = null;
@@ -40,6 +46,10 @@ public class UserFormController extends AbstractController {
 		}
     	request.setAttribute(Constants.ROLES, roles);
     	if(Constants.ADD.equals(action)) {
+    		if(user == null || !user.getRole().getName().equals(Constants.ADMINISTRATOR)) {
+    			jumpPage(Constants.MAIN, request, response);
+    			return;
+    		}
     		jumpPage(Pages.ADD_USER_PAGE, request, response);
     	} else {
     		jumpPage(Pages.UPDATE_USER_DATA_PAGE, request, response);
