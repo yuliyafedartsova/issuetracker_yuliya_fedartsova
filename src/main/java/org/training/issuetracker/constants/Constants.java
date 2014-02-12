@@ -1,8 +1,7 @@
 package org.training.issuetracker.constants;
 
 public class Constants {  
-	public static String PATH;
-	public static final String FILES_PACKAGE = "files/";
+    public static final String FILES_PACKAGE = "files/";
 	public static final String DELIMITER = "/";
 	public static final String ACTION = "action";
     public static final String ADD = "add";
@@ -110,6 +109,12 @@ public class Constants {
     public static final String VERSION_EXIST = "Version of project is already exist";
     public static final String USER_EXIST = "User with such email and password is already exist";
     public static final String DB_PROBLEM = "Problem with data base occured";
+    public static final String DRIVER = "driver";
+    public static final String DATA_BASE_NAME = "db-name";
+    public static final String DATA_BASE = "db";
+    public static final String LOCAL_PASS_TO_DB = "WEB-INF\\classes\\db\\";
+    public static final String DRIVER_TYPE = "jdbc:";
+    public static final int ISSUES_QUANTITY = 10;
     public static final int INDEX_1 = 1;
     public static final int INDEX_2 = 2;
     public static final int INDEX_3 = 3;

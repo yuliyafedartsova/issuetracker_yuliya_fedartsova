@@ -18,7 +18,12 @@ public class IssueValidator extends PersistentObjectValidator {
 	    	 message = ERROR_MESSAGE_CHANGE_STATUS;
 	    }
 		 
-	     if(issue.getResolution() != null && 
+		if(issue.getAssignee() != null && issue.getStatus().getName().equals(Constants.NEW)) { 
+	    	 message = ERROR_MESSAGE_CHANGE_STATUS;
+	    }
+		 
+		
+		if(issue.getResolution() != null && 
 	    		 !issue.getStatus().getName().equals(Constants.CLOSED)) {
 	    	 if(!issue.getStatus().getName().equals(Constants.RESOLVED)) {
 	    		 message += ERROR_MESSAGE_NOT_CLOSED;

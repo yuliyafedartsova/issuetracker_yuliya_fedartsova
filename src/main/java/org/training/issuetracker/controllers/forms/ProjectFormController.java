@@ -45,6 +45,8 @@ public class ProjectFormController extends AbstractController {
     	    validator.validateIdParameters(projectId);
     	    int id = Integer.parseInt(projectId);
         	project = projectDAO.getProjectById(id);
+        	 request.setAttribute(Constants.PROJECT, project);
+             jumpPage(Pages.UPDATE_PROJECT_PAGE, request, response);
         }
     	}catch (DaoException e) {
     		request.setAttribute(Constants.ERROR_MESSAGE, e.getMessage());
@@ -56,8 +58,7 @@ public class ProjectFormController extends AbstractController {
         	jumpPage(Constants.MAIN, request, response);
         	return;	
     	}
-        request.setAttribute(Constants.PROJECT, project);
-        jumpPage(Pages.UPDATE_PROJECT_PAGE, request, response);
+       
     }
 }
     

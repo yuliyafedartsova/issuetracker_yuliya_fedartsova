@@ -5,7 +5,27 @@
   <welcome-file-list>
     <welcome-file> main </welcome-file>
   </welcome-file-list>
-  <servlet>
+  <context-param>
+ 	 	<param-name>db</param-name>
+ 	 	<param-value>h2</param-value>
+ </context-param>
+ <context-param>
+ 	 	<param-name>db-name</param-name>
+ 	 	<param-value>test</param-value>
+ </context-param>
+ <context-param>
+ 	 	<param-name>driver</param-name>
+ 	 	<param-value>org.h2.Driver</param-value>
+ </context-param>
+  <context-param>
+ 	 	<param-name>password</param-name>
+ 	 	<param-value></param-value>
+ </context-param>
+ <context-param>
+ 	 	<param-name>user</param-name>
+ 	 	<param-value>sa</param-value>
+ </context-param>
+<servlet>
     <description></description>
     <display-name>LoginController</display-name>
     <servlet-name>LoginController</servlet-name>
@@ -47,7 +67,7 @@
     <servlet-name>UserController</servlet-name>
     <url-pattern>/user</url-pattern>
     <url-pattern>/pages/user</url-pattern>
-  </servlet-mapping>
+ </servlet-mapping>
   <servlet>
     <description></description>
     <display-name>ProjectController</display-name>
@@ -149,6 +169,7 @@
   <servlet-mapping>
     <servlet-name>PropertyReviewController</servlet-name>
     <url-pattern>/property-review</url-pattern>
+  	<url-pattern>/pages/property-review</url-pattern>
   </servlet-mapping>
   <servlet>
     <description></description>
@@ -174,4 +195,12 @@
   <listener>
     <listener-class>org.training.issuetracker.controllers.ContextListener</listener-class>
   </listener>
+  <error-page>
+        <exception-type>java.lang.Exception</exception-type>
+        <location>/pages/error.jsp</location>
+   </error-page>
+   <error-page>
+        <error-code>404</error-code>
+        <location>/pages/error.jsp</location>
+   </error-page>
 </web-app>

@@ -3,6 +3,8 @@ package org.training.issuetracker.model.impl.xml;
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
+
+import org.training.issuetracker.constants.Configurations;
 import org.training.issuetracker.constants.Constants;
 import org.training.issuetracker.exceptions.DaoException;
 import org.training.issuetracker.model.beans.Property;
@@ -20,7 +22,7 @@ public class XMLPropertyImpl  {
 			XMLReader reader = XMLReaderFactory.createXMLReader();
 			ParametrsHandler handler = new ParametrsHandler(parameters);
 			reader.setContentHandler(handler);
-			reader.parse(Constants.PATH + Constants.FILES_PACKAGE + resourceName + Constants.FILE_EXT);
+			reader.parse(Configurations.PATH + Constants.FILES_PACKAGE + resourceName + Constants.FILE_EXT);
 			}catch (SAXException e) {
 				throw new DaoException();
 			}catch (IOException e) {

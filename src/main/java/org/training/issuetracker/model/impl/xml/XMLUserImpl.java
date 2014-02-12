@@ -2,6 +2,8 @@ package org.training.issuetracker.model.impl.xml;
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
+
+import org.training.issuetracker.constants.Configurations;
 import org.training.issuetracker.constants.Constants;
 import org.training.issuetracker.exceptions.DaoException;
 import org.training.issuetracker.exceptions.ValidationException;
@@ -19,7 +21,7 @@ public class XMLUserImpl implements UserDAO {
 			XMLReader reader = XMLReaderFactory.createXMLReader();
 			UsersHandler handler = new UsersHandler(users);
 			reader.setContentHandler(handler);
-			reader.parse(Constants.PATH + Constants.FILES_PACKAGE + Constants.USERS_SOURCE_NAME + Constants.FILE_EXT);
+			reader.parse(Configurations.PATH + Constants.FILES_PACKAGE + Constants.USERS_SOURCE_NAME + Constants.FILE_EXT);
 			}catch (SAXException e) {
 				throw new DaoException();
 			}catch (IOException e) {

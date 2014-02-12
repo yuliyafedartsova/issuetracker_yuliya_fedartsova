@@ -203,7 +203,10 @@ public class DBUserImpl implements UserDAO {
 			rs = ptmSelectUser.executeQuery();
 			synchronized (DBUserImpl.class) {
 				if(rs.next()) {
-					throw new ValidationException(Constants.USER_EXIST);
+					int id = rs.getInt(Constants.INDEX_1);
+					if(id != user.getId()) {
+						throw new ValidationException(Constants.USER_EXIST);
+					}
 				}
 			ptmUpdateUser.executeUpdate();
 			}

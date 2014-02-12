@@ -1,6 +1,7 @@
 package org.training.issuetracker.controllers.forms;
 
 import java.io.IOException;
+import java.util.ArrayList;
 import java.util.List;
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServletRequest;
@@ -31,7 +32,7 @@ import org.training.issuetracker.model.factories.ResolutionFactory;
 import org.training.issuetracker.model.factories.StatusFactory;
 import org.training.issuetracker.model.factories.TypeFactory;
 import org.training.issuetracker.model.factories.UserFactory;
-import org.training.issuetracker.utils.DisplayManager;
+
 
 
 public class IssueFormController extends AbstractController {
@@ -46,13 +47,12 @@ public class IssueFormController extends AbstractController {
     protected void performTask(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
     	String action = request.getParameter(Constants.ACTION);
     	String url = null;
-    	StatusesDAO statusDAO = StatusFactory.getClassFromFactory();
-		TypesDAO typesDAO = TypeFactory.getClassFromFactory();
+    	TypesDAO typesDAO = TypeFactory.getClassFromFactory();
 		PrioritiesDAO priorityDAO = PriorityFactory.getClassFromFactory();
     	UserDAO userDAO = UserFactory.getClassFromFactory();
     	ProjectDAO projectDAO = ProjectFactory.getClassFromFactory();
     	try {
-    	List<Status> statuses = statusDAO.getAll();
+    	List<Status> statuses = null;
     	List<Priority> priorities = priorityDAO.getAll();
     	List<Type> types = typesDAO.getAll();
     	List<User> users = userDAO.getUsers();
@@ -60,7 +60,7 @@ public class IssueFormController extends AbstractController {
     	switch(action) {
 		case Constants.ADD:
 			url = Pages.ADD_ISSUE_PAGE;
-			statuses = DisplayManager.getAvailableStatusesForSubmitIssue(statuses);
+			statuses = getAvailableStatusesForSubmitIssue();
 			break;
 		case Constants.UPDATE:
 			int id = Integer.parseInt(request.getParameter(Constants.ID));
@@ -71,7 +71,7 @@ public class IssueFormController extends AbstractController {
 			request.setAttribute(Constants.ISSUE, issue);
 			request.setAttribute(Constants.RESOLUTIONS, resolutions);
 			url = Pages.UPDATE_ISSUE_PAGE;
-			statuses = DisplayManager.getAvailableStatuses(statuses, issue);
+			statuses = getAvailableStatuses(issue);
 			break;
 	    }
     	request.setAttribute(Constants.USERS, users);
@@ -89,5 +89,46 @@ public class IssueFormController extends AbstractController {
         	jumpPage(Constants.MAIN, request, response);
         	return;
 		}
+    }
+    
+    private List<Status> getAvailableStatuses(Issue issue) throws DaoException,
+	ValidationException {
+    	StatusesDAO statusDAO = StatusFactory.getClassFromFactory();
+    	List<Status> statuses = new ArrayList<Status>();
+    	switch(issue.getStatus().getName()) {
+    		case Constants.NEW:
+    			statuses.add(issue.getStatus());
+    			statuses.add(statusDAO.getByName(Constants.ASSIGNED));
+    			break;
+    		case Constants.ASSIGNED:
+    			statuses.add(issue.getStatus());
+    			statuses.add(statusDAO.getByName(Constants.IN_PROGRESS));
+    			break;	
+    		case Constants.CLOSED:
+    			statuses.add(issue.getStatus());
+    			statuses.add(statusDAO.getByName(Constants.REOPENED));
+    			break;
+    		case Constants.IN_PROGRESS:
+    			statuses.add(statusDAO.getByName(Constants.CLOSED));
+    			statuses.add(issue.getStatus());
+    			statuses.add(statusDAO.getByName(Constants.RESOLVED));
+    			break;
+    		case Constants.RESOLVED:
+    			statuses.add(statusDAO.getByName(Constants.CLOSED));
+    			statuses.add(issue.getStatus());
+    			statuses.add(statusDAO.getByName(Constants.REOPENED));
+    			break;
+    	
+    	}
+    	return statuses;
+    }
+    
+    private List<Status> getAvailableStatusesForSubmitIssue() throws DaoException,
+	ValidationException {
+    	List<Status> statuses = new ArrayList<Status>();
+    	StatusesDAO statusDAO = StatusFactory.getClassFromFactory();
+    	statuses.add(statusDAO.getByName(Constants.NEW));
+    	statuses.add(statusDAO.getByName(Constants.ASSIGNED));
+    	return statuses;
     }
 }

@@ -6,6 +6,8 @@ import java.util.Collections;
 import java.util.List;
 import java.util.Set;
 import java.util.TreeSet;
+
+import org.training.issuetracker.constants.Configurations;
 import org.training.issuetracker.constants.Constants;
 import org.training.issuetracker.exceptions.DaoException;
 import org.training.issuetracker.model.beans.Issue;
@@ -29,7 +31,7 @@ public class XMLIssueImpl implements IssueDAO {
 			XMLReader reader = XMLReaderFactory.createXMLReader();
 			IssuesHandler handler = new IssuesHandler(issues);
 			reader.setContentHandler(handler);
-			reader.parse(Constants.PATH + Constants.FILES_PACKAGE + Constants.ISSUES_SOURCE_NAME + Constants.FILE_EXT);
+			reader.parse(Configurations.PATH + Constants.FILES_PACKAGE + Constants.ISSUES_SOURCE_NAME + Constants.FILE_EXT);
 			}catch (SAXException e) {
 				throw new DaoException();
 			}catch (IOException e) {

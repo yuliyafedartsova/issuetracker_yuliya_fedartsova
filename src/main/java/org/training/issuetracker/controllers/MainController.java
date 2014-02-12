@@ -2,7 +2,6 @@ package org.training.issuetracker.controllers;
 
 import java.io.IOException;
 import java.util.List;
-import javax.servlet.ServletContext;
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
@@ -12,11 +11,9 @@ import org.training.issuetracker.exceptions.DaoException;
 import org.training.issuetracker.exceptions.ValidationException;
 import org.training.issuetracker.model.beans.Issue;
 import org.training.issuetracker.model.beans.User;
-import org.training.issuetracker.model.beans.properties.Role;
 import org.training.issuetracker.model.factories.IssueFactory;
-import org.training.issuetracker.model.factories.RoleFactory;
 import org.training.issuetracker.model.DAO.IssueDAO;
-import org.training.issuetracker.model.DAO.RolesDAO;
+
 
 
 
@@ -28,9 +25,8 @@ public class MainController extends AbstractController {
         super();
     }
 
-    protected void performTask(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-    	//init params!!!!
-    	//
+   
+   protected void performTask(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
     	IssueDAO issuesDao = IssueFactory.getClassFromFactory();
     	List<Issue> issues = null;
     	User user = (User)request.getSession().getAttribute(Constants.USER);
@@ -38,12 +34,12 @@ public class MainController extends AbstractController {
     	sortingType = (sortingType == null) ? Constants.DEFAULT : sortingType;
     	try {
     	if(user != null) { 
-    		issues = issuesDao.getNAssignedIssues(10, user, sortingType);
+    		issues = issuesDao.getNAssignedIssues(Constants.ISSUES_QUANTITY, user, sortingType);
     		if(issues.size() == Constants.NULL) {
     			request.setAttribute(Constants.EMPTY_MESSAGE, Constants.EMPTY_MESSAGE_FOR_USER);
     		}
     	} else {
-    		issues = issuesDao.getNLastAddedIssues(10, sortingType);
+    		issues = issuesDao.getNLastAddedIssues(Constants.ISSUES_QUANTITY, sortingType);
     		if(issues.size() == Constants.NULL) {
     			request.setAttribute(Constants.EMPTY_MESSAGE, Constants.EMPTY_MESSAGE_FOR_GUEST);
     		}
@@ -60,7 +56,8 @@ public class MainController extends AbstractController {
     	if(issues.size() != Constants.NULL) {
     		request.setAttribute(Constants.ISSUES, issues);
     	}
+   
     	jumpPage(Pages.MAIN_PAGE, request, response);
-    }
+    } 
     
  }

@@ -7,24 +7,16 @@ import javax.servlet.ServletException;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import org.training.issuetracker.constants.Constants;
-import org.training.issuetracker.constants.Pages;
 import org.training.issuetracker.controllers.AbstractController;
 import org.training.issuetracker.exceptions.DaoException;
 import org.training.issuetracker.exceptions.ValidationException;
-import org.training.issuetracker.model.beans.Issue;
 import org.training.issuetracker.model.beans.Project;
 import org.training.issuetracker.model.beans.User;
-import org.training.issuetracker.model.beans.properties.Resolution;
 import org.training.issuetracker.model.beans.properties.Version;
-import org.training.issuetracker.model.factories.IssueFactory;
 import org.training.issuetracker.model.factories.ProjectFactory;
-import org.training.issuetracker.model.factories.ResolutionFactory;
 import org.training.issuetracker.model.factories.UserFactory;
-import org.training.issuetracker.model.DAO.IssueDAO;
 import org.training.issuetracker.model.DAO.ProjectDAO;
-import org.training.issuetracker.model.DAO.ResolutionDAO;
 import org.training.issuetracker.model.DAO.UserDAO;
-import org.training.issuetracker.utils.DisplayManager;
 import org.training.issuetracker.utils.ValidationManagers.ProjectValidator;
 
 
@@ -56,7 +48,7 @@ public class ProjectController extends AbstractController {
     	        project = new Project(name, manager, versions, description);
     	        projectDAO.addProject(project);
     	        request.setAttribute(Constants.MESSAGE, Constants.SUCCESSFULLY_ADD_PROJECT);
-    	 	    request.getRequestDispatcher(Constants.PROJECT_FORM_CONTROLLER).forward(request, response);
+    	 	    request.getRequestDispatcher(Constants.PROJECT_REVIEW_CONTROLLER).forward(request, response);
     	        break;
     		case Constants.UPDATE:
     			int id = Integer.parseInt(request.getParameter(Constants.ID));
