@@ -2,9 +2,8 @@
 <!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
 <html>
 <head>
-<meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
 <title>Insert title here</title>
-<script src="pages/scripts.js"></script>
+<script type="text/javascript" src="pages/scripts.js"></script>
 <link rel="stylesheet" type="text/css" href="pages/tracker.css">
 </head>
 <body bgcolor= "FA F0 E6">
@@ -53,9 +52,9 @@
 	<tr><td>Build found: </td>
 	<td>
 	<c:forEach var="project" items="${projects}"> 
-	   <select name="version" size='1' id='${project.id}' class="versions">
+	   <select size='1' id='${project.id}' class="versions">
 	    	<c:forEach var="version" items="${project.buildVersions}">   
-	         	<option value='${version.id}'> ${version.name} </option>
+	         	<option onclick="addVersion('${version.id}');"> ${version.name} </option>
 			</c:forEach>
 	    </select>
 	</c:forEach>
@@ -71,6 +70,7 @@
 	</table>
 	<input type='hidden' name='author' value='${user.id}'>
 	<input type="hidden" name='action' value='add'>
+	<input type="hidden" name='version'>
 	<input type="submit" value="Add">
 	</form>
 </body>
