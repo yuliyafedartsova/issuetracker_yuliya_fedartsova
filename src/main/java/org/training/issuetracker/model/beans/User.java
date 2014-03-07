@@ -1,9 +1,12 @@
 package org.training.issuetracker.model.beans;
 
+import javax.persistence.Entity;
+import javax.persistence.Table;
+
 import org.training.issuetracker.model.beans.properties.Role;
 
-
-
+@Entity
+@Table(name = "USERS")
 public class User extends Persistent {
 	private String firstName; 
 	private String lastName;

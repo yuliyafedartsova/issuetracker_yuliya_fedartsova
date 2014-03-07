@@ -3,13 +3,17 @@ package org.training.issuetracker.model.beans;
 
 import java.sql.Date;
 
+import javax.persistence.Entity;
+import javax.persistence.Table;
+
 import org.training.issuetracker.model.beans.properties.Priority;
 import org.training.issuetracker.model.beans.properties.Resolution;
 import org.training.issuetracker.model.beans.properties.Status;
 import org.training.issuetracker.model.beans.properties.Type;
 import org.training.issuetracker.model.beans.properties.Version;
 
-
+@Entity
+@Table(name = "ISSUES")
 public class Issue extends Persistent {
 	private Priority priority;
 	private User assignee;

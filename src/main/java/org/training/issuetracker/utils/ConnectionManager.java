@@ -28,6 +28,7 @@ public class ConnectionManager {
 		 connection = DriverManager
 					.getConnection(Constants.DRIVER_TYPE + Configurations.DB + ":" + Configurations.PATH + Constants.LOCAL_PASS_TO_DB 
 							+ Configurations.DB_NAME, Configurations.DB_USER, Configurations.DB_PASSWORD);
+		
 		 }catch (SQLException e) {   
 			throw new RuntimeException(e.getMessage());
 		 }

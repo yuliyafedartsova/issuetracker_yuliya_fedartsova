@@ -2,8 +2,13 @@ package org.training.issuetracker.model.beans;
 
 import java.util.List;
 
+import javax.persistence.Entity;
+import javax.persistence.Table;
+
 import org.training.issuetracker.model.beans.properties.Version;
 
+@Entity
+@Table(name = "PROJECTS")
 public class Project extends Persistent {
 	private String name;
 	private  User manager;
