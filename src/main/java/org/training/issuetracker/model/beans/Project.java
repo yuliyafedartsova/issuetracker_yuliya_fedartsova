@@ -3,6 +3,8 @@ package org.training.issuetracker.model.beans;
 import java.util.List;
 
 import javax.persistence.Entity;
+import javax.persistence.JoinTable;
+import javax.persistence.OneToMany;
 import javax.persistence.Table;
 
 import org.training.issuetracker.model.beans.properties.Version;
@@ -12,6 +14,8 @@ import org.training.issuetracker.model.beans.properties.Version;
 public class Project extends Persistent {
 	private String name;
 	private  User manager;
+	@OneToMany
+	@JoinTable(name = "VERSIONS")
 	private  List<Version> buildVersions;
 	private String description;
 	

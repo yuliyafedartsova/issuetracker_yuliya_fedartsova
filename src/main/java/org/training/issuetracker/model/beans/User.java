@@ -1,6 +1,8 @@
 package org.training.issuetracker.model.beans;
 
 import javax.persistence.Entity;
+import javax.persistence.JoinColumn;
+import javax.persistence.OneToOne;
 import javax.persistence.Table;
 
 import org.training.issuetracker.model.beans.properties.Role;
@@ -11,6 +13,8 @@ public class User extends Persistent {
 	private String firstName; 
 	private String lastName;
 	private String email;
+	@OneToOne
+	@JoinColumn(name = "roleId")
 	private Role role; 
 	private String password;
 	

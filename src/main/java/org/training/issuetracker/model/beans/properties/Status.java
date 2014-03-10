@@ -17,4 +17,8 @@ public class Status extends Property {
 		super(name);
 	}
 	
+	public Status() {
+		super();
+	}
+	
 }

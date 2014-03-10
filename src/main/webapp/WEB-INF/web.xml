@@ -3,19 +3,39 @@
   <display-name>Issue Tracker</display-name>
   <description>JEE training project implementation by Yuliya Fedartsova</description>
   <context-param>
-		<param-name>contextConfigLocation</param-name>
-		<param-value>/WEB-INF/dispatcher-servlet.xml</param-value>
-   </context-param>
-   <servlet>
-		<servlet-name>dispatcher</servlet-name>
-		<servlet-class>org.springframework.web.servlet.DispatcherServlet</servlet-class>
-		<load-on-startup>1</load-on-startup>
-   </servlet>
+    <param-name>contextConfigLocation</param-name>
+    <param-value>/WEB-INF/dispatcher-servlet.xml</param-value>
+  </context-param>
+  <context-param>
+    <param-name>db</param-name>
+    <param-value>h2</param-value>
+  </context-param>
+  <context-param>
+    <param-name>db-name</param-name>
+    <param-value>test</param-value>
+  </context-param>
+  <context-param>
+    <param-name>driver</param-name>
+    <param-value>org.h2.Driver</param-value>
+  </context-param>
+  <context-param>
+    <param-name>user</param-name>
+    <param-value>sa</param-value>
+  </context-param>
+  <context-param>
+    <param-name>password</param-name>
+    <param-value></param-value>
+  </context-param>
+  <servlet>
+    <servlet-name>dispatcher</servlet-name>
+    <servlet-class>org.springframework.web.servlet.DispatcherServlet</servlet-class>
+    <load-on-startup>1</load-on-startup>
+  </servlet>
   <servlet-mapping>
-		<servlet-name>dispatcher</servlet-name>
-		<url-pattern>/</url-pattern>
+    <servlet-name>dispatcher</servlet-name>
+    <url-pattern>/</url-pattern>
   </servlet-mapping>
   <listener>
-		<listener-class>org.springframework.web.context.ContextLoaderListener</listener-class>
+    <listener-class>org.training.issuetracker.controllers.TestSpringListener</listener-class>
   </listener>
-  </web-app>
+</web-app>

@@ -20,6 +20,10 @@ public class Property extends Persistent {
 		this.name = name;
 	}
 
+	public Property() {
+		super();
+	}
+	
 	public String getName() {
 		return name;
 	}

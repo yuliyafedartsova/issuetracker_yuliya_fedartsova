@@ -11,13 +11,13 @@ public class Resolution extends Property {
 
 	public Resolution(int id, String name) {
 		super(id, name);
-		
 	}
 	
 	public Resolution(String name) {
 		super(name);
-		
 	}
 	
-
+	public Resolution() {
+		super();
+	}
 }

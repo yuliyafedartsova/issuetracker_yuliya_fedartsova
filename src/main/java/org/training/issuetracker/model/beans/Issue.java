@@ -3,7 +3,11 @@ package org.training.issuetracker.model.beans;
 
 import java.sql.Date;
 
+import javax.persistence.Column;
 import javax.persistence.Entity;
+import javax.persistence.JoinColumn;
+import javax.persistence.OneToOne;
+import javax.persistence.PrimaryKeyJoinColumn;
 import javax.persistence.Table;
 
 import org.training.issuetracker.model.beans.properties.Priority;
@@ -15,18 +19,38 @@ import org.training.issuetracker.model.beans.properties.Version;
 @Entity
 @Table(name = "ISSUES")
 public class Issue extends Persistent {
+	@OneToOne
+	@JoinColumn(name = "priorityId")
 	private Priority priority;
+	@OneToOne
+	@JoinColumn(name = "assigneeId")
 	private User assignee;
+	@OneToOne
+	@JoinColumn(name = "typeId")
 	private Type type;
+	@Column(name="summary")
 	private String summary;
+	@Column(name="description")
 	private String description;
+	@OneToOne
+	@JoinColumn(name = "statusId")
 	private Status status;
+	@OneToOne
+	@JoinColumn(name = "projectId")
 	private Project project;
+	@OneToOne
+	@JoinColumn(name = "resolutionId")
 	private Resolution resolution;
+	@OneToOne
+	@JoinColumn(name = "versionId")
 	private Version buildFound;
 	private Date createDate;
 	private Date modifyDate;
+	@OneToOne
+	@JoinColumn(name = "authorId")
 	private User author;
+	@OneToOne
+	@JoinColumn(name = "modifierId")
 	private User modifier;
 	
 	public Issue(int id, Priority priority, Type type,

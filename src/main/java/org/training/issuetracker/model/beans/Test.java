@@ -3,27 +3,25 @@ package org.training.issuetracker.model.beans;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
-import javax.persistence.GenerationType;
 import javax.persistence.Id;
-import javax.persistence.Inheritance;
-import javax.persistence.InheritanceType;
 
 @Entity
-@Inheritance(strategy=InheritanceType.TABLE_PER_CLASS)
-
-public class Persistent {
+public class Test {
 	@Id
     @Column(name = "ID")
-	@GeneratedValue(strategy = GenerationType.TABLE)
+    @GeneratedValue
 	private int id;
-
-	public Persistent(int id) {
+	@Column(name="NAME")
+	private String name;
+	
+	public Test(int id, String name) {
 		super();
 		this.id = id;
+		this.name = name;
 	}
 	
-	public Persistent() {
-		super();
+	public Test(String name) {
+		this.name = name;
 	}
 
 	public int getId() {
@@ -33,4 +31,17 @@ public class Persistent {
 	public void setId(int id) {
 		this.id = id;
 	}
+
+	public String getName() {
+		return name;
+	}
+
+	public void setName(String name) {
+		this.name = name;
+	}
+	
+	
+	
+	
+
 }

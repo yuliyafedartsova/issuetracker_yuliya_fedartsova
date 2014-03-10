@@ -8,7 +8,11 @@ import org.training.issuetracker.model.beans.Property;
 @Entity
 @Table(name = "PRIORITIES")
 public class Priority extends Property {
-
+	
+	public Priority() {
+		super();
+	}
+	
 	public Priority(int id, String name) {
 		super(id, name);
 	}

@@ -17,4 +17,8 @@ public class Role extends Property {
 		super(name);
 	}
 	
+	public Role() {
+		super();
+	}
+	
 }

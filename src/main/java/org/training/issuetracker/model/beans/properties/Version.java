@@ -10,7 +10,7 @@ import org.training.issuetracker.model.beans.Property;
 public class Version extends Property {
 
 	public Version() {
-		super("test");
+		super();
 	}
 	
 	public Version(int id, String name) {

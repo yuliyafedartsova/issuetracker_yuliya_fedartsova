@@ -16,4 +16,8 @@ public class Type extends Property {
 	public Type(String name) {
 		super(name);
 	}
+	
+	public Type() {
+		super();
+	}
 }
