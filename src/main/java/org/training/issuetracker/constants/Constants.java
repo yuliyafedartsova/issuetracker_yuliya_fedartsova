@@ -63,7 +63,7 @@ public class Constants {
     public static final String JUMP_USER_DATA_UPDATE = "/UserDataUpdateView";
     public static final String HEADER = "/HeaderView";
     public static final String LOGIN_FORM = "/LoginFormView";
-    public static final String MAIN = "/main";
+    public static final String MAIN = "main";
     public static final String IN_PROGRESS = "In Progress";
     public static final String CLOSED = "Closed";
     public static final String REOPENED = "Reopened";

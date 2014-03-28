@@ -1,5 +1,6 @@
 package org.training.issuetracker.controllers;
 
+import java.sql.Date;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -18,10 +19,16 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.training.issuetracker.constants.Configurations;
 import org.training.issuetracker.constants.Constants;
+import org.training.issuetracker.model.beans.Issue;
 import org.training.issuetracker.model.beans.MessageProvider;
+import org.training.issuetracker.model.beans.Project;
 import org.training.issuetracker.model.beans.Test;
 import org.training.issuetracker.model.beans.User;
 import org.training.issuetracker.model.beans.properties.Priority;
+import org.training.issuetracker.model.beans.properties.Resolution;
+import org.training.issuetracker.model.beans.properties.Role;
+import org.training.issuetracker.model.beans.properties.Status;
+import org.training.issuetracker.model.beans.properties.Type;
 import org.training.issuetracker.model.beans.properties.Version;
 import org.training.issuetracker.utils.HibernateSessionFactory;
 
@@ -48,19 +55,13 @@ public class HelloWorldController {
 	
 	@RequestMapping("/")
 	public String printWelcome(ModelMap model) {
-		List<User> users  = new ArrayList<User>();
+		List<Issue> issues = new ArrayList<Issue>();
 		SessionFactory sessionFactory = HibernateSessionFactory.getSessionFactory();
 	    Session session = sessionFactory.openSession();
-	    users = session.createCriteria(User.class).list();
-	    System.out.println();
-	    for(User user : users) {
-	    	System.out.println(user.getFirstName());
-	    	System.out.println(user.getRole().getName());
-	    }
-	    System.out.println();
-		model.addAttribute("title", messageProvider.getTitle());
-		model.addAttribute("message", messageProvider.getHelloMessage());
-		return "hello";
+	    issues = session.createCriteria(Issue.class).list();
+	    model.addAttribute("title", messageProvider.getTitle());
+		model.addAttribute(Constants.ISSUES, issues);
+		return "main";
 	}
 	
 	

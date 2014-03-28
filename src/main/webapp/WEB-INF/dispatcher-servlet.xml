@@ -24,4 +24,8 @@
 	<bean id="messageProvider" class="org.training.issuetracker.model.beans.SimpleMessageProvider" >
 		<property name="resolver" ref="resolver" />
 	</bean>
+	
+	
+	
+	
 </beans>

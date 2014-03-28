@@ -53,6 +53,11 @@ public class Issue extends Persistent {
 	@JoinColumn(name = "modifierId")
 	private User modifier;
 	
+	public Issue() {
+		
+	}
+	
+	
 	public Issue(int id, Priority priority, Type type,
 			String summary, String description, Status status, Project project,
 			Version buildFound, Date createDate, User author) {
