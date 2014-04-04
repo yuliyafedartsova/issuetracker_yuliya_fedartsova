@@ -3,6 +3,8 @@ import javax.servlet.ServletContextEvent;
 import org.springframework.web.context.ContextLoaderListener;
 import org.training.issuetracker.constants.Configurations;
 import org.training.issuetracker.constants.Constants;
+import org.training.issuetracker.model.beans.User;
+import org.training.issuetracker.model.beans.properties.Role;
 
 
 public class TestSpringListener extends ContextLoaderListener {
@@ -18,7 +20,10 @@ public class TestSpringListener extends ContextLoaderListener {
     			event.getServletContext().getInitParameter(Constants.PASSWORD);
     	Configurations.DB_USER = 
     			event.getServletContext().getInitParameter(Constants.USER);
-		super.contextInitialized(event);
+    	User guest = new User();
+        guest.setRole(new Role(Constants.GUEST));
+        event.getServletContext().setAttribute(Constants.USER, guest);
+    	super.contextInitialized(event);
 	
 	}
 	

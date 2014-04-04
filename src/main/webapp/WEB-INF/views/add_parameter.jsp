@@ -25,7 +25,7 @@
 			Add resolution: <br>
 		</c:when>
 	</c:choose>
-	<form action='${path}/property'>
+	<form action='/issuetracker/add-parameter'>
    	<input type='text' name='parameter' value=''>
     <br><br>
     <input type="hidden" name='action' value='add'>

@@ -11,7 +11,9 @@
 		<hr>
 	</c:if>
 	<form name="loginForm" method="POST" action="${path}/login">
-		Email:<br>
+		
+	
+		Email111:<br>
 		<input type="text" name=<%= Constants.EMAIL %> value=""><br>
 		Password:<br>
 		<input type="password" name=<%= Constants.PASSWORD %> value=""><br>

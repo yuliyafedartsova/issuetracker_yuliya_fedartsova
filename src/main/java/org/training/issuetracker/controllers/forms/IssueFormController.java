@@ -33,7 +33,7 @@ import org.training.issuetracker.model.factories.StatusFactory;
 import org.training.issuetracker.model.factories.TypeFactory;
 import org.training.issuetracker.model.factories.UserFactory;
 
-
+//
 
 public class IssueFormController extends AbstractController {
 	private static final long serialVersionUID = 1L;

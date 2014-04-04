@@ -9,7 +9,7 @@ function showVersions(id) {
 
 function addVersion(id) {
 	var f = document.getElementById("issue-form");
-	f.version.value = id;
+	f.versionId.value = id;
 }
 
 

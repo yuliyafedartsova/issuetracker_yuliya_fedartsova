@@ -13,7 +13,7 @@
 		<hr>
 	</c:if>	
 	Add project:<br>
-	<form action='${path}/project'>
+	<form action='/issuetracker/add-project'>
     <table>
     <tr><td> Name: &nbsp;</td>
 	<td><input type='text' name='name' value=''></td></tr>

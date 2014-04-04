@@ -103,7 +103,7 @@
 	    <tr><td> Build found </td>
     	<td><select name='version' size='1'>
     		    <option value='${issue.buildFound.id}'> ${issue.buildFound.name} </option>
-    		    <c:forEach var="version" items="${issue.project.buildVersions}"> 
+    		    <c:forEach var="version" items="${issue.project.versions}"> 
 	        		<c:if test="${issue.buildFound.name != version.name}">
 						<option value='${version.id}'> ${version} </option>
 					</c:if>

@@ -1,4 +1,6 @@
-package org.training.issuetracker.controllers;
+package org.training.issuetracker.controllers.spring;
+
+import javax.servlet.http.HttpServletRequest;
 
 import org.hibernate.Query;
 import org.hibernate.Session;
@@ -18,7 +20,7 @@ public class LoginSpringController {
 
 	@RequestMapping("/login")
 	public String registrate(ModelMap model, @RequestParam("email") String email, 
-			@RequestParam("password") String password) {
+			@RequestParam("password") String password, HttpServletRequest request) {
 		final String ERROR_MESSAGE = "Wrong email or password";
 		try {
 		checkData(email, password);
@@ -36,11 +38,14 @@ public class LoginSpringController {
 	    session.getTransaction().commit();
 	    if(user != null) {
 	    	model.addAttribute(Constants.USER, user);
+	    	request.getSession().setAttribute(Constants.USER, user);
+	    
 	    } else {
 	    	model.addAttribute(Constants.ERROR_MESSAGE, ERROR_MESSAGE);
 	    }
-	    return Constants.MAIN;
-	}
+	  //  return Constants.MAIN;
+	    return "forward:/";
+	} 
 	
 	private void checkData(String email, String password) throws ValidationException {
     	if (Constants.EMPTY.equals(email) || Constants.EMPTY.equals(password)) {

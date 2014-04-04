@@ -1,0 +1,132 @@
+package org.training.issuetracker.controllers.spring;
+
+import java.beans.PropertyEditorSupport;
+import java.sql.Date;
+
+import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpSession;
+
+import org.hibernate.Session;
+import org.hibernate.SessionFactory;
+import org.springframework.stereotype.Controller;
+import org.springframework.ui.ModelMap;
+import org.springframework.web.bind.ServletRequestDataBinder;
+import org.springframework.web.bind.WebDataBinder;
+import org.springframework.web.bind.annotation.InitBinder;
+import org.springframework.web.bind.annotation.ModelAttribute;
+import org.springframework.web.bind.annotation.PathVariable;
+import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
+import org.training.issuetracker.binders.IssueBinder;
+import org.training.issuetracker.binders.ProjectBinder;
+import org.training.issuetracker.binders.PropertyBinder;
+import org.training.issuetracker.binders.StatusBinder;
+import org.training.issuetracker.binders.TypeBinder;
+import org.training.issuetracker.binders.UserBinder;
+import org.training.issuetracker.binders.VersionBinder;
+import org.training.issuetracker.constants.Constants;
+import org.training.issuetracker.model.beans.Issue;
+import org.training.issuetracker.model.beans.Project;
+import org.training.issuetracker.model.beans.User;
+import org.training.issuetracker.model.beans.properties.Priority;
+import org.training.issuetracker.model.beans.properties.Resolution;
+import org.training.issuetracker.model.beans.properties.Status;
+import org.training.issuetracker.model.beans.properties.Type;
+import org.training.issuetracker.model.beans.properties.Version;
+import org.training.issuetracker.services.IssueService;
+import org.training.issuetracker.services.PropertyService;
+import org.training.issuetracker.services.StatusService;
+import org.training.issuetracker.utils.HibernateSessionFactory;
+
+@Controller
+public class IssueSpringController {
+
+	@RequestMapping("/add-issue")
+	public String addIssue(ModelMap model, @ModelAttribute Issue issue,
+			@RequestParam("statusId") Status status,
+			@RequestParam("typeId") Type type,
+			@RequestParam("priorityId") Priority priority,
+			@RequestParam("assigneeId") User assignee,
+			@RequestParam("projectId") Project project,
+			@RequestParam("versionId") Version version,
+			HttpServletRequest request
+	) {
+		HttpSession session = request.getSession();
+	    User currentUser = (User)session.getAttribute(Constants.USER);
+	    Date currentDate = new Date(System.currentTimeMillis());
+		issue.setAssignee(assignee);
+		issue.setAuthor(currentUser);
+		issue.setBuildFound(version);
+		issue.setCreateDate(currentDate);
+		issue.setPriority(priority);
+		issue.setProject(project);
+		issue.setStatus(status);
+		issue.setType(type);
+		new IssueService().save(issue);
+		request.setAttribute(Constants.MESSAGE, Constants.SUCCESSFULLY_ADD_ISSUE);
+	    return "forward:/";
+	}
+	
+	@RequestMapping("/reopen-issue/{Id}")
+	public String reopenIssue(ModelMap model, @PathVariable("Id") Issue issue,
+			@RequestParam("statusId") Status status
+	) {
+		if(status.getName().equals(Constants.REOPENED)) {
+			Status newStatus = new StatusService().getByName(Constants.NEW);
+		    issue.setStatus(newStatus);
+		    issue.setAssignee(null);
+		    issue.setResolution(null);
+		    new IssueService().update(issue);
+		    model.addAttribute(Constants.MESSAGE, Constants.SUCCESSFULLY_REOPEN_ISSUE);
+		}
+		return "forward:/";
+	}
+
+    
+    
+    @RequestMapping("/update-issue/{Id}")
+    public String updateIssue(@PathVariable("Id") Issue issue,
+    		@RequestParam("statusId") Status status,
+			@RequestParam("typeId") Type type,
+			@RequestParam("priorityId") Priority priority,
+			@RequestParam("assigneeId") User assignee,
+			@RequestParam("projectId") Project project,
+			@RequestParam("versionId") Version version,
+			@RequestParam("resolutionId") Resolution resolution,
+			@RequestParam("description") String description,
+			@RequestParam("summary") String summary,
+			HttpServletRequest request,
+			ModelMap model
+    ) {
+    	HttpSession session = request.getSession();
+	    User currentUser = (User)session.getAttribute(Constants.USER);
+	    Date currentDate = new Date(System.currentTimeMillis());
+	    issue.setAssignee(assignee);
+	    issue.setModifier(currentUser);
+	    issue.setModifyDate(currentDate);
+	    issue.setBuildFound(version);
+	    issue.setDescription(description);
+	    issue.setPriority(priority);
+	    issue.setProject(project);
+	    issue.setResolution(resolution);
+	    issue.setStatus(status);
+	    issue.setSummary(summary);
+	    issue.setType(type);
+	    new IssueService().update(issue);
+	    model.addAttribute(Constants.MESSAGE, Constants.SUCCESSFULLY_UPDATE_ISSUE);
+    	return "forward:/";
+    }
+    
+     @InitBinder
+	public void initBinder(WebDataBinder binder) {
+		binder.registerCustomEditor(Status.class, new StatusBinder());
+		binder.registerCustomEditor(Type.class, new TypeBinder());
+		binder.registerCustomEditor(Priority.class, new PropertyBinder(new Priority()));
+		binder.registerCustomEditor(User.class, new UserBinder());
+		binder.registerCustomEditor(Project.class, new ProjectBinder());
+		binder.registerCustomEditor(Version.class, new PropertyBinder(new Version()));
+		binder.registerCustomEditor(Resolution.class, new PropertyBinder(new Resolution()));
+		binder.registerCustomEditor(Issue.class, new IssueBinder());
+    
+    }
+  }

@@ -8,15 +8,15 @@
 		<title>Welcome</title>
 	</head>
 	<body  bgcolor= "FA F0 E6">
-				<a href='projects-review'> Projects </a><br>
-			    <a href='property-review?property=type'> Types </a>&nbsp;
-			    <a href='property-review?property=status'> Statuses </a>&nbsp;
-			    <a href='property-review?property=resolution'> Resolutions</a>&nbsp;
-			    <a href='property-review?property=priority'> Priorities </a> <br>
-			    <a href='project-form?action=add'> Add project </a><br>
-			    <a href='property-form?property=resolution&action=add'> Add resolution </a>&nbsp;
-			    <a href='property-form?property=priority&action=add'> Add priority </a>&nbsp;
-			    <a href='property-form?property=type&action=add'> Add type </a>&nbsp;<br>
-			    <a href='user-form?action=add'>Add user</a><br>
+				<a href='/issuetracker/review-projects'> Projects </a><br>
+			    <a href='/issuetracker/property-review?property=type'> Types </a>&nbsp;
+			    <a href='/issuetracker/property-review?property=status'> Statuses </a>&nbsp;
+			    <a href='/issuetracker/property-review?property=resolution'> Resolutions</a>&nbsp;
+			    <a href='/issuetracker/property-review?property=priority'> Priorities </a> <br>
+			    <a href='/issuetracker/form-project-add'> Add project </a><br>
+			    <a href='/issuetracker/property-form-add?property=resolution'> Add resolution </a>&nbsp;
+			    <a href='/issuetracker/property-form-add?property=priority'> Add priority </a>&nbsp;
+			    <a href='/issuetracker/property-form-add?property=type'> Add type </a>&nbsp;<br>
+			    <a href='/issuetracker/user-form-add'>Add user</a><br>
 			</body>
 </html>

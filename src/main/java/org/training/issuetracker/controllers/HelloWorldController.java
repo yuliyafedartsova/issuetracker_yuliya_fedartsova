@@ -53,16 +53,7 @@ public class HelloWorldController {
 		return "hello";
 	}
 	
-	@RequestMapping("/")
-	public String printWelcome(ModelMap model) {
-		List<Issue> issues = new ArrayList<Issue>();
-		SessionFactory sessionFactory = HibernateSessionFactory.getSessionFactory();
-	    Session session = sessionFactory.openSession();
-	    issues = session.createCriteria(Issue.class).list();
-	    model.addAttribute("title", messageProvider.getTitle());
-		model.addAttribute(Constants.ISSUES, issues);
-		return "main";
-	}
+	
 	
 	
 	

@@ -28,7 +28,7 @@ public class MainController extends AbstractController {
    
     protected void performTask(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
     	
-    	
+    	System.out.println("In main servlet!!!!!!!!!!!!!!!");
     	
     	
     	IssueDAO issuesDao = IssueFactory.getClassFromFactory();

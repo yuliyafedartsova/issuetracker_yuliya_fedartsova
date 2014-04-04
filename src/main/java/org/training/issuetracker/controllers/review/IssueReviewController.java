@@ -18,10 +18,8 @@ import org.training.issuetracker.model.factories.IssueFactory;
 public class IssueReviewController extends AbstractController {
 	private static final long serialVersionUID = 1L;
        
-   
     public IssueReviewController() {
         super();
-        
     }
 
     protected void performTask(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {

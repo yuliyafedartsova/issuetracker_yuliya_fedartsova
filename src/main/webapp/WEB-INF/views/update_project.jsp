@@ -12,7 +12,7 @@
 		<hr>
 	</c:if>
 	Update project: <br>	
-	<form method="post" action='${path}/project'>
+	<form method="post" action='/issuetracker/update-project/${project.id}'>
 	<table>
 		<tr><td> Name:&nbsp; </td>
 		<td><input type="text" name="name"></td> <td>${project.name}
@@ -21,17 +21,16 @@
 		<td><input type="text" name="description"></td> 
 		 <td>${project.description}
     	</td></tr>
-    	
-	 <tr><td>Builds:&nbsp;</td>
+    <tr><td>Builds:&nbsp;</td>
 		<td><select size='1'>
-			<c:forEach var="version" items="${project.buildVersions}"> 
+			<c:forEach var="version" items="${project.versions}"> 
 	         	<option value='${version.id}'> ${version} </option>
 		    </c:forEach>
 		</select></td> <td> <input type='text' name='version'>  
 		Add new version </td>
 		</td>
 		<tr><td>Manager:&nbsp;</td>
-		<td><select name='manager' size='1'>
+		<td><select name='managerId' size='1'>
 			<option value='${project.manager.id}'> ${project.manager.firstName} &nbsp; ${project.manager.lastName} </option>
 			<c:forEach var="user" items="${users}"> 
 	         	<c:if test="${project.manager.id != user.id}">

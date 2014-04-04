@@ -18,7 +18,7 @@
 				<hr>
 			</c:if>
 		   <c:if test="${user.role.name != 'Guest'}">
-				<a href='issue-form?action=add'> Submit Issue </a> <br>
+				<a href='/issuetracker/form-issue-add'> Submit Issue </a> <br>
 			</c:if>
 	        <c:if test="${user.role.name eq 'Administrator'}">
 				<%@ include file="admin_submenu.jsp" %> 
@@ -47,10 +47,10 @@
 		      	<td> 
 		      	<c:choose>
 		      		<c:when test="${user.role eq 'Guest'}">
-		      			<a href='${path}/issue-review?id=${issue.id}'> ${issue.id} </a>
+		      			<a href='/issuetracker/issue-review?id=${issue.id}'> ${issue.id} </a>
 		      		</c:when>
 				    <c:otherwise>
-						<a href='${path}/issue-form?action=update&id=${issue.id}'> ${issue.id} </a>		
+						<a href='/issuetracker/form-issue-update?id=${issue.id}'> ${issue.id} </a>		
 					</c:otherwise>
 		      	</c:choose>
 		      	</td>

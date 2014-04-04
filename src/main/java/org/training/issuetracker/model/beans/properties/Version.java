@@ -1,3 +1,4 @@
+
 package org.training.issuetracker.model.beans.properties;
 
 import javax.persistence.Entity;

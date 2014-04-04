@@ -178,7 +178,7 @@ public class Issue extends Persistent {
 		return author;
 	}
 
-	public void setAuthorBy(User author) {
+	public void setAuthor(User author) {
 		this.author = author;
 	}
 

@@ -1,4 +1,4 @@
-package org.training.issuetracker.controllers;
+package org.training.issuetracker.controllers.spring;
 
 import javax.servlet.http.HttpServletRequest;
 
