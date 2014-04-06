@@ -25,7 +25,7 @@ import org.training.issuetracker.services.StatusService;
 import org.training.issuetracker.services.TypeService;
 
 @Controller
-public class PropertyReviewSpringController {
+public class PropertyReviewSpringController extends AbstractSpringController {
 
 	@RequestMapping("/property-review")
 	public String reviewProperty(ModelMap model,
@@ -34,20 +34,16 @@ public class PropertyReviewSpringController {
 		model.addAttribute(Constants.PROPERTY, propertyName);
 		switch(propertyName) {
 		case Constants.STATUS:
-			List<Status> statuses = new StatusService().getStatuses();
-			model.addAttribute(Constants.PARAMETRES, statuses);
+			model.addAttribute(Constants.PARAMETRES, statusDao.getAll());
 			break;
 		case Constants.TYPE:
-			List<Type> types = new TypeService().getTypes();
-			model.addAttribute(Constants.PARAMETRES, types);
+			model.addAttribute(Constants.PARAMETRES, typeDao.getAll());
 			break;
 		case Constants.PRIORITY:
-			List<Priority> priorities = new PriorityService().getPriorities();
-			model.addAttribute(Constants.PARAMETRES, priorities);
+			model.addAttribute(Constants.PARAMETRES, priorityDao.getAll());
 			break;
 		case Constants.RESOLUTION:
-		    List<Resolution> resolutions = new ResolutionService().getResolutions();
-			model.addAttribute(Constants.PARAMETRES, resolutions);
+		    model.addAttribute(Constants.PARAMETRES, resolutionDao.getAll());
 			break;
     	}
 		return "parameters";

@@ -4,32 +4,22 @@ import java.util.List;
 
 import org.hibernate.Session;
 import org.hibernate.SessionFactory;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.training.issuetracker.model.beans.Property;
 import org.training.issuetracker.model.beans.User;
 import org.training.issuetracker.model.beans.properties.Status;
 import org.training.issuetracker.utils.HibernateSessionFactory;
 
-public class UserService {
+public class UserService extends PersistentService {
 	
 	public List<User> getUsers() {
-		SessionFactory sessionFactory = HibernateSessionFactory.getSessionFactory();
-	    Session session = sessionFactory.openSession();
+		Session session = sessionFactory.openSession();
 		return session.createCriteria(User.class).list();
 	}
 	
 	public User getById(int id) {
-		SessionFactory sessionFactory = HibernateSessionFactory.getSessionFactory();
 		Session session = sessionFactory.openSession();
 		return (User)session.get(User.class, id);
 	}
 	
-	
-	public void addUser(User user) {
-		SessionFactory sessionFactory = HibernateSessionFactory.getSessionFactory();
-		Session session = sessionFactory.openSession();
-	    session.beginTransaction();
-	    session.save(user);
-		session.getTransaction().commit();
-	}
-
 }

@@ -38,46 +38,34 @@ import org.training.issuetracker.services.UserService;
 
 
 @Controller
-public class IssueFormSpringController {
+public class IssueFormSpringController extends AbstractSpringController {
     @RequestMapping("/form-issue-add")
 	public String addIssue(ModelMap model) {
-		List<Status> statuses = getAvailableStatusesForSubmitIssue();
-		List<User> users = new UserService().getUsers();
-		List<Priority> priorities = new PriorityService().getPriorities();
-		List<Type> types = new TypeService().getTypes();
-		List<Project> projects = new ProjectService().getProjects();
-		model.addAttribute(Constants.USERS, users);
-		model.addAttribute(Constants.PRIORITIES, priorities);
-		model.addAttribute(Constants.STATUSES, statuses);
-		model.addAttribute(Constants.TYPES, types);
-		model.addAttribute(Constants.PROJECTS, projects);
+    	model.addAttribute(Constants.USERS, userDao.getUsers());
+		model.addAttribute(Constants.PRIORITIES, priorityDao.getAll());
+		model.addAttribute(Constants.STATUSES, getAvailableStatusesForSubmitIssue());
+		model.addAttribute(Constants.TYPES, typeDao.getAll());
+		model.addAttribute(Constants.PROJECTS, projectDao.getProjects());
 		return "/add_issue";
 	}
 	
 	@RequestMapping("/form-issue-update")
 	public String updateIssue(ModelMap model, 
 			@RequestParam("id") Issue issue) {
-		List<Resolution> resolutions = new ResolutionService().getResolutions();
-		List<User> users = new UserService().getUsers();
-		List<Project> projects = new ProjectService().getProjects();
-		List<Type> types = new TypeService().getTypes();
-		List<Priority> priorities = new PriorityService().getPriorities();
-		List<Status> statuses = getAvailableStatuses(issue);
-		model.addAttribute(Constants.RESOLUTIONS, resolutions);
+	    model.addAttribute(Constants.RESOLUTIONS, resolutionDao.getAll());
 		model.addAttribute(Constants.ISSUE, issue);
-		model.addAttribute(Constants.USERS, users);
-		model.addAttribute(Constants.PRIORITIES, priorities);
-		model.addAttribute(Constants.STATUSES, statuses);
-		model.addAttribute(Constants.TYPES, types);
-		model.addAttribute(Constants.PROJECTS, projects);
+		model.addAttribute(Constants.USERS, userDao.getUsers());
+		model.addAttribute(Constants.PRIORITIES, priorityDao.getAll());
+		model.addAttribute(Constants.STATUSES, getAvailableStatuses(issue));
+		model.addAttribute(Constants.TYPES, typeDao.getAll());
+		model.addAttribute(Constants.PROJECTS, projectDao.getProjects());
     	return "/update_issue";
 	}
 	
 	private List<Status> getAvailableStatusesForSubmitIssue() {
     	List<Status> statuses = new ArrayList<Status>();
-    	StatusService statusService = new StatusService();
-    	statuses.add(statusService.getByName(Constants.NEW));
-    	statuses.add(statusService.getByName(Constants.ASSIGNED));
+    	statuses.add(statusDao.getByName(Constants.NEW));
+    	statuses.add(statusDao.getByName(Constants.ASSIGNED));
     	return statuses;
     }
 	
@@ -88,30 +76,29 @@ public class IssueFormSpringController {
 	    
 
 	 private List<Status> getAvailableStatuses(Issue issue) {
-		    StatusService statusService = new StatusService();
-	    	List<Status> statuses = new ArrayList<Status>();
+		    List<Status> statuses = new ArrayList<Status>();
 	        switch(issue.getStatus().getName()) {
 	    		case Constants.NEW:
 	    			statuses.add(issue.getStatus());
-	    			statuses.add(statusService.getByName(Constants.ASSIGNED));
+	    			statuses.add(statusDao.getByName(Constants.ASSIGNED));
 	    			break;
 	    		case Constants.ASSIGNED:
 	    			statuses.add(issue.getStatus());
-	    			statuses.add(statusService.getByName(Constants.IN_PROGRESS));
+	    			statuses.add(statusDao.getByName(Constants.IN_PROGRESS));
 	    			break;	
 	    		case Constants.CLOSED:
 	    			statuses.add(issue.getStatus());
-	    			statuses.add(statusService.getByName(Constants.REOPENED));
+	    			statuses.add(statusDao.getByName(Constants.REOPENED));
 	    			break;
 	    		case Constants.IN_PROGRESS:
 	    			statuses.add(issue.getStatus());
-	    			statuses.add(statusService.getByName(Constants.CLOSED));
-	    			statuses.add(statusService.getByName(Constants.RESOLVED));
+	    			statuses.add(statusDao.getByName(Constants.CLOSED));
+	    			statuses.add(statusDao.getByName(Constants.RESOLVED));
 	    			break;
 	    		case Constants.RESOLVED:
-	    			statuses.add(statusService.getByName(Constants.CLOSED));
+	    			statuses.add(statusDao.getByName(Constants.CLOSED));
 	    			statuses.add(issue.getStatus());
-	    			statuses.add(statusService.getByName(Constants.REOPENED));
+	    			statuses.add(statusDao.getByName(Constants.REOPENED));
 	    			break;
 	    	
 	    	}

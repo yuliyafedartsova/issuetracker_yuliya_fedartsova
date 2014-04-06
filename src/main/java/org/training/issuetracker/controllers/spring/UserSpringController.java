@@ -20,7 +20,7 @@ import org.training.issuetracker.services.UserService;
 
 
 @Controller
-public class UserSpringController {
+public class UserSpringController extends AbstractSpringController {
 	
 	@RequestMapping("/add-user")
 	String addUser(ModelMap model, @ModelAttribute User user,
@@ -31,7 +31,7 @@ public class UserSpringController {
 			@RequestParam("role") Role role, 
 			HttpSession session
 			) {
-	new UserService().addUser(user);
+	userDao.addUser(user);
 	model.addAttribute(Constants.USER, session.getAttribute(Constants.USER));
 	return "main";
 	}

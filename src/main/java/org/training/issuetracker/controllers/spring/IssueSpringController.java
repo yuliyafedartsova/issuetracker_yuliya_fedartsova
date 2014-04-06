@@ -39,7 +39,7 @@ import org.training.issuetracker.services.StatusService;
 import org.training.issuetracker.utils.HibernateSessionFactory;
 
 @Controller
-public class IssueSpringController {
+public class IssueSpringController extends AbstractSpringController {
 
 	@RequestMapping("/add-issue")
 	public String addIssue(ModelMap model, @ModelAttribute Issue issue,
@@ -62,7 +62,7 @@ public class IssueSpringController {
 		issue.setProject(project);
 		issue.setStatus(status);
 		issue.setType(type);
-		new IssueService().save(issue);
+		issueDao.addIssue(issue);
 		request.setAttribute(Constants.MESSAGE, Constants.SUCCESSFULLY_ADD_ISSUE);
 	    return "forward:/";
 	}
@@ -72,11 +72,10 @@ public class IssueSpringController {
 			@RequestParam("statusId") Status status
 	) {
 		if(status.getName().equals(Constants.REOPENED)) {
-			Status newStatus = new StatusService().getByName(Constants.NEW);
-		    issue.setStatus(newStatus);
+			issue.setStatus(statusDao.getByName(Constants.NEW));
 		    issue.setAssignee(null);
 		    issue.setResolution(null);
-		    new IssueService().update(issue);
+		    issueDao.updateIssue(issue);
 		    model.addAttribute(Constants.MESSAGE, Constants.SUCCESSFULLY_REOPEN_ISSUE);
 		}
 		return "forward:/";
@@ -112,7 +111,7 @@ public class IssueSpringController {
 	    issue.setStatus(status);
 	    issue.setSummary(summary);
 	    issue.setType(type);
-	    new IssueService().update(issue);
+	    issueDao.updateIssue(issue);
 	    model.addAttribute(Constants.MESSAGE, Constants.SUCCESSFULLY_UPDATE_ISSUE);
     	return "forward:/";
     }

@@ -16,7 +16,7 @@ import org.training.issuetracker.utils.HibernateSessionFactory;
 
 @Controller
 
-public class LoginSpringController {
+public class LoginSpringController extends AbstractSpringController {
 
 	@RequestMapping("/login")
 	public String registrate(ModelMap model, @RequestParam("email") String email, 

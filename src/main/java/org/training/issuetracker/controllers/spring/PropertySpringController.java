@@ -27,7 +27,7 @@ import org.training.issuetracker.utils.HibernateSessionFactory;
 
 
 @Controller
-public class PropertySpringController {
+public class PropertySpringController extends AbstractSpringController {
 	
 	@RequestMapping("/update-parameter")
 	public String updateParameter(ModelMap model, 
@@ -53,19 +53,19 @@ public class PropertySpringController {
 	}
 	
 	private void updateParameter(String property, int id, String name)  {
-		 PropertyService service = new PropertyService();
+		 
 		 switch(property) {
     		case Constants.STATUS:
-    			service.update(new Status(id, name));
+    			statusDao.update(new Status(id, name));
     			break;
     		case Constants.TYPE:
-    			service.update(new Type(id, name));
+    			typeDao.update(new Type(id, name));
     			break;
     		case Constants.PRIORITY:
-    			service.update(new Priority(id, name));
+    			priorityDao.update(new Priority(id, name));
     			break;
     		case Constants.RESOLUTION:
-    			service.update(new Resolution(id, name));
+    			resolutionDao.update(new Resolution(id, name));
     			break;
         }
    }
@@ -73,17 +73,14 @@ public class PropertySpringController {
 	private void addParameter(String property, String name)  {
 		 PropertyService service = new PropertyService();
 		 switch(property) {
-     		case Constants.STATUS:
-     			service.save(new Status(name));
-     			break;
      		case Constants.TYPE:
-     			service.save(new Type(name));
+     			typeDao.add(new Type(name));
      			break;
      		case Constants.PRIORITY:
-     			service.save(new Priority(name));
+     			priorityDao.add(new Priority(name));
      			break;
      		case Constants.RESOLUTION:
-     			service.save(new Resolution(name));
+     			resolutionDao.add(new Resolution(name));
      			break;
          }
    }

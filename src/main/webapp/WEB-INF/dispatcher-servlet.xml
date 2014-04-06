@@ -8,7 +8,7 @@
        http://www.springframework.org/schema/security http://www.springframework.org/schema/security/spring-security-3.0.3.xsd
        http://www.springframework.org/schema/mvc http://www.springframework.org/schema/mvc/spring-mvc-3.0.xsd">
 
-	<context:component-scan base-package="org.training.issuetracker.controllers" />
+	<context:component-scan base-package="org.training.issuetracker" />
 
 	<mvc:annotation-driven />
 	<mvc:default-servlet-handler />
@@ -19,13 +19,37 @@
 		<property name="suffix" value=".jsp" />
 	</bean>
 	
-	<bean id="resolver" class="org.training.issuetracker.model.beans.MessageResolver" />
+		<bean id="factoryManager"
+			class="org.training.issuetracker.utils.SessionFactoryManager">
+		</bean>
 	
-	<bean id="messageProvider" class="org.training.issuetracker.model.beans.SimpleMessageProvider" >
-		<property name="resolver" ref="resolver" />
+	<bean id="sessionFactory" factory-bean="factoryManager" factory-method="getSessionFactory" />
+	
+	<bean id="service"
+			class="org.training.issuetracker.services.PersistentService">
 	</bean>
+
+	<bean id="issueService" class="org.training.issuetracker.services.IssueService"/>
+	<bean id="priorityService" class="org.training.issuetracker.services.PriorityService"/>
+	<bean id="projectService" class="org.training.issuetracker.services.ProjectService"/>
+	<bean id="propertyService" class="org.training.issuetracker.services.PropertyService"/>
+	<bean id="resolutionService" class="org.training.issuetracker.services.ResolutionService"/>
+	<bean id="roleService" class="org.training.issuetracker.services.RoleService"/>
+	<bean id="statusService" class="org.training.issuetracker.services.StatusService"/>
+	<bean id="typeService" class="org.training.issuetracker.services.TypeService"/>
+	<bean id="userService" class="org.training.issuetracker.services.UserService"/>
+	<bean id="versionService" class="org.training.issuetracker.services.VersionService"/>
+	
+	<bean id="issueDao" class="org.training.issuetracker.model.impl.spring.SpringIssueImpl"/>
+	<bean id="priorityDao" class="org.training.issuetracker.model.impl.spring.SpringPriorityImpl"/>
+	<bean id="projectDao" class="org.training.issuetracker.model.impl.spring.SpringProjectImpl"/>
+	<bean id="resolutionDao" class="org.training.issuetracker.model.impl.spring.SpringResolutionImpl"/>
+	<bean id="roleDao" class="org.training.issuetracker.model.impl.spring.SpringRoleImpl"/>
+	<bean id="statusDao" class="org.training.issuetracker.model.impl.spring.SpringStatusImpl"/>
+	<bean id="userDao" class="org.training.issuetracker.model.impl.spring.SpringUserImpl"/>
+	<bean id="typeDao" class="org.training.issuetracker.model.impl.spring.SpringTypeImpl"/>
 	
 	
 	
-	
+
 </beans>

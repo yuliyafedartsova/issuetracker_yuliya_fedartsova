@@ -16,27 +16,22 @@ import org.training.issuetracker.model.beans.User;
 import org.training.issuetracker.services.UserService;
 
 @Controller
-public class ProjectFormSpringController {
+public class ProjectFormSpringController extends AbstractSpringController {
 
 	@RequestMapping("/form-project-update/{Id}")
 	public String updateProject(ModelMap model,
 			@PathVariable("Id") Project project
 			) {
-		List<User> users = new UserService().getUsers();
-	    model.addAttribute(Constants.USERS, users);
+		model.addAttribute(Constants.USERS, userDao.getUsers());
 	    model.addAttribute(Constants.PROJECT, project);
 		return "update_project";
     }
 	
 	@RequestMapping("/form-project-add")
 	public String addProject(ModelMap model) {
-		List<User> users = new UserService().getUsers();
-		model.addAttribute(Constants.USERS, users);
+		model.addAttribute(Constants.USERS, userDao.getUsers());
 		return "add_project";
 	}
-	
-	
-	
 	
 	@InitBinder
 		public void initBinder(WebDataBinder binder) {

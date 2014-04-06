@@ -13,12 +13,12 @@ import org.training.issuetracker.model.beans.Project;
 import org.training.issuetracker.services.ProjectService;
 
 @Controller
-public class ProjectsReviewSpringController {
+public class ProjectsReviewSpringController extends AbstractSpringController {
 
 	@RequestMapping("/review-projects")
 	public String projectsReview(ModelMap model, 
 			HttpServletRequest request) {
-		List<Project> projects = new ProjectService().getProjects();
+		List<Project> projects = projectDao.getProjects();
 		cutDescriptionsOff(projects);
 		model.addAttribute(Constants.PROJECTS, projects);
 		return "projects";

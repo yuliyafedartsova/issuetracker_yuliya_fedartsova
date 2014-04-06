@@ -21,7 +21,7 @@ import org.training.issuetracker.services.VersionService;
 
 
 @Controller
-public class ProjectSpringController {
+public class ProjectSpringController extends AbstractSpringController {
 
 	@RequestMapping("/update-project/{Id}")
 	public String updateProject(ModelMap model,
@@ -31,10 +31,14 @@ public class ProjectSpringController {
 			@RequestParam("version") String versionName,
 		   @RequestParam("managerId") User manager
 	) {
+		
+		System.out.println(manager.getEmail());
+		
+		
 		project.setName(name);
 		project.setDescription(description);
 		project.setManager(manager);
-	    new ProjectService().update(project);
+	    projectDao.updateProject(project);
 		return "main";
 	}
 	
@@ -45,8 +49,8 @@ public class ProjectSpringController {
 			@RequestParam("version") String versionName,
 		   @RequestParam("manager") User manager
 	) {
-		new ProjectService().save(project);
-		new VersionService().save(new Version(versionName, project));
+		projectDao.addProject(project);
+		projectDao.addVersion(new Version(versionName, project));
 		return "main";
 	}
 	

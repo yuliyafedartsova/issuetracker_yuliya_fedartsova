@@ -14,6 +14,6 @@ public class LogoutSpringController {
 	@RequestMapping("/logout")
 	public String logout(ModelMap model, HttpServletRequest request) {
 		request.getSession().invalidate();
-		return Constants.MAIN;
+		return "forward:/";
 	}
 }

@@ -15,26 +15,12 @@ import org.training.issuetracker.utils.HibernateSessionFactory;
 
 
 @Controller
-public class IssueReviewSpringController {
+public class IssueReviewSpringController extends AbstractSpringController {
 
 	@RequestMapping("/issue-review")
 	public String reviewIssue(ModelMap model, @RequestParam("id") int id) {
-		SessionFactory sessionFactory = HibernateSessionFactory.getSessionFactory();
-		Session session = sessionFactory.openSession();
-	    session.beginTransaction();
-	    String query = "from Issue where id=:id";
-	    Query q = session.createQuery(query);
-	    q.setParameter("id", id);
-	    Issue issue = (Issue) q.uniqueResult();
-	    session.getTransaction().commit();
-	    model.addAttribute(Constants.ISSUE, issue);
+		model.addAttribute(Constants.ISSUE, issueDao.getIssueById(id));
 	    return "/review_issue";
-	
-	
 	}
-
-
-
-
 
 }

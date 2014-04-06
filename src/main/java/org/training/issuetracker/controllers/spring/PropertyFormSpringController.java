@@ -15,7 +15,7 @@ import org.training.issuetracker.services.StatusService;
 import org.training.issuetracker.services.TypeService;
 
 @Controller
-public class PropertyFormSpringController {
+public class PropertyFormSpringController extends AbstractSpringController {
 
 	@RequestMapping("/property-form-update")
 	String updateProperty(ModelMap model,
@@ -24,20 +24,16 @@ public class PropertyFormSpringController {
 		model.addAttribute(Constants.PROPERTY, propertyName);
 		switch(propertyName) {
 		case Constants.STATUS:
-			Status statuse = new StatusService().getById(propertyId);
-			model.addAttribute(Constants.PARAMETER, statuse);
+			model.addAttribute(Constants.PARAMETER, statusDao.getById(propertyId));
 			break;
 		case Constants.TYPE:
-			Type type = new TypeService().getById(propertyId);
-			model.addAttribute(Constants.PARAMETER, type);
+			model.addAttribute(Constants.PARAMETER, typeDao.getById(propertyId));
 			break;
 		case Constants.PRIORITY:
-			Priority priority = new PriorityService().getById(propertyId);
-			model.addAttribute(Constants.PARAMETER, priority);
+			model.addAttribute(Constants.PARAMETER, priorityDao.getById(propertyId));
 			break;
 		case Constants.RESOLUTION:
-			Resolution resolution = new ResolutionService().getById(propertyId);
-			model.addAttribute(Constants.PARAMETER, resolution);
+			model.addAttribute(Constants.PARAMETER, resolutionDao.getById(propertyId));
 			break;
     	}
 	

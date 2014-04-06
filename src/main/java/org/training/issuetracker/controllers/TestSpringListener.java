@@ -23,7 +23,10 @@ public class TestSpringListener extends ContextLoaderListener {
     	User guest = new User();
         guest.setRole(new Role(Constants.GUEST));
         event.getServletContext().setAttribute(Constants.USER, guest);
-    	super.contextInitialized(event);
+    	
+        System.out.println("In LISTENER!!!!");
+        System.out.println(event.getServletContext().getRealPath(Constants.DELIMITER));
+        super.contextInitialized(event);
 	
 	}
 	
