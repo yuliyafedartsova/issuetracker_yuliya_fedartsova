@@ -6,6 +6,7 @@ import org.training.issuetracker.binders.PriorityBinder;
 import org.training.issuetracker.binders.ProjectBinder;
 import org.training.issuetracker.binders.PropertyBinder;
 import org.training.issuetracker.binders.ResolutionBinder;
+import org.training.issuetracker.binders.RoleBinder;
 import org.training.issuetracker.binders.StatusBinder;
 import org.training.issuetracker.binders.TypeBinder;
 import org.training.issuetracker.binders.UserBinder;
@@ -56,5 +57,7 @@ public abstract class AbstractSpringController {
 	PropertyBinder propertyBinder;
 	@Autowired
 	PriorityBinder priorityBinder;
+	@Autowired
+	RoleBinder roleBinder;
 
 }

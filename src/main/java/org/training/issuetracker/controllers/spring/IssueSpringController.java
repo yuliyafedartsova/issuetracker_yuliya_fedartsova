@@ -1,29 +1,17 @@
 package org.training.issuetracker.controllers.spring;
 
-import java.beans.PropertyEditorSupport;
-import java.sql.Date;
 
+import java.sql.Date;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
-
-import org.hibernate.Session;
-import org.hibernate.SessionFactory;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.ModelMap;
-import org.springframework.web.bind.ServletRequestDataBinder;
 import org.springframework.web.bind.WebDataBinder;
 import org.springframework.web.bind.annotation.InitBinder;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
-import org.training.issuetracker.binders.IssueBinder;
-import org.training.issuetracker.binders.ProjectBinder;
-import org.training.issuetracker.binders.PropertyBinder;
-import org.training.issuetracker.binders.StatusBinder;
-import org.training.issuetracker.binders.TypeBinder;
-import org.training.issuetracker.binders.UserBinder;
-import org.training.issuetracker.binders.VersionBinder;
 import org.training.issuetracker.constants.Constants;
 import org.training.issuetracker.model.beans.Issue;
 import org.training.issuetracker.model.beans.Project;
@@ -33,9 +21,7 @@ import org.training.issuetracker.model.beans.properties.Resolution;
 import org.training.issuetracker.model.beans.properties.Status;
 import org.training.issuetracker.model.beans.properties.Type;
 import org.training.issuetracker.model.beans.properties.Version;
-import org.training.issuetracker.services.IssueService;
-import org.training.issuetracker.services.PropertyService;
-import org.training.issuetracker.services.StatusService;
+
 
 
 @Controller

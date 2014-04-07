@@ -34,15 +34,8 @@ public class StatusService extends PropertyService {
 	}
 
 	public Status getById(int id) {
-	   
-		
-		Session session = sessionFactory.openSession();
-			return (Status)session.get(Status.class, id);
-		
-		
-		
-		
-		
+	   Session session = sessionFactory.openSession();
+	   return (Status)session.get(Status.class, id);
 	}
 
 }

@@ -3,14 +3,12 @@ package org.training.issuetracker.controllers.spring;
 import java.util.List;
 
 import javax.servlet.http.HttpServletRequest;
-
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.ModelMap;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.training.issuetracker.constants.Constants;
-import org.training.issuetracker.constants.Pages;
 import org.training.issuetracker.model.beans.Project;
-import org.training.issuetracker.services.ProjectService;
+
 
 @Controller
 public class ProjectsReviewSpringController extends AbstractSpringController {

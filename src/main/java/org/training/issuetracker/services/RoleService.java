@@ -14,6 +14,11 @@ public class RoleService extends PropertyService {
 		Session session = sessionFactory.openSession();
 		return session.createCriteria(Role.class).list();
 	}
+	
+	public Role getById(int id) {
+		Session session = sessionFactory.openSession();
+		return (Role)session.get(Role.class, id);
+	}
 
 
 }

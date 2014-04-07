@@ -2,11 +2,10 @@ package org.training.issuetracker.model.beans;
 
 import java.util.List;
 
-import javax.persistence.CollectionTable;
+import javax.persistence.CascadeType;
 import javax.persistence.Entity;
 import javax.persistence.FetchType;
 import javax.persistence.JoinColumn;
-import javax.persistence.JoinTable;
 import javax.persistence.OneToMany;
 import javax.persistence.OneToOne;
 import javax.persistence.Table;
@@ -20,7 +19,7 @@ public class Project extends Persistent {
 	@OneToOne
 	@JoinColumn(name = "managerId")
 	private  User manager;
-	@OneToMany(mappedBy="project")
+	@OneToMany(mappedBy="project", cascade=CascadeType.ALL, orphanRemoval=true, fetch = FetchType.EAGER)
 	private  List<Version> versions;
 	private String description;
 	

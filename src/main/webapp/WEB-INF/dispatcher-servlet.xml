@@ -58,4 +58,5 @@
 	<bean id="userBinder" class="org.training.issuetracker.binders.UserBinder"/>
 	<bean id="versionBinder" class="org.training.issuetracker.binders.VersionBinder"/>
 	<bean id="priorityBinder" class="org.training.issuetracker.binders.PriorityBinder"/>
+	<bean id="roleBinder" class="org.training.issuetracker.binders.RoleBinder"/>
 </beans>
