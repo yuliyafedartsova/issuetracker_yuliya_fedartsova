@@ -75,7 +75,6 @@ function addVersion2(id) {
 		</c:forEach>
 	</select></td></tr>
 	</table>
-	<input type='hidden' name='author' value='${user.id}'>
 	<input type="hidden" name='action' value='add'>
 	<input type="hidden" name='versionId'>
 	<input type="submit" value="Add">

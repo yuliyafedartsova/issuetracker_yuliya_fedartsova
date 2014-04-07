@@ -1,7 +1,6 @@
 package org.training.issuetracker.services;
 
 import java.util.List;
-
 import org.hibernate.Query;
 import org.hibernate.Session;
 import org.hibernate.SessionFactory;
@@ -10,9 +9,12 @@ import org.training.issuetracker.model.beans.Property;
 import org.training.issuetracker.model.beans.User;
 import org.training.issuetracker.model.beans.properties.Status;
 import org.training.issuetracker.model.beans.properties.Type;
-import org.training.issuetracker.utils.HibernateSessionFactory;
+
 
 public class StatusService extends PropertyService {
+	
+	@Autowired
+	private SessionFactory sessionFactory;
 	
 	public List<Status> getStatuses() {
 		Session session = sessionFactory.openSession();
@@ -32,8 +34,15 @@ public class StatusService extends PropertyService {
 	}
 
 	public Status getById(int id) {
-	    Session session = sessionFactory.openSession();
-		return (Status)session.get(Status.class, id);
+	   
+		
+		Session session = sessionFactory.openSession();
+			return (Status)session.get(Status.class, id);
+		
+		
+		
+		
+		
 	}
 
 }

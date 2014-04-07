@@ -23,7 +23,7 @@ import org.training.issuetracker.model.factories.ResolutionFactory;
 import org.training.issuetracker.model.factories.StatusFactory;
 import org.training.issuetracker.model.factories.TypeFactory;
 import org.training.issuetracker.services.PropertyService;
-import org.training.issuetracker.utils.HibernateSessionFactory;
+
 
 
 @Controller

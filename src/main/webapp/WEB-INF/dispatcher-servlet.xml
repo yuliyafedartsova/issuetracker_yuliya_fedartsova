@@ -49,7 +49,13 @@
 	<bean id="userDao" class="org.training.issuetracker.model.impl.spring.SpringUserImpl"/>
 	<bean id="typeDao" class="org.training.issuetracker.model.impl.spring.SpringTypeImpl"/>
 	
-	
-	
-
+	<bean id="issueBinder" class="org.training.issuetracker.binders.IssueBinder"/>
+	<bean id="projectBinder" class="org.training.issuetracker.binders.ProjectBinder"/>
+	<bean id="propertytBinder" class="org.training.issuetracker.binders.PropertyBinder"/>
+	<bean id="resolutionBinder" class="org.training.issuetracker.binders.ResolutionBinder"/>
+	<bean id="statusBinder" class="org.training.issuetracker.binders.StatusBinder"/>
+	<bean id="typeBinder" class="org.training.issuetracker.binders.TypeBinder"/>
+	<bean id="userBinder" class="org.training.issuetracker.binders.UserBinder"/>
+	<bean id="versionBinder" class="org.training.issuetracker.binders.VersionBinder"/>
+	<bean id="priorityBinder" class="org.training.issuetracker.binders.PriorityBinder"/>
 </beans>

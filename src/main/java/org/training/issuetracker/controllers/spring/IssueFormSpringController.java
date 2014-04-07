@@ -71,7 +71,7 @@ public class IssueFormSpringController extends AbstractSpringController {
 	
 	 @InitBinder
 		public void initBinder(WebDataBinder binder) {
-			binder.registerCustomEditor(Issue.class, new IssueBinder());
+			binder.registerCustomEditor(Issue.class, issueBinder);
 	    }
 	    
 

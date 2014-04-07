@@ -4,7 +4,7 @@ import org.hibernate.Session;
 import org.hibernate.SessionFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.training.issuetracker.model.beans.properties.Version;
-import org.training.issuetracker.utils.HibernateSessionFactory;
+
 
 
 

@@ -36,7 +36,7 @@ import org.training.issuetracker.model.beans.properties.Version;
 import org.training.issuetracker.services.IssueService;
 import org.training.issuetracker.services.PropertyService;
 import org.training.issuetracker.services.StatusService;
-import org.training.issuetracker.utils.HibernateSessionFactory;
+
 
 @Controller
 public class IssueSpringController extends AbstractSpringController {
@@ -118,14 +118,15 @@ public class IssueSpringController extends AbstractSpringController {
     
      @InitBinder
 	public void initBinder(WebDataBinder binder) {
-		binder.registerCustomEditor(Status.class, new StatusBinder());
-		binder.registerCustomEditor(Type.class, new TypeBinder());
-		binder.registerCustomEditor(Priority.class, new PropertyBinder(new Priority()));
-		binder.registerCustomEditor(User.class, new UserBinder());
-		binder.registerCustomEditor(Project.class, new ProjectBinder());
-		binder.registerCustomEditor(Version.class, new PropertyBinder(new Version()));
-		binder.registerCustomEditor(Resolution.class, new PropertyBinder(new Resolution()));
-		binder.registerCustomEditor(Issue.class, new IssueBinder());
+		binder.registerCustomEditor(Status.class, statusBinder);
+		binder.registerCustomEditor(Type.class, typeBinder);
+		binder.registerCustomEditor(Priority.class, priorityBinder);
+		binder.registerCustomEditor(User.class, userBinder);
+		binder.registerCustomEditor(Project.class, projectBinder);
+		binder.registerCustomEditor(Version.class, versionBinder);
+		binder.registerCustomEditor(Resolution.class, resolutionBinder);
+		binder.registerCustomEditor(Issue.class, issueBinder);
     
     }
+     
   }

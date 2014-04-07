@@ -8,10 +8,6 @@ import org.training.issuetracker.services.PropertyService;
 public class PropertyBinder extends PropertyEditorSupport {
 	private Property property;
 
-	public PropertyBinder(Property property) {
-		this.property = property;
-	}
-	
 	@Override
 	public void setAsText(String id) throws IllegalArgumentException {
 	    if(id != null && !id.isEmpty()) { 
@@ -21,4 +17,14 @@ public class PropertyBinder extends PropertyEditorSupport {
 		}
 		setValue(property);
 	}
+
+	public Property getProperty() {
+		return property;
+	}
+
+	public void setProperty(Property property) {
+		this.property = property;
+	}
+	
+	
 }
