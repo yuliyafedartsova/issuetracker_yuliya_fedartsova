@@ -20,8 +20,14 @@ public class IssueService extends PersistentService {
 	
 	public List<Issue> getIssues() {
 		Session session = sessionFactory.openSession();
-	    return session.createCriteria(Issue.class).list();
+	  //  return session.createCriteria(Issue.class).list();
+		return session.createCriteria(Issue.class).setMaxResults(1).list();
 	}
+	
+	public List<Issue> getAssignedIssues() {
+		Session session = sessionFactory.openSession();
+		return session.createCriteria(Issue.class).setMaxResults(1).list();
+	} 
 	
 	public void test() {
 		Session session = sessionFactory.openSession();

@@ -12,8 +12,6 @@ import org.training.issuetracker.model.beans.Project;
 import org.training.issuetracker.model.beans.User;
 import org.training.issuetracker.model.beans.properties.Version;
 
-
-
 @Controller
 public class ProjectSpringController extends AbstractSpringController {
 
@@ -30,7 +28,10 @@ public class ProjectSpringController extends AbstractSpringController {
 		project.setDescription(description);
 		project.setManager(manager);
 	    projectDao.updateProject(project);
-		return "main";
+		if(!versionName.isEmpty() && versionName != null) {
+			projectDao.addVersion(new Version(versionName, project));
+		}
+	    return "main";
 	}
 	
 	@RequestMapping("/add-project")
@@ -50,7 +51,4 @@ public class ProjectSpringController extends AbstractSpringController {
 		binder.registerCustomEditor(Project.class, projectBinder);
 		binder.registerCustomEditor(User.class, userBinder);
     }
-	
-
-
 }

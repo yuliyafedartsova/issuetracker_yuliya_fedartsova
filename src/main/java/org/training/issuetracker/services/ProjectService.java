@@ -4,6 +4,7 @@ import java.util.List;
 import org.hibernate.Session;
 import org.hibernate.SessionFactory;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.transaction.annotation.Transactional;
 import org.training.issuetracker.model.beans.Project;
 import org.training.issuetracker.model.beans.User;
 import org.training.issuetracker.model.beans.properties.Status;
@@ -14,16 +15,22 @@ public class ProjectService extends PersistentService {
 	@Autowired
 	private SessionFactory sessionFactory;
 	
+	
+	@Transactional(readOnly=true)
 	public List<Project> getProjects() {
-		Session session = sessionFactory.openSession();
-	    List<Project> projects = session.createCriteria(Project.class).list();
-	    return projects;
+		Session session = sessionFactory.getCurrentSession();
+		session.beginTransaction();
+		List<Project> projects = session.createCriteria(Project.class).list();
+		session.getTransaction().commit();
+		return projects;
 	}
 	
 	public Project getById(int id) {
-		Session session = sessionFactory.openSession();
+		Session session = sessionFactory.getCurrentSession();
+		session.beginTransaction();
 		Project project = (Project)session.get(Project.class, id);
-	    return project;
+		session.getTransaction().commit();
+		return project;
 	}
 	
 }

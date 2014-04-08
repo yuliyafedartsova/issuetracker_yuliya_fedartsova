@@ -16,7 +16,7 @@ public class SessionFactoryManager {
     	try {
     		Configuration configuration = new Configuration()
     		.setProperty("hibernate.connection.driver_class", Configurations.DB_DRIVER_NAME)
-    		.setProperty("hibernate.connection.url", Constants.DRIVER_TYPE + Configurations.DB + ":" + "G:/test/db/" + Configurations.DB_NAME)
+    		.setProperty("hibernate.connection.url", Constants.DRIVER_TYPE + Configurations.DB + ":" + Configurations.PATH + Constants.LOCAL_PASS_TO_DB + Configurations.DB_NAME)
     		.setProperty("hibernate.connection.username", Configurations.DB_USER)
     		.setProperty("hibernate.connection.password", Configurations.DB_PASSWORD)
     		.setProperty("hibernate.connection.pool_size", "10")
